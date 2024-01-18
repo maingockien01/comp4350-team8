@@ -1,0 +1,20 @@
+{
+  "name": "comp4350-team8",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "git@github.com:maingockien01/comp4350-team8.git",
+  "author": "COMP-4350-Team-8",
+  "license": "MIT",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "apps/*"
+    ],
+    "nohoist": [
+      "**/jest",
+      "**/prisma",
+      "**/@prisma/client"
+    ]
+  }
+}
