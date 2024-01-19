@@ -14,3 +14,7 @@ stop: # Stop the development environment
 .PHONY: down
 down: # Stop and remove the development environment
 	docker-compose down
+
+.PHONY: watch-frontend
+watch-frontend: # Watch the frontend for changes
+	docker-compose exec bash ./scripts/dev/watch.frontend.sh
