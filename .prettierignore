@@ -1,0 +1,34 @@
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE - WebStorm
+.idea
+
+# NodeJS
+**/node_modules/
+
+# NestJS
+**/dist/
+
+# Package build
+packages/**/tsconfig.tsbuildinfo
+packages/**/*.d.ts
+packages/**/*.js
+packages/**/*.js.map
+
+# React
+/.pnp
+.pnp.js
+**/build
+
+# Testing
+/coverage

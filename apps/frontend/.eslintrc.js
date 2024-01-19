@@ -1,4 +1,4 @@
 module.exports = {
-  "root": true,
-  "extends": ["eslint-config-team8"],
+  root: true,
+  extends: ['eslint-config-team8'],
 };
