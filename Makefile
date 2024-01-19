@@ -18,3 +18,7 @@ down: # Stop and remove the development environment
 .PHONY: watch-frontend
 watch-frontend: # Watch the frontend for changes
 	docker-compose exec bash ./scripts/dev/watch.frontend.sh
+
+.PHONY: lint
+lint: # Lint all workspaces
+	docker-compose exec bash ./scripts/dev/lint.sh

@@ -4,6 +4,10 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-      "build": "tsc"
+    "build": "tsc",
+    "lint": "eslint --ext .ts,.tsx --fix"
+  },
+  "devDependencies": {
+    "eslint-config-team8": "*"
   }
 }
