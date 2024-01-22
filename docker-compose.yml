@@ -5,5 +5,5 @@ services:
       - ./:/app
     ports:
       - "3000:3000"
-    command: bash ./scripts/dev/dev.local.sh
+    command: /bin/sh ./scripts/dev/dev.local.sh
 
