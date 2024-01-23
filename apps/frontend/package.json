@@ -46,7 +46,7 @@
 			"patterns": [
 				"src"
 			],
-			"extensions": "js,jsx, tsx, ts, css"
+			"extensions": "js,jsx,tsx,ts,css"
 		}
 	}
 }
