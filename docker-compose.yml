@@ -1,3 +1,7 @@
+volumes:
+  mysql-data:
+    driver: local
+
 services:
   apps:
     build: ./docker/nodejs
@@ -7,3 +11,15 @@ services:
       - "3000:3000"
     command: /bin/sh ./scripts/dev/dev.local.sh
 
+  database:
+    image: mysql:5.7
+    volumes:
+        - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+      - "33060:33060"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: app
+      MYSQL_USER: app
+      MYSQL_PASSWORD: password
