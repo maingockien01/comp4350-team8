@@ -42,4 +42,6 @@ RUN yarn workspace @team8/frontend build
 
 RUN yarn workspace @team8/backend build
 
+CMD ["node", "apps/backend/dist/src/main.js"]
+
 EXPOSE 3000
