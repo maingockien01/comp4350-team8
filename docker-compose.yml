@@ -4,7 +4,7 @@ volumes:
 
 services:
   apps:
-    build: ./docker/nodejs
+    build: ./
     volumes:
       - ./:/app
     ports:
