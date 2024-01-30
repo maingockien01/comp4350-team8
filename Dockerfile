@@ -21,7 +21,7 @@ COPY yarn.lock ./
 # Copy global files
 COPY tsconfig.json ./
 COPY .eslintrc.js ./
-COPY .prettierrc.js ./
+COPY .prettierrc ./
 
 RUN yarn install
 
