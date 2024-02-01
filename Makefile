@@ -3,22 +3,28 @@ default: help
 help: # Show help for each of the Makefile recipes.
 	@grep -E '^[a-zA-Z0-9 -]+:.*#'  Makefile | sort | while read -r l; do printf "\033[1;32m$$(echo $$l | cut -f 1 -d':')\033[00m:$$(echo $$l | cut -f 2- -d'#')\n"; done
 
-.PHONY: dev
-containers: # Start the development environment
-	docker-compose up -d --build
+.PHONY: start
+start: # Start the apps from dist folder
+	node ./apps/backend/dist/src/main.js
 
-.PHONY: stop
-stop: # Stop the development environment
-	docker-compose stop
+.PHONY: packages
+packages: # Build the shared packages
+	yarn workspace @team8/constants build
+	yarn workspace @team8/types build
+	yarn workspace @team8/utils build
 
-.PHONY: down
-down: # Stop and remove the development environment
-	docker-compose down
+.PHONY: frontend
+frontend: # Build frontend
+	yarn workspace @team8/frontend build
 
-.PHONY: watch-frontend
-watch-frontend: # Watch the frontend for changes
-	docker-compose exec bash ./scripts/dev/watch.frontend.sh
+.PHONY: backend
+backend: # Build backend
+	yarn workspace @team8/backend build
+
+.PHONY: install
+install: # Install packages
+	yarn install
 
 .PHONY: lint
 lint: # Lint all workspaces
-	docker-compose exec bash ./scripts/dev/lint.sh
+	sh ./scripts/dev/lint.sh
