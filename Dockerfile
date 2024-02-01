@@ -1,4 +1,4 @@
-FROM node:21.1.0 as base
+FROM node:18-alpine as base
 
 WORKDIR /usr/src/app
 
@@ -9,6 +9,9 @@ FROM base as dependencies
 
 # Copy packages package.json
 COPY packages/constants/package.json ./packages/constants/
+COPY packages/utils/package.json ./packages/utils/
+COPY packages/types/package.json ./packages/types/
+COPY packages/eslint-config-team8/package.json ./packages/eslint-config-team8/
 
 # Copy apps package.json
 COPY apps/backend/package.json ./apps/backend/
@@ -20,8 +23,8 @@ COPY yarn.lock ./
 
 # Copy global files
 COPY tsconfig.json ./
-COPY .eslintrc.js ./
 COPY .prettierrc ./
+COPY .prettierignore ./
 
 RUN yarn install
 
