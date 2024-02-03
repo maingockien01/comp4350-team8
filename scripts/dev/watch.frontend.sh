@@ -1,0 +1,1 @@
+yarn workspace @team8/frontend watch

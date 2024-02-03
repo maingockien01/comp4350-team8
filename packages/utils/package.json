@@ -1,0 +1,14 @@
+{
+	"name": "@team8/utils",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"private": true,
+	"scripts": {
+		"build": "tsc",
+		"lint": "eslint --ext .ts,.tsx --fix"
+	},
+	"devDependencies": {
+		"eslint-config-team8": "*"
+	}
+}
