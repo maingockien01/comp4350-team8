@@ -5,6 +5,6 @@ import { APPS_NAME } from '@team8/constants/apps';
 export class HelloController {
 	@Get()
 	getHello(): string {
-		return `Hello from ${APPS_NAME}!`;
+		return `Hello from ${APPS_NAME} updated!`;
 	}
 }
