@@ -5,7 +5,7 @@ help: # Show help for each of the Makefile recipes.
 
 .PHONY: start
 start: # Start the apps from dist folder
-	node ./apps/backend/dist/src/main.js
+	yarn workspace @team8/backend start:prod
 
 .PHONY: packages
 packages: # Build the shared packages
