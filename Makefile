@@ -28,3 +28,11 @@ install: # Install packages
 .PHONY: lint
 lint: # Lint all workspaces
 	sh ./scripts/dev/lint.sh
+
+.PHONY: bash
+bash: # Start a bash session in the apps container
+	docker-compose exec apps-dev sh
+
+.PHONY: dev
+dev: # Start the apps in development mode
+	docker-compose up apps-dev
