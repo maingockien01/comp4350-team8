@@ -1,25 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { APPS_NAME } from '@team8/constants/apps';
+import MainScreen from './Screens/MainScreen';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-function App() {
+const App = () => {
 	return (
-		<div className="App">
-			<header className="App-header">
-				<img src={logo} className="App-logo" alt="logo" />
-				<p>Hello from {APPS_NAME} with new !</p>
-				<a
-					className="App-link"
-					href="https://reactjs.org"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					Learn React
-				</a>
-			</header>
-		</div>
+		<>
+			<Router>
+				<Routes>
+					<Route index={true} path="/" element={<MainScreen />} />
+				</Routes>
+			</Router>
+		</>
 	);
-}
+};
 
 export default App;
