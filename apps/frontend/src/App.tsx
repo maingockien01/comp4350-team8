@@ -17,6 +17,17 @@ function App() {
 				>
 					Learn React
 				</a>
+				<button
+					onClick={() => {
+						return fetch(
+							'/rest-api/courses?degree=comp&term=winter2024',
+						)
+							.then((res) => res.text())
+							.then(console.log);
+					}}
+				>
+					Click here
+				</button>
 			</header>
 		</div>
 	);

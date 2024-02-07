@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { HelloModule } from './hello/hello.module';
 import { RouterModule } from '@nestjs/core';
+import { CoursesModule } from './courses/courses.module';
 
 @Module({
 	imports: [
 		HelloModule,
+		CoursesModule,
 		RouterModule.register([
 			{
 				path: '/rest-api',
@@ -12,6 +14,10 @@ import { RouterModule } from '@nestjs/core';
 					{
 						path: '/hello',
 						module: HelloModule,
+					},
+					{
+						path: '/courses',
+						module: CoursesModule,
 					},
 				],
 			},
