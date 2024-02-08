@@ -31,4 +31,4 @@ packages/**/*.js.map
 **/build
 
 # Testing
-/coverage
+**/coverage
