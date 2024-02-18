@@ -12,6 +12,8 @@
 		"baseUrl": "./",
 		"incremental": true,
 		"skipLibCheck": true,
-		"moduleResolution": "node"
+		"moduleResolution": "node",
+		"types": ["jest", "node"],
+		"allowJs": true,
 	}
 }

@@ -35,4 +35,4 @@ bash: # Start a bash session in the apps container
 
 .PHONY: dev
 dev: # Start the apps in development mode
-	docker-compose up apps-dev
+	docker-compose up apps-dev --build -d && docker-compose up cypress --build -d && docker-compose logs -f apps-dev
