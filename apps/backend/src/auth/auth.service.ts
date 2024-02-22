@@ -6,6 +6,11 @@ import { AuthDto } from '../dto';
 export class AuthService {
 	constructor(private usersService: UsersService) {}
 
+	async signUp(dto: AuthDto): Promise<any> {
+		const user = await this.usersService.addOne(dto);
+		return user;
+	}
+
 	async logIn(dto: AuthDto): Promise<any> {
 		const user = await this.usersService.findOne(dto.username);
 		if (user?.password !== dto.password) {

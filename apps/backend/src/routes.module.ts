@@ -17,15 +17,10 @@ import { AuthModule } from '../src/auth/auth.module';
 					},
 				],
 			},
-			{
-				path: '/auth',
-				children: [
-					{
-						path: '/login',
-						module: AuthModule,
-					},
-				],
-			},
+			// {
+			// 	path: '/auth',
+			// 	module: AuthModule,
+			// },
 		]),
 	],
 	controllers: [],
