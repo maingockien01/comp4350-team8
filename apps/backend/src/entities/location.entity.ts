@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, Relation } from 'typeorm';
 import { Section } from './section.entity';
 
 @Entity()
@@ -13,5 +13,5 @@ export class Location {
   roomNumber: number;
 
   @OneToMany(() => Section, (section) => section.location)
-  sections: Section[]
+  sections: Relation<Section[]>;
 }

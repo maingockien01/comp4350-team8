@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany,JoinTable } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany,JoinTable, Relation } from 'typeorm';
 import { Course } from './course.entity';
 import { Location } from './location.entity';
 import { Term } from './term.entity';
@@ -28,15 +28,15 @@ export class Section {
   professor: string;
 
   @ManyToOne(() => Course, (course) => course.sections)
-  course: Course
+  course: Relation<Course>;
 
   @ManyToOne(() => Term, (term) => term.sections)
-  term: Term
+  term: Relation<Term>;
 
   @ManyToOne(() => Location, (location) => location.sections)
-  location: Location
+  location: Relation<Location>;
 
   @ManyToMany(() => User)
   @JoinTable()
-  users: User[]
+  users: Relation<User[]>;
 }

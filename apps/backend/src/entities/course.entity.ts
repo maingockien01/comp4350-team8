@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany,JoinTable } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany,JoinTable, Relation } from 'typeorm';
 import { Section } from './section.entity';
 import { User } from './user.entity';
 
@@ -22,9 +22,9 @@ export class Course {
   description: string;
 
   @OneToMany(() => Section, (section) => section.course)
-  sections: Section[];
+  sections: Relation<Section[]>;
 
   @ManyToMany(() => User)
   @JoinTable()
-  users: User[];
+  users: Relation<User[]>;
 }
