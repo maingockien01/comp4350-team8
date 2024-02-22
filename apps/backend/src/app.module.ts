@@ -30,6 +30,7 @@ import { HealthModule } from './health/health.module';
 				database: config.get<string>('DB_DATABASE'),
 				autoLoadEntities: config.get<boolean>('DB_AUTOLOAD_ENTITIES'),
 				synchronize: config.get<boolean>('DB_SYNCHRONIZE'),
+				entities: [join(__dirname, '/**/*.entity{.ts,.js}')],
 			}),
 		}),
 		HealthModule,
