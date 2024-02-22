@@ -18,6 +18,8 @@
 		"jsx": "react-jsx",
 		"types": [
 			"vite/client",
+			"jest",
+			"node",
 		],
 
 	},
