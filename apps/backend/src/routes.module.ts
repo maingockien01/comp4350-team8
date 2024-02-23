@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { HelloModule } from './hello/hello.module';
 import { RouterModule } from '@nestjs/core';
 import { AuthModule } from '../src/auth/auth.module';
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
 	imports: [
@@ -15,12 +16,16 @@ import { AuthModule } from '../src/auth/auth.module';
 						path: '/hello',
 						module: HelloModule,
 					},
+					{
+						path: '/auth',
+						module: AuthModule,
+					},
+					{
+						path: '/profile',
+						module: ProfileModule,
+					},
 				],
 			},
-			// {
-			// 	path: '/auth',
-			// 	module: AuthModule,
-			// },
 		]),
 	],
 	controllers: [],

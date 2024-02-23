@@ -2,7 +2,7 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { ProfileService } from './profile.service';
 import { UpdateDto } from '@team8/types/dtos/profile/update.dto';
 
-@Controller('profile')
+@Controller()
 export class ProfileController {
 	constructor(private profileService: ProfileService) {}
 

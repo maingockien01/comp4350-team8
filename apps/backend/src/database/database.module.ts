@@ -17,7 +17,7 @@ import { join } from 'path';
 					'DB_AUTOLOAD_ENTITIES',
 				),
 				synchronize: config.getOrThrow<boolean>('DB_SYNCHRONIZE'),
-				entities: [join(__dirname, '/**/*.entity{.ts,.js}')],
+				entities: [join(__dirname, '../**/*.entity{.ts,.js}')],
 			}),
 			inject: [ConfigService],
 		}),

@@ -1,9 +1,9 @@
 import { Injectable, ForbiddenException } from '@nestjs/common';
-import { SignUpDto } from '../auth/dto';
+import { SignUpDto } from '@team8/types/dtos/auth/signup.dto';
 import { EntityManager, Repository, QueryFailedError } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UpdateDto } from '../profile/dto';
+import { UpdateDto } from '@team8/types/dtos/profile/update.dto';
 
 @Injectable()
 export class UsersService {
