@@ -1,24 +1,15 @@
 import React from "react";
 import Navbar from '../Components/Navbar'
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button, { ButtonProps } from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import LinearProgress from '@mui/material/LinearProgress';
 import { BarChart } from '@mui/x-charts/BarChart';
 import Tabs, { tabsClasses } from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Card from '../Components/Cards'
 
 const uData = [4];
 const xLabels = [
@@ -53,6 +44,7 @@ const MainScreen = () => {
       clearInterval(timer);
     };
   }, []);
+
   return(
   <>
   <Navbar/>

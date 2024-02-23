@@ -3,6 +3,8 @@ import './App.css';
 import { APPS_NAME } from '@team8/constants/apps';
 import MainScreen from './Screens/MainScreen';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LookUpScreen from './Screens/LookUpScreen';
+import CoursesScreen from './Screens/CoursesScreen';
 
 const App = () => {
 	return (
@@ -10,6 +12,8 @@ const App = () => {
 			<Router>
 				<Routes>
 					<Route index={true} path="/" element={<MainScreen />} />
+					<Route path="/lookup" element={<LookUpScreen />}/>
+					<Route path='/courses' element={<CoursesScreen/>}/>
 				</Routes>
 			</Router>
 		</>
