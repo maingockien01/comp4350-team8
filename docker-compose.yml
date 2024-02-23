@@ -16,6 +16,8 @@ services:
 
   database:
     image: mysql:5.7
+    volumes:
+      - ./docker/mysql/provision/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "3306:3306"
       - "33060:33060"
