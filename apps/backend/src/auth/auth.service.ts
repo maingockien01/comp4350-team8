@@ -13,6 +13,7 @@ export class AuthService {
 	}
 
 	async logIn(dto: LogInDto): Promise<any> {
+		//TODO: Return message according to error
 		const user = await this.usersService.findOne(dto.username);
 		if (user?.hashPassword !== dto.hashPassword) {
 			throw new UnauthorizedException();
