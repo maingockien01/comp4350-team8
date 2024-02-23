@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ProfileService } from './profile.service';
-import { UpdateDto } from './dto';
+import { UpdateDto } from '@team8/types/dtos/profile/update.dto';
 
 @Controller('profile')
 export class ProfileController {

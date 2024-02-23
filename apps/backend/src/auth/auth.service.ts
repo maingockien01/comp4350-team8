@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
-import { SignUpDto, LogInDto } from './dto';
-
+import { LogInDto } from '@team8/types/dtos/auth/login.dto';
+import { SignUpDto } from '@team8/types/dtos/auth/signup.dto';
 @Injectable()
 export class AuthService {
 	constructor(private usersService: UsersService) {}
