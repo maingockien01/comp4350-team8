@@ -19,6 +19,9 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    concurrency: 
+      group: build-${{ github.sha }}
+      cancel-in-progress: true
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -36,7 +39,7 @@ jobs:
           context: .
           push: true
           tags: ${{ env.DOCKER_TAG }}
-          cache-from: type=registry,ref=user/app:latest
+          cache-from: type=registry,ref=${{ env.DOCKER_TAG }}
           cache-to: type=inline
   
   lint:
@@ -47,27 +50,28 @@ jobs:
       cancel-in-progress: true
     steps:
       - name: Run linter on workspace backend
-        continue-on-error: true
-        run: docker run ${{ env.IMAGE_NAME }} yarn workspace @team8/backend lint
+        id: backend
+        run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/backend lint
       - name: Run linter on workspace frontend
-        continue-on-error: true
-        run: docker run ${{ env.IMAGE_NAME }} yarn workspace @team8/frontend lint
+        id: frontend
+        run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/frontend lint
       - name: Run linter on workspace types
-        continue-on-error: true
-        run: docker run ${{ env.IMAGE_NAME }} yarn workspace @team8/types lint
+        id: types
+        run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/types lint
       - name: Run linter on workspace constants
-        continue-on-error: true
-        run: docker run ${{ env.IMAGE_NAME }} yarn workspace @team8/constants lint
+        id: constants
+        run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/constants lint
       - name: Run linter on workspace utils
-        continue-on-error: true
-        run: docker run ${{ env.IMAGE_NAME }} yarn workspace @team8/utils lint
+        id: utils
+        run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/utils lint
 
-  tests:
+  tests-unit-backend:
     runs-on: ubuntu-latest
     needs: build
     concurrency: 
-      group: tests-${{ github.sha }}
+      group: tests-unit-backend-${{ github.sha }}
       cancel-in-progress: true
     steps:
-      - name: Run unit tests on backend
-        run: docker run ${{ env.IMAGE_NAME }} yarn workspace @team8/backend test:unit
+      - name: Run unit tests on workspace backend
+        id: backend
+        run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/backend test:unit
