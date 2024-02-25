@@ -16,6 +16,7 @@ import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import { amber } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
 import { brown } from '@mui/material/colors';
+import { Link } from "react-router-dom";
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -114,11 +115,31 @@ const Navbar = () => {
                 </Toolbar>
                 <Divider sx={{bgcolor:"black"}}></Divider>
                 <Toolbar sx={{justifyContent:"space-between"}}>
-                    <ColorButton variant="contained">Home</ColorButton>
-                    <ColorButton variant="contained">Courses Look Up</ColorButton>
-                    <ColorButton variant="contained">Add/Drop Courses</ColorButton>
-                    <ColorButton variant="contained">Calendar</ColorButton>
-                    <ColorButton variant="contained">Roadmap</ColorButton>
+                  <Link to="/">
+                    <ColorButton variant="contained">
+                      Home
+                    </ColorButton>
+                  </Link>
+                  <Link to="/courses-look-up">
+                    <ColorButton variant="contained">
+                      Courses Look Up
+                    </ColorButton>
+                  </Link>
+                  <Link to="/add-drop-courses">
+                    <ColorButton variant="contained">
+                      Add/Drop Courses
+                    </ColorButton>
+                  </Link>
+                  <Link to="/calendar">        
+                    <ColorButton variant="contained">
+                      Calendar
+                    </ColorButton>
+                  </Link>
+                  <Link to="/roadmap">
+                    <ColorButton variant="contained">
+                      Roadmap
+                    </ColorButton>
+                  </Link>
                 </Toolbar>
             </Stack>
         </Container>

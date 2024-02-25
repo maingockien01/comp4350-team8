@@ -55,7 +55,7 @@ const MainScreen = () => {
   }, []);
   return(
   <>
-  <Navbar/>
+  {/*<Navbar/>*/}
   <Container maxWidth="lg" sx={{mt: 2}}>
     <Grid container>
       <Grid item xs={8} sx={{boxShadow:"none", backgroundColor:"#FAD37D", borderTopLeftRadius:10, borderBottomLeftRadius:10}}>
