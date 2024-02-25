@@ -39,7 +39,9 @@ COPY packages/utils ./packages/utils
 COPY packages/eslint-config-team8 ./packages/eslint-config-team8
 
 # Build
-RUN yarn workspace @team8/constants build
+RUN yarn workspace @team8/constants build --incremental false
+RUN yarn workspace @team8/types build --incremental false
+RUN yarn workspace @team8/utils build --incremental false
 
 RUN yarn workspace @team8/frontend build
 
