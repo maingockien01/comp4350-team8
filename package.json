@@ -8,7 +8,8 @@
 	"private": true,
 	"scripts": {
 		"format": "prettier --write \"**/*.{ts,tsx,json,md}\"",
-		"dev": "concurrently \"yarn workspace @team8/frontend watch\" \"yarn workspace @team8/backend start:dev\""
+		"dev": "concurrently \"yarn workspace @team8/frontend watch\" \"yarn workspace @team8/backend start:dev\"",
+		"migration:generate": "yarn workspace @team8/backend typeorm-ts-node-commonjs migration:generate -d ./src/database/ormconfig.ts -p ./src/database/migrations/$MIGRATION_NAME"
 	},
 	"workspaces": {
 		"packages": [
