@@ -1,12 +1,7 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class UpdateDto {
+export class LogInRetDto {
 	@IsString()
 	@IsNotEmpty()
 	username: string;
-
-	@IsString()
-	fullName: string;
-
-	pictureProfile: any;
 }

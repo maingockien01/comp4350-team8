@@ -42,7 +42,7 @@ export class User {
 	// @JoinTable()
 	// sections: Relation<Section[]>;
 
-	constructor(user: Partial<User>) {
-		Object.assign(this, user);
-	}
+	// constructor(user: Partial<User>) {
+	// 	Object.assign(this, user);
+	// }
 }

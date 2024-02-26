@@ -1,24 +1,32 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
-import { LogInDto } from '@team8/types/dtos/auth/login.dto';
-import { SignUpDto } from '@team8/types/dtos/auth/signup.dto';
+import {
+	LogInDto,
+	SignUpDto,
+	LogInRetDto,
+	SignUpRetDto,
+} from '@team8/types/dtos/auth';
+
 @Injectable()
 export class AuthService {
 	constructor(private usersService: UsersService) {}
 
-	async signUp(dto: SignUpDto): Promise<any> {
+	async signUp(dto: SignUpDto): Promise<SignUpRetDto> {
 		//TODO: Hash the password
 		const user = await this.usersService.create(dto);
-		return user;
+		const result = new SignUpRetDto();
+		result.username = user.username;
+		return result;
 	}
 
-	async logIn(dto: LogInDto): Promise<any> {
+	async logIn(dto: LogInDto): Promise<LogInRetDto> {
 		//TODO: Return message according to error
-		const user = await this.usersService.findOne(dto.username);
+		const user = await this.usersService.findOneByUsername(dto.username);
 		if (user?.hashPassword !== dto.hashPassword) {
 			throw new UnauthorizedException();
 		}
-		const { hashPassword, ...result } = user;
+		const result = new LogInRetDto();
+		result.username = user.username;
 		// TODO: Generate a JWT and return it here
 		// instead of the user object
 		return result;
