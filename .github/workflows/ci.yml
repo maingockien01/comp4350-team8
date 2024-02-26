@@ -96,6 +96,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+      - name: Run database
+        run: docker-compose up -d database
       - name: Run e2e tests on workspace backend
         id: backend
         run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/backend test:e2e
