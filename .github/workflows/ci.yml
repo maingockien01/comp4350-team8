@@ -75,3 +75,14 @@ jobs:
       - name: Run unit tests on workspace backend
         id: backend
         run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/backend test:unit
+
+  tests-unit-frontend:
+    runs-on: ubuntu-latest
+    needs: build
+    concurrency:
+      group: tests-unit-frontend-${{ github.sha }}
+      cancel-in-progress: true
+    steps:
+      - name: Run unit tests on workspace frontend
+        id: frontend
+        run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/frontend test:unit
