@@ -30,8 +30,12 @@ dev: # Start the apps in development mode
 
 .PHONY: down
 down: # Stop the apps
-	docker-compose down --remove-orphans --volumes all
+	docker-compose down --remove-orphans --volumes
 
 .PHONY: stop
 stop: # Stop the apps
 	docker-compose stop
+
+.PHONY: seeding
+seeding: # Run the seeding
+	cat apps/SQL\ queries/*.sql | docker-compose exec -T database mysql -u app -ppassword app
