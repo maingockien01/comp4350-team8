@@ -1,9 +1,6 @@
 import { Test } from '@nestjs/testing';
 import { HelloController } from '../../../src/hello/hello.controller';
-import { ModuleMocker } from 'jest-mock';
 import { APPS_NAME } from '@team8/constants/apps';
-
-const moduleMocker = new ModuleMocker(global);
 
 describe('HelloController', () => {
     let helloController: HelloController;
