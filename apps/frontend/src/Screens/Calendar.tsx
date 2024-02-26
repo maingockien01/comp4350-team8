@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Container from '@mui/material/Container';
+// eslint-disable-next-line ts-ignore
 // @ts-ignore
 import { DayPilotCalendar } from "@daypilot/daypilot-lite-react";
 const Calendar = () => {
