@@ -4,6 +4,7 @@ import { Repository, QueryFailedError } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateDto } from '@team8/types/dtos/profile/update.dto';
+import { CreateUserDto } from '../auth/createUser.dto';
 
 @Injectable()
 export class UsersService {
@@ -12,7 +13,7 @@ export class UsersService {
 		private readonly usersRepository: Repository<User>,
 	) {}
 
-	async create(dto: SignUpDto) {
+	async create(dto: CreateUserDto) {
 		try {
 			await this.usersRepository.save(dto);
 			return await this.findOneByUsername(dto.username);
