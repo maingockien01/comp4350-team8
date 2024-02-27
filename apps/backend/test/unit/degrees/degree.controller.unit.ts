@@ -92,7 +92,7 @@ describe('DegreeController', () => {
 
                 return Promise.resolve(result);
             });
-            expect(async () => await degreeController.getDegreeById(1, false)).toThrow(new NotFoundException(`Degree with id 1 not found`));
+            await expect(() => degreeController.getDegreeById(1, false)).rejects.toThrow(new NotFoundException(`Degree with id 1 not found`));
         });
     });
 });
