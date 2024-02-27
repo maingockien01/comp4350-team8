@@ -1,35 +1,39 @@
 import { Module } from '@nestjs/common';
-import { HelloModule } from './hello/hello.module';
 import { RouterModule } from '@nestjs/core';
 import { TermModule } from './terms/term.module';
 import { DegreeModule } from './degrees/degree.module';
-import { Degree } from './entities/degree.entity';
 import { UserModule } from './users/user.module';
+import { AuthModule } from './auth/auth.module';
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
 	imports: [
-		HelloModule,
 		TermModule,
 		DegreeModule,
 		UserModule,
+		AuthModule,
 		RouterModule.register([
 			{
 				path: '/rest-api',
 				children: [
 					{
-						path: '/hello',
-						module: HelloModule,
+						path: '/auth',
+						module: AuthModule,
 					},
 					{
-						path:'/term',
+						path: '/profile',
+						module: ProfileModule,
+					},
+					{
+						path: '/term',
 						module: TermModule,
 					},
 					{
-						path:'/degree',
+						path: '/degree',
 						module: DegreeModule,
 					},
 					{
-						path:'/user',
+						path: '/user',
 						module: UserModule,
 					},
 				],

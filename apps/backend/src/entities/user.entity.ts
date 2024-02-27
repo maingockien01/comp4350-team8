@@ -1,32 +1,48 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany,JoinTable, Relation} from 'typeorm';
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	ManyToOne,
+	ManyToMany,
+	JoinTable,
+	Relation,
+} from 'typeorm';
 import { Degree } from './degree.entity';
-import { Course} from './course.entity';
+import { Course } from './course.entity';
 import { Section } from './section.entity';
+
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  uid: number;
+	@PrimaryGeneratedColumn()
+	uid: number;
 
-  @Column()
-  fullName: string;
+	@Column()
+	fullName: string;
 
-  @Column()
-  username: string;
+	@Column({ unique: true })
+	username: string;
 
-  @Column()
-  hashPassword: string;
+	@Column()
+	hashPassword: string;
 
-  @Column()
-  pictureProfile: string;
+	// @Column()
+	// did: number;
 
-  @ManyToOne(() => Degree, (degree) => degree.users)
-  degree: Degree
+	@Column({ default: '' })
+	pictureProfile: string;
 
-  @ManyToMany(() => Course)
-  @JoinTable()
-  courses: Relation<Course[]>;
+	@ManyToOne(() => Degree, (degree) => degree.users)
+	degree: Degree;
 
-  @ManyToMany(() => Section)
-  @JoinTable()
-  sections: Relation<Section[]>;
+	@ManyToMany(() => Course)
+	@JoinTable()
+	courses: Relation<Course[]>;
+
+	@ManyToMany(() => Section)
+	@JoinTable()
+	sections: Relation<Section[]>;
+
+	// constructor(user: Partial<User>) {
+	// 	Object.assign(this, user);
+	// }
 }
