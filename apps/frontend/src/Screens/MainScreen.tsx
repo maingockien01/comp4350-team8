@@ -1,39 +1,78 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from '../Components/Navbar'
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button, { ButtonProps } from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import LinearProgress from '@mui/material/LinearProgress';
 import { BarChart } from '@mui/x-charts/BarChart';
-import Tabs, { tabsClasses } from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Card from '../Components/Cards'
+import ScrollMenu from "react-horizontal-scroll-menu";
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 const uData = [4];
 const xLabels = [
   'Overall GPA',
 ];
 
+// selected prop will be passed
+const MenuItem = ({text, selected}: {text:any, selected:any}) => {
+  return <Stack sx={{backgroundColor:'green', borderRadius:2, width:200, height:100, justifyContent:'flex-start'}}
+    className={`menu-item ${selected ? 'active' : ''}`}
+    >
+      <Typography sx={{color:'white'}} variant="h5">{text.courseName}</Typography>
+      <Typography sx={{color:'white'}} variant="h6">{text.time}</Typography>
+      <Typography sx={{color:'white'}} variant="h6">{text.location}</Typography>
+    </Stack>;
+};
+
+// All items component
+// Important! add unique key
+  const Menu = (list: any[], selected: any) =>
+  list.map(el => {
+    const {name} = el;
+
+    return <MenuItem text={el} key={name} selected={selected} />;
+  });
+
+
 const MainScreen = () => {
   const [progress, setProgress] = React.useState(0);
   const [elective, setElective] = React.useState(0);
-  const [value, setValue] = React.useState(0);
+  const [selected, setSelected] = useState<any>(); // Assuming selected is of type Term
+  const [menuItems, setMenuItems] = useState<any[]>([]); // Assuming menuItems is an array
+  const [activeList, setActiveList] = useState<any[]>([]);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+  useEffect(() => {
+    // Call Menu function to get menu items
+    const items = Menu(activeList, selected); // Assuming list and selected are defined elsewhere
+    setMenuItems(items);
+  }, [activeList]); // Run effect when selected changes
+
+  const onSelect = (item: any) => {
+    setSelected(item);
   };
 
+  useEffect(() => {
+    // Fetch current term
+    fetch('/rest-api/term/searchCurrent')
+    .then((res) => res.json())
+    .then((res) => {
+        return fetch(`/rest-api/user/searchActive?uid=1&tid=${res}`);
+    })
+    .then((res) => res.json())
+    .then((res) => {
+        setActiveList(res);
+        
+        console.log(res); // Log the active list
+    })
+    .catch((error) => {
+        console.error('Error fetching data:', error);
+    });
+}, []);
+  
   React.useEffect(() => {
     const timer = setInterval(() => {
       setProgress(70);
@@ -53,6 +92,7 @@ const MainScreen = () => {
       clearInterval(timer);
     };
   }, []);
+
   return(
   <>
   <Container maxWidth="lg" sx={{mt: 2}}>
@@ -110,26 +150,14 @@ const MainScreen = () => {
       </Typography>
       <Divider sx={{bgcolor:"brown", marginBottom:2}}></Divider>
     </Stack>
-    <Box
-      sx={{
-        flexGrow: 1,
-        bgcolor: 'red',
-      }}
-    >
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        variant="scrollable"
-        scrollButtons
-        aria-label="visible arrows tabs example"
-        sx={{height: '100px',
-          [`& .${tabsClasses.scrollButtons}`]: {
-            '&.Mui-disabled': { opacity: 0.3 },
-          },
-        }}
-      >
-        <Tab/>
-      </Tabs>
+    <Box>
+      <ScrollMenu
+        data={menuItems}
+        arrowLeft={<ChevronLeftIcon />} // Assuming ArrowLeft is a component
+        arrowRight={<ChevronRightIcon />} // Assuming ArrowRight is a component
+        selected={selected}
+        onSelect={onSelect}
+      />
     </Box>
   </Container>
   </>

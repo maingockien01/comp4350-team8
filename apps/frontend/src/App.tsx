@@ -7,19 +7,19 @@ import AddDropCourses from './Screens/AddDropCourses';
 import CoursesLookUp from './Screens/CoursesLookUp';
 import Roadmap from './Screens/Roadmap';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from "./Components/Navbar";
+import LookUpScreen from './Screens/LookUpScreen';
+import CoursesScreen from './Screens/CoursesScreen';
 
 const App = () => {
 	return (
 		<>
-			<Navbar />
-			<Routes>
-				<Route path="/" element={<MainScreen />}/>
-				<Route path='/courses-look-up' element={<CoursesLookUp />}/>
-				<Route path='/add-drop-courses' element={<AddDropCourses />}/>
-				<Route path='/calendar' element={<Calendar />}/>
-				<Route path='/roadmap' element={<Roadmap />}/>
-			</Routes>
+			<Router>
+				<Routes>
+					<Route index={true} path="/" element={<MainScreen />} />
+					<Route path="/lookup" element={<LookUpScreen />}/>
+					<Route path='/courses' element={<CoursesScreen/>}/>
+				</Routes>
+			</Router>
 		</>
 	);
 };
