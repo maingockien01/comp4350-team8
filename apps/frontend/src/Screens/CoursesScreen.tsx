@@ -2,18 +2,11 @@ import React from "react";
 import Navbar from "../Components/Navbar";
 import { useLocation } from "react-router-dom";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
-
-interface Course {
-    cid: number;
-    courseName: string;
-    courseNumber: string;
-    description: string;
-    // Add other properties as needed
-  }
+import {CourseDTO} from '@team8/types/dtos/course/course.dto'
   
 const CoursesScreen = () => {
     const location = useLocation();
-    const courses: Course[] = location.state.res;
+    const courses: CourseDTO[] = location.state.res;
 
     return (
         <>

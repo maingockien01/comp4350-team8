@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Query } from "@nestjs/common";
-import { UserService } from "./user.service";
-import { UserDTO } from "./user.dto";
-import { SectionDTO } from "../sections/section.dto";
+import { UserCourseService } from "./user.course.service";
+import { UserDTO } from "@team8/types/dtos/user/user.dto";
+import { SectionDTO } from "@team8/types/dtos/section/section.dto";
 
 @Controller()
-export class UserController {
-	constructor(readonly userService: UserService) {}
+export class UserCourseController {
+	constructor(readonly userService: UserCourseService) {}
     
 	// Responsibility: handle API requests
 	@Get()

@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Query } from "@nestjs/common";
 import { TermService } from "./term.service";
-import { CourseDTO } from "../courses/course.dto";
-import { TermDTO } from "./term.dto";
+import { CourseDTO } from "@team8/types/dtos/course/course.dto";
+import { TermDTO } from "@team8/types/dtos/term/term.dto";
 
 @Controller()
 export class TermController {

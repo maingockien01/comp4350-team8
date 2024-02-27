@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Degree } from '../entities/degree.entity';
-import { DegreeDTO } from './degree.dto';
+import { DegreeDTO } from '@team8/types/dtos/degree/degree.dto';
 
 @Injectable()
 export class DegreeService {

@@ -9,6 +9,6 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 	imports: [TypeOrmModule.forFeature([Term])],
 	controllers: [TermController],
 	providers: [TermService],
-	
+	exports: [TermService],
 })
 export class TermModule {}

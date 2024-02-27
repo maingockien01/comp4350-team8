@@ -2,7 +2,7 @@ import { Injectable, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Section } from '../entities/section.entity';
-import { SectionDTO } from './section.dto';
+import { SectionDTO } from '@team8/types/dtos/section/section.dto';
 
 @Injectable()
 export class SectionService {

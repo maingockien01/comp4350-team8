@@ -1,12 +1,12 @@
 import { Test } from '@nestjs/testing';
 import { TermController } from '../../../src/terms/term.controller';
 import { ModuleMocker } from 'jest-mock';
-import { TermDTO } from '../../../src/terms/term.dto';
+import { TermDTO } from '@team8/types/dtos/term/term.dto';
 import { TermService } from '../../../src/terms/term.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Term } from '../../../src/entities/term.entity';
 import { Repository } from 'typeorm';
-import { CourseDTO } from 'apps/backend/src/courses/course.dto';
+import { CourseDTO } from '@team8/types/dtos/course/course.dto'
 
 const moduleMocker = new ModuleMocker(global);
 
