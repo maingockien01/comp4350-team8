@@ -3,15 +3,27 @@ import { Button, Container, Grid, List, ListItem, Typography, Box, Stack, ListIt
 import Navbar from "../Components/Navbar";
 import { useNavigate } from "react-router-dom";
 
+interface Term {
+  tid: number;
+  year: number;
+  season: string;
+  // Add other properties as needed
+}
+
+interface Degree{
+  did:number,
+  name:string,
+
+}
 const LookUpScreen = () => {
-  const [degree, setDegree] = useState([]);
-  const [term, setTerm] = useState([]);
-  const [selectDegree, setSelectDegree] = useState(null);
-  const [selectTerm, setSelectTerm] = useState(null);
+  const [degree, setDegree] = useState<Degree[]>([]);
+  const [term, setTerm] = useState<Term[]>([]);
+  const [selectDegree, setSelectDegree] = useState<Degree>();
+  const [selectTerm, setSelectTerm] = useState<Term>();
   const navigate = useNavigate();
 
   const handleSubmit = () =>{
-    if(selectDegree !== null && selectTerm !== null){
+    if(selectDegree !== undefined && selectTerm !== undefined){
       fetch(`/rest-api/term/search?tid=${selectTerm.tid}&department=${selectDegree.name}`)
             .then((res) => res.json())
             .then(res => {
@@ -22,24 +34,22 @@ const LookUpScreen = () => {
       console.log("Please select something");
     }
   }
-  const handleSeclectDegree = (value) =>{
+  const handleSeclectDegree = (value: Degree) =>{
     setSelectDegree(value);
   }
 
-  const handleSeclectTerm = (value) =>{
+  const handleSeclectTerm = (value: Term) =>{
     setSelectTerm(value);
   } 
 
   useEffect(() => {
     fetch('/rest-api/term')
     .then((res) => res.json())
-    .then(res => {setTerm(res)})
-    .then(console.log)
+    .then((res) => {setTerm(res)})
 
     fetch('/rest-api/degree')
     .then((res) => res.json())
     .then(res => {setDegree(res)})
-    .then(console.log)
   }, [])
 
   return (
@@ -62,7 +72,7 @@ const LookUpScreen = () => {
             }}>
               {degree.map((degrees) => (
                 <ListItem
-                key={degrees}>
+                key={degrees.did}>
                   <ListItemButton onClick={() => handleSeclectDegree(degrees)} sx={{background: selectDegree === degrees ? 'red' : 'inherit', '&:hover': {backgroundColor: "red",},}}>
                     <ListItemText primary={`${degrees.name}`}/>
                   </ListItemButton>
@@ -87,7 +97,7 @@ const LookUpScreen = () => {
             }}>
               {term.map((terms) => (
                 <ListItem
-                key={terms}>
+                key={terms.tid}>
                   <ListItemButton onClick={()=> handleSeclectTerm(terms)} sx={{background: selectTerm === terms ? 'red' : 'inherit', '&:hover': {backgroundColor: "red",},}}>
                     <ListItemText primary={`${terms.season} ${terms.year}`}/>
                   </ListItemButton>

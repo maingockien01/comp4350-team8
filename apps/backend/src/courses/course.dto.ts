@@ -1,3 +1,7 @@
 export class CourseDTO{
-    courseName: string
+  cid: number;
+  courseName: string;
+  department: string;
+  courseNumber: number;
+  description: string;
 }

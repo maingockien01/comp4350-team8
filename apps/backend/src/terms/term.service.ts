@@ -2,7 +2,8 @@ import { Injectable, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Term } from '../entities/term.entity';
-import { Course } from '../entities/course.entity';
+import { CourseDTO } from '../courses/course.dto';
+import { TermDTO } from "./term.dto";
 
 @Injectable()
 export class TermService {
@@ -12,11 +13,17 @@ export class TermService {
 	) {}
 
 	// Responsibility: handle business logic - make DB requests
-	async findAll(): Promise<Term[]>{
+	async findAll(): Promise<TermDTO[]>{
 		return await this.termRepository.find();
 	}
 
-	async find(tid: any, department: string): Promise<Course[]>{
+	async findCurrentTerm():Promise<number>{
+		const terms = await this.findAll();
+		const maxTid = Math.max(...terms.map(term => term.tid));
+		return maxTid;
+	}
+
+	async find(tid: any, department: string): Promise<CourseDTO[]>{
 		const termCourse = await this.termRepository.findOne({
 			relations:{
 				courses:true
@@ -26,6 +33,6 @@ export class TermService {
 			}
 		});
 		
-		return termCourse.courses.filter(Course => Course.department === department);
+		return termCourse.courses.filter(CourseDTO => CourseDTO.department === department);
 	}
 }

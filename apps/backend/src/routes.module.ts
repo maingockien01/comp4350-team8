@@ -4,12 +4,14 @@ import { RouterModule } from '@nestjs/core';
 import { TermModule } from './terms/term.module';
 import { DegreeModule } from './degrees/degree.module';
 import { Degree } from './entities/degree.entity';
+import { UserModule } from './users/user.module';
 
 @Module({
 	imports: [
 		HelloModule,
 		TermModule,
 		DegreeModule,
+		UserModule,
 		RouterModule.register([
 			{
 				path: '/rest-api',
@@ -25,6 +27,10 @@ import { Degree } from './entities/degree.entity';
 					{
 						path:'/degree',
 						module: DegreeModule,
+					},
+					{
+						path:'/user',
+						module: UserModule,
 					},
 				],
 			},

@@ -17,9 +17,6 @@ export class User {
   hashPassword: string;
 
   @Column()
-  did: number;
-
-  @Column()
   pictureProfile: string;
 
   @ManyToOne(() => Degree, (degree) => degree.users)
