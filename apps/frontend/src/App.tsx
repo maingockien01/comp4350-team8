@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { APPS_NAME } from '@team8/constants/apps';
 import MainScreen from './Screens/MainScreen';
@@ -12,20 +12,34 @@ import CoursesScreen from './Screens/CoursesScreen';
 import LoginScreen from './Screens/LoginScreen';
 
 const App = () => {
-	return (
-		<>
+	const [isLoggedIn, setLoggedIn] = useState(false);
+
+	const Index = () => {
+		return (
 			<Router>
-				<Routes>
-					<Route index={true} path="/" element={<MainScreen />} />
-					<Route path="/lookup" element={<LookUpScreen />} />
-					<Route path="/courses" element={<CoursesScreen />} />
-					<Route
-						path="/rest-api/auth/login"
-						element={<LoginScreen />}
-					/>
-				</Routes>
+				{isLoggedIn ? (
+					<Routes>
+						<Route index={true} path="/" element={<MainScreen />} />
+						<Route path="/lookup" element={<LookUpScreen />} />
+						<Route path="/courses" element={<CoursesScreen />} />
+					</Routes>
+				) : (
+					<Routes>
+						<Route
+							path="/login"
+							//path="/rest-api/auth/login"
+							element={<LoginScreen />}
+						/>
+					</Routes>
+				)}
 			</Router>
-		</>
+		);
+	};
+
+	return (
+		<div className="App">
+			<Index />
+		</div>
 	);
 };
 
