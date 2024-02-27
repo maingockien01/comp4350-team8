@@ -19,7 +19,10 @@ const App = () => {
 					<Route index={true} path="/" element={<MainScreen />} />
 					<Route path="/lookup" element={<LookUpScreen />} />
 					<Route path="/courses" element={<CoursesScreen />} />
-					<Route path="/login" element={<LoginScreen />} />
+					<Route
+						path="/rest-api/auth/login"
+						element={<LoginScreen />}
+					/>
 				</Routes>
 			</Router>
 		</>
