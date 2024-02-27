@@ -9,6 +9,7 @@
 		"@mui/material": "^5.15.7",
 		"@mui/x-charts": "^6.19.3",
 		"@team8/constants": "*",
+		"axios": "^1.6.7",
 		"npm-watch": "^0.11.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
