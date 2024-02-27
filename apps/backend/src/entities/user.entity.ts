@@ -31,16 +31,16 @@ export class User {
 	@Column({ default: '' })
 	pictureProfile: string;
 
-	// @ManyToOne(() => Degree, (degree) => degree.users)
-	// degree: Degree;
+	@ManyToOne(() => Degree, (degree) => degree.users)
+	degree: Degree;
 
-	// @ManyToMany(() => Course)
-	// @JoinTable()
-	// courses: Relation<Course[]>;
+	@ManyToMany(() => Course)
+	@JoinTable()
+	courses: Relation<Course[]>;
 
-	// @ManyToMany(() => Section)
-	// @JoinTable()
-	// sections: Relation<Section[]>;
+	@ManyToMany(() => Section)
+	@JoinTable()
+	sections: Relation<Section[]>;
 
 	// constructor(user: Partial<User>) {
 	// 	Object.assign(this, user);
