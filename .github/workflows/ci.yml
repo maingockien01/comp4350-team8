@@ -106,4 +106,4 @@ jobs:
         uses: docker/setup-buildx-action@v3
       - name: Run e2e tests on workspace backend
         id: backend
-        run: docker-compose up run apps-dev yarn workspace @team8/backend test:e2e
+        run: docker-compose run apps-dev yarn workspace @team8/backend test:e2e
