@@ -25,16 +25,16 @@ describe('UserController', () => {
     describe('find', () => {
         it('should return a User with matched uid', async () => {
         const result = {"uid":1,"fullName":"Jack Nguyen","username":"jacknguyen","hashPassword":"jack123","pictureProfile":"default"}
-        jest.spyOn(UserCourseService, 'find').mockImplementation(() => Promise.resolve(result));
-        expect(await UserCourseController.findOne(1)).toBe(result);
+        jest.spyOn(userService, 'find').mockImplementation(() => Promise.resolve(result));
+        expect(await userController.findOne(1)).toBe(result);
         });
     });
 
     describe('find', () => {
         it('should return an array of Courses with time and building with matched uid and tid', async () => {
         const result = [{"courseName":"COMP 702","time":"11:00 AM","location":"T501"},{"courseName":"COMP 1202","time":"11:00 AM","location":"D401"}]
-        jest.spyOn(UserCourseService, 'findActive').mockImplementation(() => Promise.resolve(result));
-        expect(await UserCourseController.findActive(1,10)).toBe(result);
+        jest.spyOn(userService, 'findActive').mockImplementation(() => Promise.resolve(result));
+        expect(await userController.findActive(1,10)).toBe(result);
         });
     });
 });
