@@ -15,7 +15,7 @@ export class DegreeService {
         return this.degreeRepository.find();
     }
 
-	getDegrees(criterias: Partial<Degree>, withRecommendedCourses: boolean = false): Promise<Degree[]> {
+	getDegrees(criterias: Partial<Degree>, withRecommendedCourses: boolean = false): Promise<DegreeDTO[]> {
 		
 		const relations: FindOptionsRelations<Degree> = {};
         if (withRecommendedCourses) {

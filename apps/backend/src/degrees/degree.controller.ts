@@ -1,4 +1,4 @@
-import { BadRequestException, Controller, Get, Param, Post, Query } from "@nestjs/common";
+import { Controller, Get, NotFoundException, Param, Post, Query } from "@nestjs/common";
 import { DegreeService } from "./degree.service";
 import { DegreeDTO } from "@team8/types/dtos/degree/degree.dto";
 import { Degree } from "../entities/degree.entity";
@@ -25,7 +25,7 @@ export class DegreeController {
         }, withRoadmap);
 
         if (degrees.length === 0) {
-            throw new BadRequestException(`Degree with id ${did} not found`);
+            throw new NotFoundException(`Degree with id ${did} not found`);
         }
 
         return degrees.at(0);

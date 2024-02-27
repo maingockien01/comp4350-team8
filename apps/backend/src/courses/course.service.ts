@@ -23,7 +23,7 @@ export class CoursesService {
 		return courses;
 	}
 
-	async getCourses(criterias: Partial<Course>, relations: string[]): Promise<CourseDTO[]> {
+	async getCourses(criterias: Partial<Course>, relations: string[] = []): Promise<CourseDTO[]> {
 		const courses = await this.courseRepository.find({
 			where: {
 				...criterias,
