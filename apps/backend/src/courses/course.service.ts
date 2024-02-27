@@ -12,12 +12,23 @@ export class CoursesService {
 	) {}
 
 	// Responsibility: handle business logic - make DB requests
-	async getCourses(department: string): Promise<CourseDTO[]> {
+	async getCoursesByDepartment(department: string): Promise<CourseDTO[]> {
 		//Make DB Request
 		const courses = await this.courseRepository.find({
 			where: {
 				department,
 			},
+		});
+
+		return courses;
+	}
+
+	async getCourses(criterias: Partial<Course>, relations: string[]): Promise<CourseDTO[]> {
+		const courses = await this.courseRepository.find({
+			where: {
+				...criterias,
+			},
+			relations,
 		});
 
 		return courses;
