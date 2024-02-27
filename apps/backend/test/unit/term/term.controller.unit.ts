@@ -6,7 +6,7 @@ import { TermService } from '../../../src/terms/term.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Term } from '../../../src/entities/term.entity';
 import { Repository } from 'typeorm';
-import { CourseDTO } from 'apps/backend/src/courses/course.dto';
+import { CourseDTO } from '@team8/types/dtos/course/course.dto'
 
 const moduleMocker = new ModuleMocker(global);
 
