@@ -10,7 +10,6 @@ const CoursesScreen = () => {
 
     return (
         <>
-        <Navbar/>
         <Container maxWidth="lg" sx={{mt: 2}}>
             <div>
                 {courses.map((course) => (

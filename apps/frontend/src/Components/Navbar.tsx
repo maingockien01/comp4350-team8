@@ -114,13 +114,21 @@ const Navbar = () => {
                 </Toolbar>
                 <Divider sx={{bgcolor:"black"}}></Divider>
                 <Toolbar sx={{justifyContent:"space-between"}}>
-                    <ColorButton variant="contained">Home</ColorButton>
+                    <Link to="/">
+                      <ColorButton variant="contained">Home</ColorButton>
+                    </Link>
                     <Link to='/lookup'>
                       <ColorButton variant="contained">Courses Look Up</ColorButton>
                     </Link>
-                    <ColorButton variant="contained">Add/Drop Courses</ColorButton>
-                    <ColorButton variant="contained">Calendar</ColorButton>
-                    <ColorButton variant="contained">Roadmap</ColorButton>
+                    <Link to="/add-drop">
+                      <ColorButton variant="contained">Add/Drop Courses</ColorButton>
+                    </Link>
+                    <Link to="/calendar">
+                      <ColorButton variant="contained">Calendar</ColorButton>
+                    </Link>
+                    <Link to="/roadmap">
+                      <ColorButton variant="contained">Roadmap</ColorButton>
+                    </Link>
                 </Toolbar>
             </Stack>
         </Container>
