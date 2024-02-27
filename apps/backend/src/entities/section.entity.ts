@@ -13,16 +13,7 @@ export class Section {
   sectionName: string;
 
   @Column()
-  locationID: number;
-
-  @Column()
-  tid: number;
-
-  @Column()
   time: string;
-
-  @Column()
-  cid: number;
 
   @Column()
   professor: string;
