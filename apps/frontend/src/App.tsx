@@ -12,11 +12,11 @@ import Navbar from './Components/Navbar';
 import LoginScreen from './Screens/LoginScreen';
 
 const App = () => {
-	const [isLoggedIn, setLoggedIn] = useState(false);
+	const [isLoggedIn, setLoggedIn] = useState(true);
 
 	const Index = () => {
 		return (
-			<Router>
+			<div>
 				{isLoggedIn ? (
 					<Routes>
 						<Route index={true} path="/" element={<MainScreen />} />
@@ -35,12 +35,13 @@ const App = () => {
 						/>
 					</Routes>
 				)}
-			</Router>
+			</div>
 		);
 	};
 
 	return (
 		<div className="App">
+			<Navbar />
 			<Index />
 		</div>
 	);
