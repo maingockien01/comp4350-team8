@@ -44,7 +44,6 @@ const LookUpScreen = () => {
 
   return (
     <>
-    <Navbar/>
     <Container maxWidth="lg" sx={{mt: 2}}>
       <Grid container sx={{border: '1px solid black'}}>
         <Grid item xs={6}>
