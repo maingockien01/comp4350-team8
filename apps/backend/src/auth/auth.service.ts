@@ -8,6 +8,7 @@ import {
 } from '@team8/types/dtos/auth';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './createUser.dto';
+import { User } from '../entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -23,16 +24,16 @@ export class AuthService {
 		return result;
 	}
 
-	async logIn(dto: LogInDto): Promise<LogInRetDto> {
+	async logIn(dto: LogInDto): Promise<User> {
 		//TODO: Return message according to error
 		const user = await this.usersService.findOneByUsername(dto.username);
 		if (!(await bcrypt.compare(dto.password, user.hashPassword))) {
 			throw new UnauthorizedException();
 		}
-		const result = new LogInRetDto();
-		result.username = user.username;
+		// const result = new LogInRetDto();
+		// result.username = user.username;
 		// TODO: Generate a JWT and return it here
 		// instead of the user object
-		return result;
+		return user;
 	}
 }
