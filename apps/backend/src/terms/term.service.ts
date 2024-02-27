@@ -2,8 +2,8 @@ import { Injectable, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Term } from '../entities/term.entity';
-import { CourseDTO } from '../courses/course.dto';
-import { TermDTO } from "./term.dto";
+import { CourseDTO } from '@team8/types/dtos/course/course.dto';
+import { TermDTO } from "@team8/types/dtos/term/term.dto";
 
 @Injectable()
 export class TermService {

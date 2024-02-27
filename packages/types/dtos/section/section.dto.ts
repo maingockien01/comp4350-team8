@@ -1,4 +1,4 @@
-export class SectionDTO{
+export interface SectionDTO{
     sid: number;
     sectionName: string;
     time: string;

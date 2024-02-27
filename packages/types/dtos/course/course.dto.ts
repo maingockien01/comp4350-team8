@@ -1,4 +1,4 @@
-export class CourseDTO{
+export interface CourseDTO{
   cid: number;
   courseName: string;
   department: string;

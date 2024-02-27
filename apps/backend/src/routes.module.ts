@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
 import { TermModule } from './terms/term.module';
 import { DegreeModule } from './degrees/degree.module';
-import { UserModule } from './users/user.module';
+import { UserCourseModule } from './users/user.course.module';
 import { AuthModule } from './auth/auth.module';
 import { ProfileModule } from './profile/profile.module';
 
@@ -10,7 +10,7 @@ import { ProfileModule } from './profile/profile.module';
 	imports: [
 		TermModule,
 		DegreeModule,
-		UserModule,
+		UserCourseModule,
 		AuthModule,
 		RouterModule.register([
 			{
@@ -34,7 +34,7 @@ import { ProfileModule } from './profile/profile.module';
 					},
 					{
 						path: '/user',
-						module: UserModule,
+						module: UserCourseModule,
 					},
 				],
 			},

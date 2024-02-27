@@ -2,16 +2,17 @@ import { Injectable, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
-import { UserDTO } from './user.dto';
-import { SectionDTO } from '../sections/section.dto';
+import { UserDTO } from '@team8/types/dtos/user/user.dto';
+import { SectionDTO } from '@team8/types/dtos/section/section.dto';
 import { Section } from '../entities/section.entity';
 import { TermService } from '../terms/term.service';
 
 @Injectable()
-export class UserService {
+export class UserCourseService {
 	constructor(
 		@InjectRepository(User)
 		private userRepository: Repository<User>,
+		private termService: TermService,
 	) {}
 
 	async findAll(): Promise<UserDTO[]>{

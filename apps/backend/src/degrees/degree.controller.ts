@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Query } from "@nestjs/common";
 import { DegreeService } from "./degree.service";
-import { DegreeDTO } from "./degree.dto";
+import { DegreeDTO } from "@team8/types/dtos/degree/degree.dto";
 
 @Controller()
 export class DegreeController {

@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
-import { UserController } from '../../../src/users/user.controller';
+import { UserController } from '../../../src/users/user.course.controller';
 import { APPS_NAME } from '@team8/constants/apps';
-import { UserService } from '../../../src/users/user.service';
+import { UserService } from '../../../src/users/user.course.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../../../src/entities/user.entity';

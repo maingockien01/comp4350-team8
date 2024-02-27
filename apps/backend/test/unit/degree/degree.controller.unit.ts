@@ -5,7 +5,7 @@ import { DegreeService } from '../../../src/degrees/degree.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Degree } from '../../../src/entities/degree.entity';
-import { DegreeDTO } from '../../../src/degrees/degree.dto';
+import { DegreeDTO } from '@team8/types/dtos/degree/degree.dto';
 
 const moduleMocker = new ModuleMocker(global);
 

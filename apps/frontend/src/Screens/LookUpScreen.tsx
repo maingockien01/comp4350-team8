@@ -2,24 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Button, Container, Grid, List, ListItem, Typography, Box, Stack, ListItemText, ListItemButton } from "@mui/material";
 import Navbar from "../Components/Navbar";
 import { useNavigate } from "react-router-dom";
+import {TermDTO} from '@team8/types/dtos/term/term.dto'
+import {DegreeDTO} from '@team8/types/dtos/degree/degree.dto'
 
-interface Term {
-  tid: number;
-  year: number;
-  season: string;
-  // Add other properties as needed
-}
-
-interface Degree{
-  did:number,
-  name:string,
-
-}
 const LookUpScreen = () => {
-  const [degree, setDegree] = useState<Degree[]>([]);
-  const [term, setTerm] = useState<Term[]>([]);
-  const [selectDegree, setSelectDegree] = useState<Degree>();
-  const [selectTerm, setSelectTerm] = useState<Term>();
+  const [degree, setDegree] = useState<DegreeDTO[]>([]);
+  const [term, setTerm] = useState<TermDTO[]>([]);
+  const [selectDegree, setSelectDegree] = useState<DegreeDTO>();
+  const [selectTerm, setSelectTerm] = useState<TermDTO>();
   const navigate = useNavigate();
 
   const handleSubmit = () =>{
@@ -34,11 +24,11 @@ const LookUpScreen = () => {
       console.log("Please select something");
     }
   }
-  const handleSeclectDegree = (value: Degree) =>{
+  const handleSeclectDegree = (value: DegreeDTO) =>{
     setSelectDegree(value);
   }
 
-  const handleSeclectTerm = (value: Term) =>{
+  const handleSeclectTerm = (value: TermDTO) =>{
     setSelectTerm(value);
   } 
 
