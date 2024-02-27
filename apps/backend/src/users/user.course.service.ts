@@ -5,14 +5,12 @@ import { User } from '../entities/user.entity';
 import { UserDTO } from '@team8/types/dtos/user/user.dto';
 import { SectionDTO } from '@team8/types/dtos/section/section.dto';
 import { Section } from '../entities/section.entity';
-import { TermService } from '../terms/term.service';
 
 @Injectable()
 export class UserCourseService {
 	constructor(
 		@InjectRepository(User)
 		private userRepository: Repository<User>,
-		private termService: TermService,
 	) {}
 
 	async findAll(): Promise<UserDTO[]>{
