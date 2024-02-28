@@ -1,17 +1,17 @@
 import React from 'react';
 import PersonIcon from '@mui/icons-material/Person';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import '../css/LoginForm.css';
+import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined';
+import '../css/SignupForm.css';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-interface HandleLoginFunction {
-	(): void;
-}
+const SignupForm = () => {
+	const navigate = useNavigate();
 
-const LoginForm = (props: { handleLogin: HandleLoginFunction }) => {
 	const [formState, setFormState] = React.useState({
 		username: '',
+		fullName: '',
 		password: '',
 	});
 
@@ -24,14 +24,14 @@ const LoginForm = (props: { handleLogin: HandleLoginFunction }) => {
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		console.log('wtf');
 		// Send a POST request to the backend with the form data
 		axios
-			.post('rest-api/auth/login', formState)
+			.post('rest-api/auth/signup', formState)
 			.then((response) => {
 				// Handle the response from the backend
 				if (response.data.status == 'success') {
-					console.log(response);
-					props.handleLogin();
+					navigate('/login');
 				}
 			})
 			.catch((error) => {
@@ -43,7 +43,7 @@ const LoginForm = (props: { handleLogin: HandleLoginFunction }) => {
 	return (
 		<div className="wrapper">
 			<form onSubmit={handleSubmit}>
-				<h1>Login</h1>
+				<h1>Signup</h1>
 				<div className="input-box">
 					<input
 						type="text"
@@ -57,6 +57,17 @@ const LoginForm = (props: { handleLogin: HandleLoginFunction }) => {
 				</div>
 				<div className="input-box">
 					<input
+						type="text"
+						name="fullName"
+						placeholder="Full Name"
+						required
+						onChange={handleChange}
+						value={formState.fullName}
+					></input>
+					<DriveFileRenameOutlineOutlinedIcon className="icon" />
+				</div>
+				<div className="input-box">
+					<input
 						type="password"
 						name="password"
 						placeholder="Password"
@@ -67,25 +78,10 @@ const LoginForm = (props: { handleLogin: HandleLoginFunction }) => {
 					<LockOutlinedIcon className="icon" />
 				</div>
 
-				<div className="remember-forgot">
-					<label>
-						<input type="checkbox" />
-						Remember me
-					</label>
-					<a href="#">Forgot password?</a>
-				</div>
-
-				<button type="submit">Login</button>
-
-				<div className="register-link">
-					<p>
-						Don't have an account?{' '}
-						<Link to="/signup">Register</Link>
-					</p>
-				</div>
+				<button type="submit">Signup</button>
 			</form>
 		</div>
 	);
 };
 
-export default LoginForm;
+export default SignupForm;
