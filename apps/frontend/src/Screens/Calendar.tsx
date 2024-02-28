@@ -46,12 +46,11 @@ const Calendar = () => {
     fetch('/rest-api/term/searchCurrent')
     .then((res) => res.json())
     .then((tid) => {
-        return fetch(`/rest-api/user/searchActive?uid=1&tid=${tid}`);
+        return fetch(`/rest-api/user/searchActive?uid=${uid}&tid=${tid}`);
     })
     .then((res) => res.json())
     .then((res) => {
       for (let i = 0; i < res.length; i++) {
-        console.log(res[i])
         const events = res[i].time.split(',');
         let day = [];
         for(const e of events){

@@ -45,6 +45,10 @@ const App = () => {
 				) : (
 					<Routes>
 						<Route
+                            path="/"
+                            element={<LoginScreen handleLogin={handleLogin} />}
+                        />
+						<Route
 							path="/login"
 							element={<LoginScreen handleLogin={handleLogin} />}
 						/>

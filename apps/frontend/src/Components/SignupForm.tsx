@@ -24,7 +24,6 @@ const SignupForm = () => {
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		console.log('wtf');
 		// Send a POST request to the backend with the form data
 		axios
 			.post('rest-api/auth/signup', formState)

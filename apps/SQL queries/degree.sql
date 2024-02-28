@@ -8,9 +8,9 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 INSERT INTO `degree` (`did`, `name`) VALUES
-(1, 'Computer Science, B.Sc. Major');
+(1, 'Computer Science');
 INSERT INTO `degree` (`did`, `name`) VALUES
-(2, 'Computer Science, B.C.Sc, Honours');
+(2, 'Computer Science, Honours');
 
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
