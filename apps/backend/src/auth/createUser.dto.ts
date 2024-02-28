@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class SignUpDto {
+export class CreateUserDto {
 	@IsString()
 	@IsNotEmpty()
 	username: string;
@@ -11,5 +11,9 @@ export class SignUpDto {
 
 	@IsString()
 	@IsNotEmpty()
-	password: string;
+	hashPassword: string;
+
+	constructor(dto: Partial<CreateUserDto>) {
+		Object.assign(this, dto);
+	}
 }

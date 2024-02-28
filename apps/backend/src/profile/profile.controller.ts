@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, HttpCode, HttpStatus } from '@nestjs/common';
 import { ProfileService } from './profile.service';
 import { UpdateDto } from '@team8/types/dtos/profile/update.dto';
 
@@ -7,6 +7,7 @@ export class ProfileController {
 	constructor(private profileService: ProfileService) {}
 
 	//TODO: Create update function for each field of user profile
+	@HttpCode(HttpStatus.OK)
 	@Post()
 	update(@Body() updateDto: UpdateDto) {
 		return this.profileService.update(updateDto);

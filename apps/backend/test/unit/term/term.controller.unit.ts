@@ -92,19 +92,21 @@ describe('TermController', () => {
             
             const result: CourseDTO[] = [
                 {
-                    "cid": 1,
-                    "courseName": "COMP 101",
-                    "department": "Computer Science",
-                    "courseNumber": 101,
-                    "description": "An introductory course covering fundamental concepts of computer science."
+                    cid: 1,
+                    courseName: "COMP 101",
+                    department: "Computer Science",
+                    courseNumber: 101,
+                    description: "An introductory course covering fundamental concepts of computer science.",
+                    prerequisites: [],
                 },
                 {
-                    "cid": 11,
-                    "courseName": "COMP 801",
-                    "department": "Computer Science",
-                    "courseNumber": 801,
-                    "description": "Introduction to web development technologies, including HTML, CSS, JavaScript, and server-side scripting languages."
-                }
+                    cid: 11,
+                    courseName: "COMP 801",
+                    department: "Computer Science",
+                    courseNumber: 801,
+                    description: "Introduction to web development technologies, including HTML, CSS, JavaScript, and server-side scripting languages.",
+                    prerequisites: [],
+                },
             ]
 
             jest.spyOn(termService, 'find').mockImplementation(() => Promise.resolve(result));

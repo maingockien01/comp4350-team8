@@ -6,29 +6,34 @@ import {
 	LogInRetDto,
 	SignUpRetDto,
 } from '@team8/types/dtos/auth';
+import * as bcrypt from 'bcrypt';
+import { CreateUserDto } from './createUser.dto';
+import { User } from '../entities/user.entity';
 
 @Injectable()
 export class AuthService {
 	constructor(private usersService: UsersService) {}
 
 	async signUp(dto: SignUpDto): Promise<SignUpRetDto> {
-		//TODO: Hash the password
-		const user = await this.usersService.create(dto);
+		const saltOrRounds = 10;
+		const userDto = new CreateUserDto(dto);
+		userDto.hashPassword = await bcrypt.hash(dto.password, saltOrRounds);
+		const user = await this.usersService.create(userDto);
 		const result = new SignUpRetDto();
 		result.username = user.username;
 		return result;
 	}
 
-	async logIn(dto: LogInDto): Promise<LogInRetDto> {
+	async logIn(dto: LogInDto): Promise<User> {
 		//TODO: Return message according to error
 		const user = await this.usersService.findOneByUsername(dto.username);
-		if (user?.hashPassword !== dto.hashPassword) {
+		if (!(await bcrypt.compare(dto.password, user.hashPassword))) {
 			throw new UnauthorizedException();
 		}
-		const result = new LogInRetDto();
-		result.username = user.username;
+		// const result = new LogInRetDto();
+		// result.username = user.username;
 		// TODO: Generate a JWT and return it here
 		// instead of the user object
-		return result;
+		return user;
 	}
 }

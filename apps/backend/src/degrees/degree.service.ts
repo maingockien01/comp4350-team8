@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOptionsRelations, Repository } from 'typeorm';
 import { Degree } from '../entities/degree.entity';
 import { DegreeDTO } from '@team8/types/dtos/degree/degree.dto';
 
@@ -14,4 +14,21 @@ export class DegreeService {
     async findAll(): Promise<DegreeDTO[]>{
         return this.degreeRepository.find();
     }
+
+	getDegrees(criterias: Partial<Degree>, withRecommendedCourses: boolean = false): Promise<DegreeDTO[]> {
+		
+		const relations: FindOptionsRelations<Degree> = {};
+        if (withRecommendedCourses) {
+            relations.recommendedCourses = {
+                prerequisites: true
+            }
+        }
+
+		return this.degreeRepository.find({
+			where: {
+				...criterias,
+			},
+			relations,
+		});
+	}
 }
