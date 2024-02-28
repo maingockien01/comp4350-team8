@@ -60,6 +60,7 @@ const MainScreen = () => {
     fetch('/rest-api/term/searchCurrent')
     .then((res) => res.json())
     .then((res) => {
+      //TODO
         return fetch(`/rest-api/user/searchActive?uid=1&tid=${res}`);
     })
     .then((res) => res.json())

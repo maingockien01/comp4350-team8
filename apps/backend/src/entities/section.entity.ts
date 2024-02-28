@@ -11,7 +11,8 @@ export class Section {
 
   @Column()
   sectionName: string;
-
+  
+  // Start time of the section
   @Column()
   time: string;
 
