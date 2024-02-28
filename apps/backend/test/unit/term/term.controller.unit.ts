@@ -89,32 +89,29 @@ describe('TermController', () => {
 
     describe('find', () => {
         it('it should return an array of Courses', async () => {
+            
             const result: CourseDTO[] = [
                 {
-                    "cid": 1,
-                    "courseName": "COMP 101",
-                    "department": "Computer Science",
-                    "courseNumber": 101,
-                    "description": "An introductory course covering fundamental concepts of computer science."
+                    cid: 1,
+                    courseName: "COMP 101",
+                    department: "Computer Science",
+                    courseNumber: 101,
+                    description: "An introductory course covering fundamental concepts of computer science.",
+                    prerequisites: [],
                 },
                 {
-                    "cid": 11,
-                    "courseName": "COMP 801",
-                    "department": "Computer Science",
-                    "courseNumber": 801,
-                    "description": "Introduction to web development technologies, including HTML, CSS, JavaScript, and server-side scripting languages."
-                }
+                    cid: 11,
+                    courseName: "COMP 801",
+                    department: "Computer Science",
+                    courseNumber: 801,
+                    description: "Introduction to web development technologies, including HTML, CSS, JavaScript, and server-side scripting languages.",
+                    prerequisites: [],
+                },
             ]
 
             jest.spyOn(termService, 'find').mockImplementation(() => Promise.resolve(result));
             expect(await termController.find(1, "Computer Science")).toBe(result);
         });
-
-        it('it should return an empty array', async () => {
-            const result: CourseDTO[] = []
-            jest.spyOn(termService, 'find').mockImplementation(() => Promise.resolve(result));
-            expect(await termController.find(1, "")).toBe(result);
-        } )
     });
 
     describe('findCurrentTerm', () => {

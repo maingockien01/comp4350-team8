@@ -4,7 +4,7 @@ import { APPS_NAME } from '@team8/constants/apps';
 import MainScreen, { getUidCookie } from './Screens/MainScreen';
 import Calendar from './Screens/Calendar';
 import AddDropCourses from './Screens/AddDropCourses';
-import Roadmap from './Screens/Roadmap';
+import Roadmap from './Screens/Roadmap/Roadmap';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import LookUpScreen from './Screens/LookUpScreen';
 import CoursesScreen from './Screens/CoursesScreen';
