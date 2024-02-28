@@ -38,7 +38,7 @@ const Roadmap = () => {
                 }}
             />
             
-            {selectedDegree && <CourseTree courses={selectedDegree.recommendedCourses as CourseDTO[]} />}
+            {selectedDegree && <CourseTree courses={selectedDegree.recommendedCourses as CourseDTO[]} key={selectedDegree.did}/>}
         </Container>
     )
 }
