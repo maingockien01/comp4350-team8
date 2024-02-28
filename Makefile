@@ -19,7 +19,23 @@ lint: # Lint all workspaces
 bash: # Start a bash session in the apps container
 	docker-compose exec apps-dev sh
 
+.PHONY: migrations
+migrations: # Genereate the migrations
+	docker-compose exec apps-dev sh -c "MIGRATION_NAME=$(name) yarn run migration:generate"
+
 .PHONY: dev
 dev: # Start the apps in development mode
 	docker-compose up apps-dev --build -d \
 	&& docker-compose logs -f apps-dev
+
+.PHONY: down
+down: # Stop the apps
+	docker-compose down --remove-orphans --volumes
+
+.PHONY: stop
+stop: # Stop the apps
+	docker-compose stop
+
+.PHONY: seeding
+seeding: # Run the seeding
+	cat apps/SQL\ queries/*.sql | docker-compose exec -T database mysql -u app -ppassword app
