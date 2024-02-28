@@ -32,7 +32,7 @@ export class TermService {
 				tid: tid
 			}
 		});
-		
+
 		return termCourse.courses.filter(CourseDTO => CourseDTO.department === department);
 	}
 }

@@ -22,16 +22,16 @@ const MenuItem = ({ text, selected }: { text: any; selected: any }) => {
 			sx={{
 				backgroundColor: 'green',
 				borderRadius: 2,
-				width: 200,
+				width: 250,
 				height: 100,
-				justifyContent: 'flex-start',
+				justifyContent:'center'
 			}}
 			className={`menu-item ${selected ? 'active' : ''}`}
 		>
 			<Typography sx={{ color: 'white' }} variant="h5">
 				{text.courseName}
 			</Typography>
-			<Typography sx={{ color: 'white' }} variant="h6">
+			<Typography sx={{ color: 'white', fontSize:10 }} >
 				{text.time}
 			</Typography>
 			<Typography sx={{ color: 'white' }} variant="h6">
@@ -67,6 +67,7 @@ const MainScreen = () => {
 	const [selected, setSelected] = useState<any>(); // Assuming selected is of type Term
 	const [menuItems, setMenuItems] = useState<any[]>([]); // Assuming menuItems is an array
 	const [activeList, setActiveList] = useState<any[]>([]);
+	const [userInfo, setUserInfo] = useState<any>(null);
 
 	useEffect(() => {
 		// Call Menu function to get menu items
@@ -91,8 +92,11 @@ const MainScreen = () => {
 			.then((res) => res.json())
 			.then((res) => {
 				setActiveList(res);
-
-				console.log(res); // Log the active list
+				return fetch(`/rest-api/user/search?uid=${uid}`,);
+			})
+			.then((res) => res.json())
+			.then((res) => {
+				setUserInfo(res)
 			})
 			.catch((error) => {
 				console.error('Error fetching data:', error);
@@ -141,7 +145,7 @@ const MainScreen = () => {
 									fontWeight={'bold'}
 									className="userName"
 								>
-									Jack, Nguyen
+									{userInfo? userInfo.fullName : ''}
 								</Typography>
 								<Typography
 									color="#502C1E"
@@ -265,13 +269,15 @@ const MainScreen = () => {
 					></Divider>
 				</Stack>
 				<Box>
-					<ScrollMenu
+					{activeList.length === 0 ? 'You have not registered for the current Term' :
+						<ScrollMenu
 						data={menuItems}
 						arrowLeft={<ChevronLeftIcon />} // Assuming ArrowLeft is a component
 						arrowRight={<ChevronRightIcon />} // Assuming ArrowRight is a component
 						selected={selected}
 						onSelect={onSelect}
 					/>
+					}
 				</Box>
 			</Container>
 		</>
