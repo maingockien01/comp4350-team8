@@ -50,26 +50,29 @@ const Calendar = () => {
     })
     .then((res) => res.json())
     .then((res) => {
-      const events = res[0].time.split(',');
-      let day = [];
-      for(const e of events){
-          let dayAbbr = e.charAt(0);
-          let dayName = dayMappings[dayAbbr];
-          let [st, et] = e.substring(1).split('-');
-          
-          // Construct the date strings
-          let startDateStr = `2020-12-12T${st}:00`;
-          let endDateStr = `2020-12-12T${et}:00`;
-          // Create the date objects
-          let startTime = new Date(startDateStr);
-          let endTime = new Date(endDateStr);
-  
-          setTimetable(weeklySchedule[dayName].push({
-              id: 1,
-              name: "Course Name",
-              startTime: startTime,
-              endTime: endTime
-          }))
+      for (let i = 0; i < res.length; i++) {
+        console.log(res[i])
+        const events = res[i].time.split(',');
+        let day = [];
+        for(const e of events){
+            let dayAbbr = e.charAt(0);
+            let dayName = dayMappings[dayAbbr];
+            let [st, et] = e.substring(1).split('-');
+            
+            // Construct the date strings
+            let startDateStr = `2020-12-12T${st}:00`;
+            let endDateStr = `2020-12-12T${et}:00`;
+            // Create the date objects
+            let startTime = new Date(startDateStr);
+            let endTime = new Date(endDateStr);
+    
+            setTimetable(weeklySchedule[dayName].push({
+                id: 1,
+                name: res[i].courseName + ' [' + res[i].location +']',
+                startTime: startTime,
+                endTime: endTime
+            }))
+        }
       }
     })
     .catch((error) => {
