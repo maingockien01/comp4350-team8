@@ -41,6 +41,17 @@ const MenuItem = ({ text, selected }: { text: any; selected: any }) => {
 	);
 };
 
+export const getUidCookie = () => {
+	const cookies = document.cookie.split(';');
+	for (let i = 0; i < cookies.length; i++) {
+		const cookie = cookies[i].trim();
+		if (cookie.startsWith('uid=')) {
+			return cookie.substring('uid='.length, cookie.length);
+		}
+	}
+	return undefined;
+};
+
 // All items component
 // Important! add unique key
 const Menu = (list: any[], selected: any) =>
@@ -68,11 +79,14 @@ const MainScreen = () => {
 	};
 
 	useEffect(() => {
+		const uid = getUidCookie();
 		// Fetch current term
 		fetch('/rest-api/term/searchCurrent')
 			.then((res) => res.json())
 			.then((res) => {
-				return fetch(`/rest-api/user/searchActive?uid=1&tid=${res}`);
+				return fetch(
+					`/rest-api/user/searchActive?uid=${uid}&tid=${res}`,
+				);
 			})
 			.then((res) => res.json())
 			.then((res) => {

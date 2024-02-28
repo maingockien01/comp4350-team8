@@ -1,18 +1,33 @@
 import React, { useState } from 'react';
 import './App.css';
 import { APPS_NAME } from '@team8/constants/apps';
-import MainScreen from './Screens/MainScreen';
+import MainScreen, { getUidCookie } from './Screens/MainScreen';
 import Calendar from './Screens/Calendar';
 import AddDropCourses from './Screens/AddDropCourses';
 import Roadmap from './Screens/Roadmap';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import LookUpScreen from './Screens/LookUpScreen';
 import CoursesScreen from './Screens/CoursesScreen';
 import Navbar from './Components/Navbar';
 import LoginScreen from './Screens/LoginScreen';
+import SignupScreen from './Screens/SignupScreen';
 
 const App = () => {
-	const [isLoggedIn, setLoggedIn] = useState(true);
+	const navigate = useNavigate();
+
+	const [isLoggedIn, setLoggedIn] = useState(getUidCookie() !== undefined);
+
+	const handleLogin = () => {
+		setLoggedIn(true);
+		navigate('/home');
+	};
+
+	const handleLogout = () => {
+		//Should do this in backend
+		document.cookie = 'uid=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
+		setLoggedIn(false);
+		navigate('/login');
+	};
 
 	const Index = () => {
 		return (
@@ -20,6 +35,7 @@ const App = () => {
 				{isLoggedIn ? (
 					<Routes>
 						<Route index={true} path="/" element={<MainScreen />} />
+						<Route path="/home" element={<MainScreen />} />
 						<Route path="/lookup" element={<LookUpScreen />} />
 						<Route path="/courses" element={<CoursesScreen />} />
 						<Route path="/add-drop" element={<AddDropCourses />} />
@@ -30,9 +46,9 @@ const App = () => {
 					<Routes>
 						<Route
 							path="/login"
-							//path="/rest-api/auth/login"
-							element={<LoginScreen />}
+							element={<LoginScreen handleLogin={handleLogin} />}
 						/>
+						<Route path="/signup" element={<SignupScreen />} />
 					</Routes>
 				)}
 			</div>
@@ -41,7 +57,7 @@ const App = () => {
 
 	return (
 		<div className="App">
-			<Navbar />
+			{isLoggedIn && <Navbar handleLogout={handleLogout} />}
 			<Index />
 		</div>
 	);
