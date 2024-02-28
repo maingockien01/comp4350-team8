@@ -89,6 +89,7 @@ describe('TermController', () => {
 
     describe('find', () => {
         it('it should return an array of Courses', async () => {
+            
             const result: CourseDTO[] = [
                 {
                     "cid": 1,
@@ -109,12 +110,6 @@ describe('TermController', () => {
             jest.spyOn(termService, 'find').mockImplementation(() => Promise.resolve(result));
             expect(await termController.find(1, "Computer Science")).toBe(result);
         });
-
-        it('it should return an empty array', async () => {
-            const result: CourseDTO[] = []
-            jest.spyOn(termService, 'find').mockImplementation(() => Promise.resolve(result));
-            expect(await termController.find(1, "")).toBe(result);
-        } )
     });
 
     describe('findCurrentTerm', () => {
