@@ -4,7 +4,8 @@ import { UserCourseService } from '../../../src/users/user.course.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../../../src/entities/user.entity';
-
+import { SectionDTO } from 'packages/types/dtos/section/section.dto';
+import { Section } from '../../../src/entities/section.entity';
 describe('UserController', () => {
     let userController: UserCourseController;
     let userService:UserCourseService;
@@ -35,6 +36,14 @@ describe('UserController', () => {
         const result = [{"courseName":"COMP 702","time":"11:00 AM","location":"T501"},{"courseName":"COMP 1202","time":"11:00 AM","location":"D401"}]
         jest.spyOn(userService, 'findActive').mockImplementation(() => Promise.resolve(result));
         expect(await userController.findActive(1,10)).toBe(result);
+        });
+    });
+
+    describe('findAll', () => {
+        it('should return an array of all Users', async () => {
+        const result = [{"uid":1,"fullName":"Jack Nguyen","username":"jacknguyen","hashPassword":"jack123","pictureProfile":"default"}]
+        jest.spyOn(userService, 'findAll').mockImplementation(() => Promise.resolve(result));
+        expect(await userController.findAll()).toBe(result);
         });
     });
 });

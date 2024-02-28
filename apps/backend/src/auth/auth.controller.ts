@@ -7,17 +7,28 @@ import {
 	Res,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LogInDto } from '@team8/types/dtos/auth/login.dto';
-import { SignUpDto } from '@team8/types/dtos/auth/signup.dto';
 import { Response } from 'express';
+import { LogInDto, SignUpDto } from '@team8/types/dtos/auth';
+import { ReturnDto } from 'packages/types/dtos/auth/Return.dto';
 
 @Controller()
 export class AuthController {
 	constructor(private authService: AuthService) {}
 
 	@Post('signup')
-	signUp(@Body() signupDto: SignUpDto) {
-		return this.authService.signUp(signupDto);
+	async signUp(@Body() signupDto: SignUpDto): Promise<ReturnDto> {
+		try {
+			await this.authService.signUp(signupDto);
+			return {
+				status: 'success',
+				message: 'Login successfully!',
+			};
+		} catch (error) {
+			return {
+				status: 'fail',
+				message: 'Invalid username or password!',
+			};
+		}
 	}
 
 	@HttpCode(HttpStatus.OK)
@@ -25,12 +36,21 @@ export class AuthController {
 	async logIn(
 		@Body() logInDto: LogInDto,
 		@Res({ passthrough: true }) response: Response,
-	) {
-		const user = await this.authService.logIn(logInDto);
-		response.cookie('uid', user.uid);
-		response.cookie('username', user.username);
-		return {
-			message: 'success',
-		};
+	): Promise<ReturnDto> {
+		try {
+			const user = await this.authService.logIn(logInDto);
+			response.cookie('uid', user.uid);
+			response.cookie('username', user.username);
+
+			return {
+				status: 'success',
+				message: 'Login successfully!',
+			};
+		} catch (error) {
+			return {
+				status: 'fail',
+				message: 'Credential Taken!',
+			};
+		}
 	}
 }

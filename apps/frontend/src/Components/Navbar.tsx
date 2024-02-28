@@ -15,125 +15,189 @@ import Divider from '@mui/material/Divider';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import { styled } from '@mui/material/styles';
 import { brown } from '@mui/material/colors';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
-    color: 'white',
-    fontWeight: 500,
-    backgroundColor: "#F5A800",
-    width: '200px',
-    '&:hover': {
-      backgroundColor: brown[500],
-    },
-    '&:active': {
-        backgroundColor: brown[600],
-      },
-    '&:focus': {
-        backgroundColor: "#502C1E",
-    },
-  }));
+	color: 'white',
+	fontWeight: 500,
+	backgroundColor: '#F5A800',
+	width: '200px',
+	'&:hover': {
+		backgroundColor: brown[500],
+	},
+	'&:active': {
+		backgroundColor: brown[600],
+	},
+	'&:focus': {
+		backgroundColor: '#502C1E',
+	},
+}));
 
-const Navbar = () => {
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-  
-    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-      setAnchorElNav(event.currentTarget);
-    };
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-      setAnchorElUser(event.currentTarget);
-    };
-  
-    const handleCloseNavMenu = () => {
-      setAnchorElNav(null);
-    };
-  
-    const handleCloseUserMenu = () => {
-      setAnchorElUser(null);
-    };
-    
-    
-    return (
-      <AppBar sx={{backgroundColor:"white", boxShadow:'none'}} position="static">
-        <Container maxWidth="lg">
-            <Stack spacing={1} sx={{mt:3}}>
-                <Toolbar disableGutters>
-                    <AutoStoriesIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, color:"black", fontSize:80}} />
-                    <Divider orientation="vertical" variant="middle" flexItem />
-                    <Typography
-                        variant="h5"
-                        noWrap
-                        component="a"
-                        sx={{
-                        mr: 2,
-                        ml:2,
-                        display: { xs: 'none', md: 'flex' },
-                        fontFamily: 'monospace',
-                        fontWeight: 900,
-                        fontSize:40,
-                        letterSpacing: '.3rem',
-                        color: "#502C1E",
-                        textDecoration: 'none',
-                        }}
-                    >
-                        Schedule Master
-                    </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                    </Box>
-                    <Box sx={{ flexGrow:0  }}>
-                        <Tooltip title="Open settings">
-                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                           <Typography>Jack Nguyen</Typography><Avatar alt="Remy Sharp" src="" sx={{ml: 2}}/> 
-                        </IconButton>
-                        </Tooltip>
-                        <Menu
-                        sx={{ mt: '45px' }}
-                        id="menu-appbar"
-                        anchorEl={anchorElUser}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        open={Boolean(anchorElUser)}
-                        onClose={handleCloseUserMenu}
-                        >
-                        {settings.map((setting) => (
-                            <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                            <Typography textAlign="center">{setting}</Typography>
-                            </MenuItem>
-                        ))}
-                        </Menu>
-                    </Box>
-                </Toolbar>
-                <Divider sx={{bgcolor:"black"}}></Divider>
-                <Toolbar sx={{justifyContent:"space-between"}}>
-                    <Link to="/">
-                      <ColorButton variant="contained">Home</ColorButton>
-                    </Link>
-                    <Link to='/lookup'>
-                      <ColorButton variant="contained">Courses Look Up</ColorButton>
-                    </Link>
-                    <Link to="/add-drop">
-                      <ColorButton variant="contained">Add/Drop Courses</ColorButton>
-                    </Link>
-                    <Link to="/calendar">
-                      <ColorButton variant="contained">Calendar</ColorButton>
-                    </Link>
-                    <Link to="/roadmap">
-                      <ColorButton variant="contained">Roadmap</ColorButton>
-                    </Link>
-                </Toolbar>
-            </Stack>
-        </Container>
-      </AppBar>
-    );
+interface HandleLogoutFunction {
+	(): void;
+}
+
+const getUsernameCookie = () => {
+	const cookies = document.cookie.split(';');
+	for (let i = 0; i < cookies.length; i++) {
+		const cookie = cookies[i].trim();
+		if (cookie.startsWith('username=')) {
+			return cookie.substring('username='.length, cookie.length);
+		}
+	}
+	return undefined;
+};
+
+const Navbar = (props: { handleLogout: HandleLogoutFunction }) => {
+	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+		null,
+	);
+	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+		null,
+	);
+
+	const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchorElNav(event.currentTarget);
+	};
+	const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchorElUser(event.currentTarget);
+	};
+
+	const handleCloseNavMenu = () => {
+		setAnchorElNav(null);
+	};
+
+	const handleCloseUserMenu = (menuItem: string) => {
+		if (menuItem == 'Logout') {
+			props.handleLogout();
+		}
+		setAnchorElUser(null);
+	};
+
+	return (
+		<AppBar
+			sx={{ backgroundColor: 'white', boxShadow: 'none' }}
+			position="static"
+		>
+			<Container maxWidth="lg">
+				<Stack spacing={1} sx={{ mt: 3 }}>
+					<Toolbar disableGutters>
+						<AutoStoriesIcon
+							sx={{
+								display: { xs: 'none', md: 'flex' },
+								mr: 1,
+								color: 'black',
+								fontSize: 80,
+							}}
+						/>
+						<Divider
+							orientation="vertical"
+							variant="middle"
+							flexItem
+						/>
+						<Typography
+							variant="h5"
+							noWrap
+							component="a"
+							sx={{
+								mr: 2,
+								ml: 2,
+								display: { xs: 'none', md: 'flex' },
+								fontFamily: 'monospace',
+								fontWeight: 900,
+								fontSize: 40,
+								letterSpacing: '.3rem',
+								color: '#502C1E',
+								textDecoration: 'none',
+							}}
+						>
+							Schedule Master
+						</Typography>
+						<Box
+							sx={{
+								flexGrow: 1,
+								display: { xs: 'none', md: 'flex' },
+							}}
+						></Box>
+						<Box sx={{ flexGrow: 0 }}>
+							<Tooltip title="Open settings">
+								<IconButton
+									onClick={handleOpenUserMenu}
+									sx={{ p: 0 }}
+								>
+									<Typography>
+										{getUsernameCookie()}
+									</Typography>
+									<Avatar
+										alt="Remy Sharp"
+										src=""
+										sx={{ ml: 2 }}
+									/>
+								</IconButton>
+							</Tooltip>
+							<Menu
+								sx={{ mt: '45px' }}
+								id="menu-appbar"
+								anchorEl={anchorElUser}
+								anchorOrigin={{
+									vertical: 'top',
+									horizontal: 'right',
+								}}
+								keepMounted
+								transformOrigin={{
+									vertical: 'top',
+									horizontal: 'right',
+								}}
+								open={Boolean(anchorElUser)}
+								onClose={handleCloseUserMenu}
+							>
+								{settings.map((setting) => (
+									<MenuItem
+										key={setting}
+										onClick={() =>
+											handleCloseUserMenu(setting)
+										}
+									>
+										<Typography textAlign="center">
+											{setting}
+										</Typography>
+									</MenuItem>
+								))}
+							</Menu>
+						</Box>
+					</Toolbar>
+					<Divider sx={{ bgcolor: 'black' }}></Divider>
+					<Toolbar sx={{ justifyContent: 'space-between' }}>
+						<Link to="/home">
+							<ColorButton variant="contained">Home</ColorButton>
+						</Link>
+						<Link to="/lookup">
+							<ColorButton variant="contained">
+								Courses Look Up
+							</ColorButton>
+						</Link>
+						<Link to="/add-drop">
+							<ColorButton variant="contained">
+								Add/Drop Courses
+							</ColorButton>
+						</Link>
+						<Link to="/calendar">
+							<ColorButton variant="contained">
+								Calendar
+							</ColorButton>
+						</Link>
+						<Link to="/roadmap">
+							<ColorButton variant="contained">
+								Roadmap
+							</ColorButton>
+						</Link>
+					</Toolbar>
+				</Stack>
+			</Container>
+		</AppBar>
+	);
 };
 
 export default Navbar;
