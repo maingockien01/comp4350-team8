@@ -31,13 +31,7 @@ INSERT INTO `section` (`sid`, `sectionName`, `time`, `professor`, `courseCid`, `
 (18, 'R01', 'R10:00-11:00,F10:00-11:00', 'Rachel', 18, 8, 18),
 (19, 'S03', 'R14:00-15:00,F14:00-15:00', 'Thomas', 19, 9, 2),
 (20, 'T01', 'R11:00-12:00,F11:00-12:00', 'Laura', 20, 10, 4);
-INSERT INTO `section` (`sid`, `sectionName`, `time`, `professor`, `courseCid`, `termTid`, `locationLid`) VALUES
-(21, 'U02', 'R09:00-10:00,F09:00-10:00', 'Nathan', 21, 11, 21),
-(22, 'V01', 'R13:00-14:00,F13:00-14:00', 'Olivia', 22, 1, 2),
-(23, 'W03', 'R15:00-16:00,F15:00-16:00', 'Henry', 23, 2, 3),
-(24, 'X01', 'R12:00-13:00,F12:00-13:00', 'Sophia', 24, 3, 4),
-(25, 'Y02', 'R10:00-11:00,F10:00-11:00', 'Benjamin', 25, 4, 5),
-(26, 'Z01', 'R11:00-12:00,F11:00-12:00', 'Zoe', 26, 5, 6);
+
 
 
 

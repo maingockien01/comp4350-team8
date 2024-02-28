@@ -5,6 +5,7 @@ import { getCurrentUserID } from "../Utils/getCurrentUserID";
 import { SectionDTO } from '@team8/types/dtos/section/section.dto'
 
 interface Class {
+  id: number,
   name: string,
   startTime: Date, 
   endTime: Date
@@ -49,7 +50,7 @@ const Calendar = () => {
     })
     .then((res) => res.json())
     .then((res) => {
-      const events = res.time.split(',');
+      const events = res[0].time.split(',');
       let day = [];
       for(const e of events){
           let dayAbbr = e.charAt(0);
@@ -57,17 +58,18 @@ const Calendar = () => {
           let [st, et] = e.substring(1).split('-');
           
           // Construct the date strings
-          let startDateStr = `2020-12-12T${st}:00Z`;
-          let endDateStr = `2020-12-12T${et}:00Z`;
+          let startDateStr = `2020-12-12T${st}:00`;
+          let endDateStr = `2020-12-12T${et}:00`;
           // Create the date objects
           let startTime = new Date(startDateStr);
           let endTime = new Date(endDateStr);
   
-          weeklySchedule[dayName].push({
+          setTimetable(weeklySchedule[dayName].push({
+              id: 1,
               name: "Course Name",
               startTime: startTime,
               endTime: endTime
-          })
+          }))
       }
     })
     .catch((error) => {
@@ -75,7 +77,6 @@ const Calendar = () => {
     });
   }, []);
 
-  
   return(
     <Container maxWidth = "lg">
         <h2>
@@ -87,6 +88,7 @@ const Calendar = () => {
         />
     </Container>
     );
+    
 }
 
 export default Calendar;
