@@ -107,5 +107,5 @@ jobs:
         id: backend-e2e
         run: | 
           docker network create team8
-          docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root --name database mysql:5.7 -v ./docker/mysql/provision/init.sql:/docker-entrypoint-initdb.d/init.sql --network team8 
+          docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root --name database -v ./docker/mysql/provision/init.sql:/docker-entrypoint-initdb.d/init.sql --network team8 mysql:5.7 
           docker run --network team8 --name apps ${{ env.DOCKER_TAG }} yarn workspace @team8/backend test:e2e 
