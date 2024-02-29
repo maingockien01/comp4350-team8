@@ -76,7 +76,7 @@ jobs:
       cancel-in-progress: true
     steps:
       - name: Run unit tests on workspace backend
-        id: backend
+        id: backend-unit
         run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/backend test:unit
 
   tests-unit-frontend:
@@ -88,7 +88,7 @@ jobs:
       cancel-in-progress: true
     steps:
       - name: Run unit tests on workspace frontend
-        id: frontend
+        id: frontend-unit
         run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/frontend test:unit
 
   tests-backend-e2e:
@@ -105,6 +105,6 @@ jobs:
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
       - name: Run e2e tests on workspace backend
-        id: backend
-        run: docker-compose run apps-dev yarn workspace @team8/backend test:e2e
+        id: backend-e2e
+        run: docker-compose -f "docker-compose.yml" --build run apps-dev yarn workspace @team8/backend test:e2e
         continue-on-error: true
