@@ -103,6 +103,10 @@ jobs:
         uses: actions/checkout@v4
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
+      - name: Create docker network
+        run: docker network create team8
+      - name: Run database container
+        run: docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root --name mysql mysql:5.7 -v ./docker/mysql/provision/init.sql:/docker-entrypoint-initdb.d/init.sql --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3 --health-start-period=10s --network=team8
       - name: Run e2e tests on workspace backend
         id: backend-e2e
-        run: docker-compose -f "docker-compose.yml" run apps-dev yarn workspace @team8/backend test:e2e
+        run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/backend test:e2e --network=team8
