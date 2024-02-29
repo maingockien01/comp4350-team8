@@ -10,4 +10,6 @@ WORKDIR /app
 
 ADD . .
 
+RUN yarn install
+
 EXPOSE 3000
