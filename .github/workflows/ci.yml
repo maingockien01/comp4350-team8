@@ -1,5 +1,5 @@
 name: CI
-run-name: ${{ github.actor }} is running ${{ github.workflow }} on commit ${{ github.sha }} for branch ${{ github.ref }}
+run-name: ${{ github.actor }} is running ${{ github.workflow }} for Sprint 2 tesitng
 
 on:
   push:
