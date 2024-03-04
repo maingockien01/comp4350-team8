@@ -106,6 +106,7 @@ jobs:
           - 3306:3306
         env:
           MYSQL_ROOT_PASSWORD: root
+        network_mode: host
 
     steps:
       - name: Checkout code
