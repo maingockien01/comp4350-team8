@@ -11,7 +11,8 @@ const LookUpScreen = () => {
   const [selectDegree, setSelectDegree] = useState<DegreeDTO>();
   const [selectTerm, setSelectTerm] = useState<TermDTO>();
   const navigate = useNavigate();
-
+  // some comments
+  // some other comments
   const handleSubmit = () =>{
     if(selectDegree !== undefined && selectTerm !== undefined){
       fetch(`/rest-api/term/search?tid=${selectTerm.tid}&department=${selectDegree.name}`)
