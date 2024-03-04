@@ -123,4 +123,4 @@ jobs:
           mysqladmin ping -h localhost -u app_test -ppassword
       - name: Run e2e tests on workspace backend
         id: backend-e2e
-        run: docker run --name apps ${{ env.DOCKER_TAG }} yarn workspace @team8/backend test:e2e
+        run: docker run --network="host" --name apps ${{ env.DOCKER_TAG }} yarn workspace @team8/backend test:e2e
