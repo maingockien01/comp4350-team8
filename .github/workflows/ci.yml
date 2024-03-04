@@ -118,6 +118,9 @@ jobs:
       - name: Start mysql
         run: |
           sudo /etc/init.d/mysql start
+      - name: ping mysql
+        run: |
+          mysqladmin ping -h localhost
       - name: Run e2e tests on workspace backend
         id: backend-e2e
         run: docker run --name apps ${{ env.DOCKER_TAG }} yarn workspace @team8/backend test:e2e
