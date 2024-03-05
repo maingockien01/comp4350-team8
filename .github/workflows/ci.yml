@@ -101,7 +101,7 @@ jobs:
     services:
       database:
         image: mysql:5.7
-        networks:
+        network:
           - backend
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3 --name=database
         ports:
