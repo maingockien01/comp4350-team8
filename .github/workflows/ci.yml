@@ -117,7 +117,7 @@ jobs:
 #          sudo /etc/init.d/mysql start
       - name: Init mysql
         run: |
-          cat ./docker/mysql/provision/init.sql | docker exec database mysql -uroot -proot
+          docker exec -i database mysql -uroot -proot < ./docker/mysql/provision/init.sql
       - name: ping mysql
         run: |
           docker exec database mysqladmin ping -h localhost -u app_test -ppassword
