@@ -1,5 +1,5 @@
 name: CI
-run-name: ${{ github.actor }} is running ${{ github.workflow }} on commit ${{ github.sha }} for branch name ${{ github.ref_name }}
+run-name: ${{ github.actor }} is running ${{ github.workflow }} on commit ${{ github.sha }}
 
 on:
   push:
@@ -101,7 +101,7 @@ jobs:
     services:
       database:
         image: mysql:5.7
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3 --network host
         ports:
           - 3306:3306
         env:
