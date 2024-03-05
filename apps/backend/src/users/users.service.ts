@@ -14,16 +14,9 @@ export class UsersService {
 	) {}
 
 	async create(dto: CreateUserDto) {
-		try {
-			await this.usersRepository.save(dto);
-			return await this.findOneByUsername(dto.username);
-		} catch (error) {
-			if (error instanceof QueryFailedError) {
-				if (error.driverError.code === 'ER_DUP_ENTRY') {
-					throw new ForbiddenException('Credential taken');
-				}
-			}
-		}
+		const insertResult = await this.usersRepository.insert(dto);
+		
+		return insertResult.identifiers[0] as User;
 	}
 
 	async findOneByUsername(username: string) {

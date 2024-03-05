@@ -17,7 +17,6 @@ import { styled } from '@mui/material/styles';
 import { brown } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
 
-const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
 	color: 'white',
@@ -75,6 +74,7 @@ const Navbar = (props: { handleLogout: HandleLogoutFunction }) => {
 		}
 		setAnchorElUser(null);
 	};
+
 
 	return (
 		<AppBar

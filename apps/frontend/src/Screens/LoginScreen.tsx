@@ -1,15 +1,20 @@
 import React from 'react';
-import LoginForm from '../Components/LoginForm';
+import LoginForm from '../Components/LoginForm/LoginForm';
 import '../css/LoginScreen.css';
 
 interface HandleLoginFunction {
 	(): void;
 }
 
-const LoginScreen = (props: { handleLogin: HandleLoginFunction }) => {
+const LoginScreen = () => {
+	
+	const handleLogin = () => {
+
+	}
+	
 	return (
 		<div className="LoginScreen">
-			<LoginForm handleLogin={props.handleLogin} />
+			<LoginForm handleLogin={handleLogin} />
 		</div>
 	);
 };

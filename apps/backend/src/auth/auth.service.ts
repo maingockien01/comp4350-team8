@@ -1,40 +1,43 @@
 import {
 	Injectable,
-	UnauthorizedException,
-	BadRequestException,
 } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
-import { LogInDto, SignUpDto } from '@team8/types/dtos/auth';
+import { LogInDto, LogInResDto } from '@team8/types/dtos/auth/login.dto';
+import { SignUpDto } from '@team8/types/dtos/auth/signup.dto';
 import * as bcrypt from 'bcrypt';
-import { CreateUserDto } from './createUser.dto';
 import { User } from '../entities/user.entity';
+import { JwtService } from '@nestjs/jwt'; 
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
-	constructor(private usersService: UsersService) {}
+	constructor(
+		private jwtService: JwtService,
+		@InjectRepository(User)
+		private readonly userRepository: Repository<User>,
+	) {}
 
-	async signUp(dto: SignUpDto): Promise<User> {
+	async signUpOrFail(dto: SignUpDto): Promise<void> {
 		const saltOrRounds = 10;
-		const userDto = new CreateUserDto(dto);
-		userDto.hashPassword = await bcrypt.hash(dto.password, saltOrRounds);
-		const user = await this.usersService.create(userDto);
-		if (!user) {
-			throw new BadRequestException();
-		}
-		return user;
+		const hashPassword = await bcrypt.hash(dto.password, saltOrRounds);
+		await this.userRepository.insert({
+			...dto,
+			hashPassword,
+		}); //Fail on user duplication
 	}
 
-	async logIn(dto: LogInDto): Promise<User> {
-		//TODO: Return message according to error
-		const user = await this.usersService.findOneByUsername(dto.username);
-		if (!user) {
-			throw new UnauthorizedException();
+	async logInOrFail(dto: LogInDto): Promise<LogInResDto> {
+		const user = await this.userRepository.findOneByOrFail({ username: dto.username });
+
+		await bcrypt.compare(dto.password, user.hashPassword); //Fail on wrong password
+
+		const payload = { 
+			sub: user.uid,
+			username: user.username,
 		}
-		if (!(await bcrypt.compare(dto.password, user.hashPassword))) {
-			throw new UnauthorizedException();
-		}
-		// TODO: Generate a JWT and return it here
-		// instead of the user object
-		return user;
+
+		return {
+			access_token: await this.jwtService.signAsync(payload),
+		};
 	}
 }

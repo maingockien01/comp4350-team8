@@ -1,9 +1,11 @@
 import React from 'react';
 import PersonIcon from '@mui/icons-material/Person';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import '../css/LoginForm.css';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import './LoginForm.css';
+import { Link, useNavigate } from 'react-router-dom';
+import { login } from './login.api'
+import { useAuth } from '../../Providers/AuthProvider';
+import { LogInResDto } from '@team8/types/dtos/auth/login.dto';
 
 interface HandleLoginFunction {
 	(): void;
@@ -15,6 +17,10 @@ const LoginForm = (props: { handleLogin: HandleLoginFunction }) => {
 		password: '',
 	});
 
+	const auth = useAuth();
+	const navigate = useNavigate();
+
+
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setFormState({
 			...formState,
@@ -25,19 +31,15 @@ const LoginForm = (props: { handleLogin: HandleLoginFunction }) => {
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		// Send a POST request to the backend with the form data
-		axios
-			.post('rest-api/auth/login', formState)
-			.then((response) => {
-				// Handle the response from the backend
-				if (response.data.status == 'success') {
-					console.log(response);
-					props.handleLogin();
-				}
-			})
-			.catch((error) => {
-				// Handle any errors that occurred during the request
-				console.error(error);
-			});
+		login(formState.username, formState.password).then((dto: LogInResDto) => {
+			// If the request is successful, store the token in the AuthProvider
+			auth?.setToken(dto.access_token);
+			navigate('/', { replace: true })
+		}).
+		catch((error) => {
+			//TODO: Handle any errors that occurred during the request - show error message to user
+			console.error(error);
+		});
 	};
 
 	return (

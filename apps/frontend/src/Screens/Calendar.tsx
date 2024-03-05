@@ -46,7 +46,7 @@ const Calendar = () => {
     fetch('/rest-api/term/searchCurrent')
     .then((res) => res.json())
     .then((tid) => {
-        return fetch(`/rest-api/user/searchActive?uid=${uid}&tid=${tid}`);
+        return fetch(`/rest-api/user/searchActive?uid=${uid}&tid=${tid}`); //TODO: do not send uid in query
     })
     .then((res) => res.json())
     .then((res) => {

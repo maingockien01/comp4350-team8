@@ -16,13 +16,13 @@ export class User {
 	@PrimaryGeneratedColumn()
 	uid: number;
 
-	@Column()
+	@Column({ nullable: false })
 	fullName: string;
 
-	@Column({ unique: true })
+	@Column({ unique: true, nullable: false})
 	username: string;
 
-	@Column()
+	@Column({ nullable: false })
 	hashPassword: string;
 
 	// @Column()

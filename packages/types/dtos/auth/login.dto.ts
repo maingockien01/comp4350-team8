@@ -9,3 +9,7 @@ export class LogInDto {
 	@IsNotEmpty()
 	password: string;
 }
+
+export class LogInResDto {
+	access_token: string;
+}
