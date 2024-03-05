@@ -106,21 +106,14 @@ jobs:
           - 3306:3306
         env:
           MYSQL_ROOT_PASSWORD: root
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
-#      - name: Start mysql
-#        run: |
-#          sudo /etc/init.d/mysql start
       - name: Init mysql
         run: |
           docker exec -i database mysql -uroot -proot < ./docker/mysql/provision/init.sql
-      - name: ping mysql
-        run: |
-          docker exec database mysqladmin ping -h localhost -u app_test -ppassword
       - name: Run e2e tests on workspace backend
         id: backend-e2e
         run: docker run --network ${{ job.container.network }} --name apps ${{ env.DOCKER_TAG }} yarn workspace @team8/backend test:e2e
