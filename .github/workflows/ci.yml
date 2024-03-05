@@ -98,15 +98,6 @@ jobs:
     concurrency:
       group: tests-backend-e2e-${{ github.sha }}
       cancel-in-progress: true
-    services:
-      database:
-        image: mysql:5.7
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-        ports:
-          - 3306:3306
-        env:
-          MYSQL_ROOT_PASSWORD: root
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
