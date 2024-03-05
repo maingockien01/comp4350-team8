@@ -106,16 +106,15 @@ jobs:
           - 3306:3306
         env:
           MYSQL_ROOT_PASSWORD: root
-        network_mode: host
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
-      - name: Start mysql
-        run: |
-          sudo /etc/init.d/mysql start
+#      - name: Start mysql
+#        run: |
+#          sudo /etc/init.d/mysql start
       - name: Init mysql
         run: |
           mysql -h localhost -u root -proot < ./docker/mysql/provision/init.sql
