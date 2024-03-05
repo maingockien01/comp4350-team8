@@ -101,8 +101,6 @@ jobs:
     services:
       database:
         image: mysql:5.7
-        network:
-          - backend
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3 --name=database
         ports:
           - 3306:3306
@@ -125,4 +123,4 @@ jobs:
           docker exec database mysqladmin ping -h localhost -u app_test -ppassword
       - name: Run e2e tests on workspace backend
         id: backend-e2e
-        run: docker run --network host --name apps ${{ env.DOCKER_TAG }} yarn workspace @team8/backend test:e2e
+        run: docker run --network ${{ job.container.network }} --name apps ${{ env.DOCKER_TAG }} yarn workspace @team8/backend test:e2e
