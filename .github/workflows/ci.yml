@@ -117,7 +117,7 @@ jobs:
           sudo /etc/init.d/mysql start
       - name: Init mysql
         run: |
-          mysql -h localhost -u root -proot < ./docker/mysql/provision/init.sql
+          mysql -h 172.18.0.1 -u root -proot < ./docker/mysql/provision/init.sql
       - name: ping mysql
         run: |
           mysqladmin ping -h localhost -u app_test -ppassword
