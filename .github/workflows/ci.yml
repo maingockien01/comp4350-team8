@@ -101,7 +101,7 @@ jobs:
     services:
       database:
         image: mysql:5.7
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3 --name=database
         ports:
           - 3306:3306
         env:
@@ -117,10 +117,10 @@ jobs:
 #          sudo /etc/init.d/mysql start
       - name: Init mysql
         run: |
-          mysql -h database -u root -proot < ./docker/mysql/provision/init.sql
+          cat ./docker/mysql/provision/init.sql | docker exec database mysql -uroot -proot
       - name: ping mysql
         run: |
-          mysqladmin ping -h database -u app_test -ppassword
+          docker exec database mysqladmin ping -h database -u app_test -ppassword
       - name: Run e2e tests on workspace backend
         id: backend-e2e
         run: docker run --network host --name apps ${{ env.DOCKER_TAG }} yarn workspace @team8/backend test:e2e
