@@ -13,7 +13,6 @@ services:
     command: /bin/sh ./scripts/dev/dev.local.sh
     depends_on:
       - database
-    network_mode: host
 
   database:
     image: mysql:5.7
@@ -28,4 +27,3 @@ services:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       timeout: 20s
       retries: 10
-    network_mode: host
