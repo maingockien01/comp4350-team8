@@ -1,5 +1,5 @@
 name: CI
-run-name: ${{ github.actor }} is running ${{ github.workflow }} on commit ${{ github.sha }} for branch ${{ github.ref }}
+run-name: ${{ github.actor }} is running ${{ github.workflow }} on commit ${{ github.sha }}
 
 on:
   push:
@@ -44,7 +44,7 @@ jobs:
           cache-to: type=inline
   
   lint:
-    name: Lint code - Code style check
+    name: Lint code
     runs-on: ubuntu-latest
     needs: build
     concurrency: 
@@ -68,7 +68,7 @@ jobs:
         run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/utils lint
 
   tests-unit-backend:
-    name: Run unit tests on workspace backend
+    name: BE unit tests
     runs-on: ubuntu-latest
     needs: build
     concurrency: 
@@ -76,11 +76,11 @@ jobs:
       cancel-in-progress: true
     steps:
       - name: Run unit tests on workspace backend
-        id: backend
+        id: backend-unit
         run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/backend test:unit
 
   tests-unit-frontend:
-    name: Run unit tests on workspace frontend
+    name: FE Unit tests
     runs-on: ubuntu-latest
     needs: build
     concurrency:
@@ -88,23 +88,32 @@ jobs:
       cancel-in-progress: true
     steps:
       - name: Run unit tests on workspace frontend
-        id: frontend
+        id: frontend-unit
         run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/frontend test:unit
 
   tests-backend-e2e:
-    name: Run integration tests on workspace backend
+    name: BE e2e tests
     runs-on: ubuntu-latest
     needs: build
-    continue-on-error: true
     concurrency:
       group: tests-backend-e2e-${{ github.sha }}
       cancel-in-progress: true
+    services:
+      database:
+        image: mysql:5.7
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3 --name=database
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: root
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
+      - name: Init mysql
+        run: |
+          docker exec -i database mysql -uroot -proot < ./docker/mysql/provision/init.sql
       - name: Run e2e tests on workspace backend
-        id: backend
-        run: docker-compose run apps-dev yarn workspace @team8/backend test:e2e
-        continue-on-error: true
+        id: backend-e2e
+        run: docker run --network ${{ job.container.network }} --name apps ${{ env.DOCKER_TAG }} yarn workspace @team8/backend test:e2e
