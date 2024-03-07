@@ -5,7 +5,7 @@ import MainScreen, { getUidCookie } from './Screens/MainScreen';
 import Calendar from './Screens/Calendar';
 import AddDropCourses from './Screens/AddDropCourses';
 import Roadmap from './Screens/Roadmap/Roadmap';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import LookUpScreen from './Screens/LookUpScreen';
 import CoursesScreen from './Screens/CoursesScreen';
 import Navbar from './Components/Navbar';
@@ -29,40 +29,42 @@ const App = () => {
 		navigate('/login');
 	};
 
-	const Index = () => {
-		return (
-			<div>
-				{isLoggedIn ? (
-					<Routes>
-						<Route index={true} path="/" element={<MainScreen />} />
-						<Route path="/home" element={<MainScreen />} />
-						<Route path="/lookup" element={<LookUpScreen />} />
-						<Route path="/courses" element={<CoursesScreen />} />
-						<Route path="/add-drop" element={<AddDropCourses />} />
-						<Route path="/calendar" element={<Calendar />} />
-						<Route path="/roadmap" element={<Roadmap />} />
-					</Routes>
-				) : (
-					<Routes>
-						<Route
-                            path="/"
-                            element={<LoginScreen handleLogin={handleLogin} />}
-                        />
-						<Route
-							path="/login"
-							element={<LoginScreen handleLogin={handleLogin} />}
-						/>
-						<Route path="/signup" element={<SignupScreen />} />
-					</Routes>
-				)}
-			</div>
-		);
-	};
-
 	return (
-		<div className="App">
+		<div>
 			{isLoggedIn && <Navbar handleLogout={handleLogout} />}
-			<Index />
+			<Routes>
+				<Route
+					index={true}
+					path="/"
+					element={isLoggedIn ? <MainScreen /> : <Navigate to="/login" replace />}
+				/>
+				<Route
+					path="/home"
+					element={isLoggedIn ? <MainScreen /> : <Navigate to="/login" replace />}
+				/>
+				<Route
+					path="/lookup"
+					element={isLoggedIn ? <LookUpScreen /> : <Navigate to="/login" replace />}
+				/>
+				<Route
+					path="/courses"
+					element={isLoggedIn ? <CoursesScreen /> : <Navigate to="/login" replace />}
+				/>
+				<Route
+					path="/add-drop"
+					element={isLoggedIn ? <AddDropCourses /> : <Navigate to="/login" replace />}
+				/>
+				<Route
+					path="/calendar"
+					element={isLoggedIn ? <Calendar /> : <Navigate to="/login" replace />}
+				/>
+				<Route
+					path="/roadmap"
+					element={isLoggedIn ? <Roadmap /> : <Navigate to="/login" replace />}
+				/>
+				<Route path="/login" element={<LoginScreen handleLogin={handleLogin} />} />
+				<Route path="/signup" element={<SignupScreen />} />
+			</Routes>
 		</div>
 	);
 };
