@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany,JoinTable, Relation } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable, Relation } from 'typeorm';
 import { Section } from './section.entity';
 import { User } from './user.entity';
 import { HasPrerequisites } from '@team8/types/domain/roadmap.model';
@@ -7,29 +7,25 @@ import { HasPrerequisites } from '@team8/types/domain/roadmap.model';
 
 @Entity()
 export class Course implements HasPrerequisites {
-  @PrimaryGeneratedColumn()
-  cid: number;
+	@PrimaryGeneratedColumn()
+	cid: number;
 
-  @Column()
-  courseName: string;
+	@Column()
+	courseNumber: string;
 
-  @Column()
-  department: string;
+	@Column()
+	courseName: string;
 
-  @Column()
-  courseNumber: number;
+	@Column()
+	department: string;
 
-  @Column()
-  description: string;
+	@Column()
+	description: string;
 
-  @OneToMany(() => Section, (section) => section.course)
-  sections: Relation<Section[]>;
+	@OneToMany(() => Section, (section) => section.course)
+	sections: Relation<Section[]>;
 
-  @ManyToMany(() => User)
-  @JoinTable()
-  users: Relation<User[]>;
-
-  @ManyToMany(() => Course)
-  @JoinTable()
-  prerequisites: Relation<Course[]>;
+	@ManyToMany(() => Course)
+	@JoinTable()
+	prerequisites: Relation<Course[]>;
 }

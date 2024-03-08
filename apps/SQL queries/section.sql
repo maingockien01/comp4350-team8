@@ -8,12 +8,9 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 INSERT INTO `section` (`sid`, `sectionName`, `time`, `professor`, `courseCid`, `termTid`, `locationLid`) VALUES
-(1, 'A02', 'M20:00-21:00,W20:00-21:00,F20:00-21:00', 'Robert', 1, 1, 2);
-INSERT INTO `section` (`sid`, `sectionName`, `time`, `professor`, `courseCid`, `termTid`, `locationLid`) VALUES
-(2, 'B01', 'M10:00-11:00,W10:00-11:00,F10:00-11:00', 'Jennifer', 2, 2, 5);
-INSERT INTO `section` (`sid`, `sectionName`, `time`, `professor`, `courseCid`, `termTid`, `locationLid`) VALUES
-(3, 'C03', 'M13:00-14:00,W13:00-14:00,F13:00-14:00', 'Michael', 3, 3, 7);
-INSERT INTO `section` (`sid`, `sectionName`, `time`, `professor`, `courseCid`, `termTid`, `locationLid`) VALUES
+(1, 'A02', 'M20:00-21:00,W20:00-21:00,F20:00-21:00', 'Robert', 1, 1, 2),
+(2, 'B01', 'M10:00-11:00,W10:00-11:00,F10:00-11:00', 'Jennifer', 2, 2, 5),
+(3, 'C03', 'M13:00-14:00,W13:00-14:00,F13:00-14:00', 'Michael', 3, 3, 7),
 (4, 'D01', 'M09:00-10:00,W09:00-10:00,F09:00-10:00', 'Emily', 4, 4, 9),
 (5, 'E02', 'M14:00-15:00,W14:00-15:00,F14:00-15:00', 'David', 5, 5, 11),
 (6, 'F01', 'M11:00-12:00,W11:00-12:00,F11:00-12:00', 'Jessica', 6, 6, 13),
@@ -31,10 +28,6 @@ INSERT INTO `section` (`sid`, `sectionName`, `time`, `professor`, `courseCid`, `
 (18, 'R01', 'R10:00-11:00,F10:00-11:00', 'Rachel', 18, 8, 18),
 (19, 'S03', 'R14:00-15:00,F14:00-15:00', 'Thomas', 19, 9, 2),
 (20, 'T01', 'R11:00-12:00,F11:00-12:00', 'Laura', 20, 10, 4);
-
-
-
-
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

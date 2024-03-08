@@ -1,12 +1,4 @@
-import {
-	Entity,
-	Column,
-	PrimaryGeneratedColumn,
-	ManyToOne,
-	ManyToMany,
-	JoinTable,
-	Relation,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable, Relation } from 'typeorm';
 import { Degree } from './degree.entity';
 import { Course } from './course.entity';
 import { Section } from './section.entity';
@@ -25,21 +17,14 @@ export class User {
 	@Column()
 	hashPassword: string;
 
-	// @Column()
-	// did: number;
-
 	@Column({ default: '' })
 	pictureProfile: string;
 
 	@ManyToOne(() => Degree, (degree) => degree.users)
 	degree: Degree;
 
-	@ManyToMany(() => Course)
-	@JoinTable()
-	courses: Relation<Course[]>;
-
 	@ManyToMany(() => Section)
-	@JoinTable()
+	@JoinTable({ name: 'users_register_sections' })
 	sections: Relation<Section[]>;
 
 	// constructor(user: Partial<User>) {

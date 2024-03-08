@@ -8,12 +8,9 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 INSERT INTO `degree_recommended_courses_course` (`degreeDid`, `courseCid`) VALUES
-(1, 1);
-INSERT INTO `degree_recommended_courses_course` (`degreeDid`, `courseCid`) VALUES
-(1, 2);
-INSERT INTO `degree_recommended_courses_course` (`degreeDid`, `courseCid`) VALUES
-(1, 3);
-INSERT INTO `degree_recommended_courses_course` (`degreeDid`, `courseCid`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
 (1, 4),
 (1, 5);
 
