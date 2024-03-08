@@ -7,20 +7,19 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-INSERT INTO `term` (`tid`, `year`, `season`) VALUES
-(1, 2014, 'Winter');
-INSERT INTO `term` (`tid`, `year`, `season`) VALUES
-(2, 2014, 'Spring');
-INSERT INTO `term` (`tid`, `year`, `season`) VALUES
-(3, 2014, 'Summer');
-INSERT INTO `term` (`tid`, `year`, `season`) VALUES
-(4, 2014, 'Fall'),
-(5, 2015, 'Winter'),
-(6, 2015, 'Spring'),
-(7, 2015, 'Summer'),
-(8, 2015, 'Fall'),
-(9, 2016, 'Winter'),
-(10, 2016, 'Spring');
+INSERT INTO `term` (`year`, `season`) VALUES
+(2021, 'Winter'),
+(2021, 'Summer'),
+(2021, 'Fall'),
+(2022, 'Winter'),
+(2022, 'Summer'),
+(2022, 'Fall'),
+(2023, 'Winter'),
+(2023, 'Summer'),
+(2023, 'Fall'),
+(2024, 'Winter'),
+(2024, 'Summer'),
+(2024, 'Fall'),
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

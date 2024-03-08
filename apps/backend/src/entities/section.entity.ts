@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany,JoinTable, Relation } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable, Relation } from 'typeorm';
 import { Course } from './course.entity';
 import { Location } from './location.entity';
 import { Term } from './term.entity';
@@ -6,29 +6,28 @@ import { User } from './user.entity';
 
 @Entity()
 export class Section {
-  @PrimaryGeneratedColumn()
-  sid: number;
+	@PrimaryGeneratedColumn()
+	sid: number;
 
-  @Column()
-  sectionName: string;
-  
-  // Start time of the section
-  @Column()
-  time: string;
+	@Column()
+	sectionName: string;
 
-  @Column()
-  professor: string;
+	// Start time of the section
+	@Column()
+	time: string;
 
-  @ManyToOne(() => Course, (course) => course.sections)
-  course: Relation<Course>;
+	@Column()
+	professor: string;
 
-  @ManyToOne(() => Term, (term) => term.sections)
-  term: Relation<Term>;
+	@ManyToOne(() => Course, (course) => course.sections)
+	course: Relation<Course>;
 
-  @ManyToOne(() => Location, (location) => location.sections)
-  location: Relation<Location>;
+	@ManyToOne(() => Term, (term) => term.sections)
+	term: Relation<Term>;
 
-  @ManyToMany(() => User)
-  @JoinTable()
-  users: Relation<User[]>;
+	@ManyToOne(() => Location, (location) => location.sections)
+	location: Relation<Location>;
+
+	@ManyToMany(() => User)
+	users: Relation<User[]>;
 }
