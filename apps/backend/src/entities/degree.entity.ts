@@ -14,8 +14,8 @@ export class Degree {
 	@OneToMany(() => User, (user) => user.degree)
 	users: Relation<User[]>;
 
-	@ManyToMany(() => Course)
-	@JoinTable()
+	@ManyToMany(() => Course, (course) => course.degrees)
+	@JoinTable({ name: 'recommended_courses_relation' })
 	recommendedCourses: Relation<Course[]>;
 
 	get roadmap(): Roadmap {

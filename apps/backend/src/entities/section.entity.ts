@@ -28,6 +28,7 @@ export class Section {
 	@ManyToOne(() => Location, (location) => location.sections)
 	location: Relation<Location>;
 
-	@ManyToMany(() => User)
+	@ManyToMany(() => User, (user) => user.sections)
+	@JoinTable({ name: 'sections_contain_users_relation' })
 	users: Relation<User[]>;
 }
