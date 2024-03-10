@@ -19,7 +19,7 @@ INSERT INTO `term` (`year`, `season`) VALUES
 (2023, 'Fall'),
 (2024, 'Winter'),
 (2024, 'Summer'),
-(2024, 'Fall'),
+(2024, 'Fall');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

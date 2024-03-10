@@ -7,7 +7,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-INSERT INTO `users_register_sections` (`userUid`, `sectionSid`) VALUES
+INSERT INTO `sections_contain_users_relation` (`userUid`, `sectionSid`) VALUES
 (1, 3),
 (1, 10),
 (1, 20),
