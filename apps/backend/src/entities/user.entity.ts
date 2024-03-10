@@ -20,7 +20,7 @@ export class User {
 	pictureProfile: string;
 
 	@ManyToOne(() => Degree, (degree) => degree.users)
-	degree: Degree;
+	degree: Relation<Degree>;
 
 	@ManyToMany(() => Section, (section) => section.users)
 	sections: Relation<Section[]>;
