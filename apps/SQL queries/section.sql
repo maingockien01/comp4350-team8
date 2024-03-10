@@ -7,7 +7,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-INSERT INTO `section` (`sid`, `sectionName`, `time`, `professor`, `courseCid`, `termTid`, `locationLid`) VALUES
+INSERT INTO `section` (`sectionName`, `time`, `professor`, `courseCid`, `termTid`, `locationLid`) VALUES
 ('A03', 'M11:00-12:00,W11:00-12:00,F11:00-12:00', 'Dr. Smith', 25, 8, 14),
 ('A02', 'T13:00-14:00,R13:00-14:00', 'Prof. Johnson', 32, 6, 5),
 ('A01', 'M10:00-11:00,W10:00-11:00,F10:00-11:00', 'Dr. Martinez', 19, 11, 9),
