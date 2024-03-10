@@ -7,12 +7,22 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-INSERT INTO `degree_recommended_courses_course` (`degreeDid`, `courseCid`) VALUES
-(1, 1),
-(1, 2),
+INSERT INTO `sections_contain_users_relation` (`userUid`, `sectionSid`) VALUES
 (1, 3),
-(1, 4),
-(1, 5);
+(1, 10),
+(1, 20),
+(2, 1),
+(2, 2),
+(2, 3),
+(3, 4),
+(3, 5),
+(3, 6),
+(4, 7),
+(4, 8),
+(4, 9),
+(5, 10),
+(5, 11),
+(5, 12);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

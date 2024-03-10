@@ -7,30 +7,23 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-INSERT INTO `term_courses_course` (`termTid`, `courseCid`) VALUES
-(1, 1);
-INSERT INTO `term_courses_course` (`termTid`, `courseCid`) VALUES
-(1, 11);
-INSERT INTO `term_courses_course` (`termTid`, `courseCid`) VALUES
-(2, 2);
-INSERT INTO `term_courses_course` (`termTid`, `courseCid`) VALUES
-(2, 12),
-(3, 3),
-(3, 13),
-(4, 4),
-(4, 14),
-(5, 5),
-(5, 15),
-(6, 6),
-(6, 16),
-(7, 7),
-(7, 17),
-(8, 8),
-(8, 18),
-(9, 9),
-(9, 19),
-(10, 10),
-(10, 20);
+INSERT INTO `courses_prerequisite_relation` (`courseCid_1`, `courseCid_2`) VALUES
+(3, 1),
+(5, 6),
+(6, 3),
+(8, 3),
+(9, 6),
+(9, 8),
+(10, 5),
+(10, 7),
+(11, 7),
+(12, 5),
+(13, 5),
+(15, 7),
+(16, 5), (16, 9),
+(17, 10), (17, 14), (17, 15),
+(18, 10), (18, 15), (18, 16),
+(20, 8), (20, 16);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
