@@ -1,5 +1,4 @@
 import { Injectable, ForbiddenException } from '@nestjs/common';
-import { SignUpDto } from '@team8/types/dtos/auth/signup.dto';
 import { Repository, QueryFailedError } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -33,8 +32,7 @@ export class UsersService {
 	async update(dto: UpdateDto) {
 		const user = await this.findOneByUsername(dto.username);
 		if (dto.fullName !== null) user.fullName = dto.fullName;
-		if (dto.pictureProfile !== null)
-			user.pictureProfile = dto.pictureProfile;
+		if (dto.pictureProfile !== null) user.pictureProfile = dto.pictureProfile;
 		await this.usersRepository.save(user);
 	}
 }
