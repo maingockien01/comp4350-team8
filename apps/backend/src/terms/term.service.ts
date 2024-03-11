@@ -33,7 +33,6 @@ export class TermService {
 			},
 		});
 		department = department.split(',')[0];
-		console.log(department);
 		return termCourse.courses.filter((CourseDTO) => CourseDTO.department === department);
 	}
 }

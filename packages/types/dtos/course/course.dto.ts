@@ -1,8 +1,8 @@
 export interface CourseDTO {
 	cid: number;
+	courseNumber: string;
 	courseName: string;
 	department: string;
-	courseNumber: number;
 	description: string;
 	prerequisites: CourseDTO[];
 }
