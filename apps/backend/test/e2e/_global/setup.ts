@@ -3,11 +3,11 @@ require('ts-node').register({
 });
 
 import { INestApplication } from "@nestjs/common"
-import { Test } from "@nestjs/testing";
+import { Test, TestingModule } from "@nestjs/testing";
 import { AppModule } from "../../../src/app.module";
 
 const setup = async () => {
-  const module = await Test.createTestingModule({
+  const module: TestingModule = await Test.createTestingModule({
     imports: [AppModule]
   }).compile();
 
