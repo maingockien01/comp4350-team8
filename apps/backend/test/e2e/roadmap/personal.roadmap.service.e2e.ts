@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import { PersonalRoadmapService } from '../../../src/roadmap/personal.roadmap.service';
 import { makeApp } from '../_global/setup';
 import { teardownApp } from '../_global/teardown';
-import { createUser } from '../helpers/CreateUser';
+import { createUser } from '../_helpers/CreateUser';
 
 describe('PersonalRoadmapService', () => {
 	let app: INestApplication;
