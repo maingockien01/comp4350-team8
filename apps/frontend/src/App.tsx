@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import { APPS_NAME } from '@team8/constants/apps';
-import MainScreen, { getUidCookie } from './Screens/MainScreen';
+import MainScreen from './Screens/MainScreen';
 import Calendar from './Screens/Calendar';
 import AddDropCourses from './Screens/AddDropCourses';
 import Roadmap from './Screens/Roadmap/Roadmap';
@@ -11,11 +11,12 @@ import CoursesScreen from './Screens/CoursesScreen';
 import Navbar from './Components/Navbar';
 import LoginScreen from './Screens/LoginScreen';
 import SignupScreen from './Screens/SignupScreen';
+import { getUidFromCookie } from './Utils/CookieFunctions';
 
 const App = () => {
 	const navigate = useNavigate();
 
-	const [isLoggedIn, setLoggedIn] = useState(getUidCookie() !== undefined);
+	const [isLoggedIn, setLoggedIn] = useState(getUidFromCookie() !== undefined);
 
 	const handleLogin = () => {
 		setLoggedIn(true);
@@ -24,7 +25,7 @@ const App = () => {
 
 	const handleLogout = () => {
 		//Should do this in backend
-		document.cookie = 'uid=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
+		document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
 		setLoggedIn(false);
 		navigate('/login');
 	};

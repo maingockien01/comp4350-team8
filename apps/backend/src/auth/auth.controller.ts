@@ -1,11 +1,4 @@
-import {
-	Body,
-	Controller,
-	Post,
-	HttpCode,
-	HttpStatus,
-	Res,
-} from '@nestjs/common';
+import { Body, Controller, Post, HttpCode, HttpStatus, Res, UseGuards, Request, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
 import { LogInDto, SignUpDto } from '@team8/types/dtos/auth';
@@ -26,22 +19,16 @@ export class AuthController {
 		} catch (error) {
 			return {
 				status: 'fail',
-				message: 'Invalid username or password!',
+				message: 'Credential Taken!',
 			};
 		}
 	}
 
 	@HttpCode(HttpStatus.OK)
 	@Post('login')
-	async logIn(
-		@Body() logInDto: LogInDto,
-		@Res({ passthrough: true }) response: Response,
-	): Promise<ReturnDto> {
+	async logIn(@Body() logInDto: LogInDto, @Res({ passthrough: true }) response: Response): Promise<any> {
 		try {
-			const user = await this.authService.logIn(logInDto);
-			response.cookie('uid', user.uid);
-			response.cookie('username', user.username);
-
+			const user = await this.authService.logIn(logInDto, response);
 			return {
 				status: 'success',
 				message: 'Login successfully!',
@@ -49,7 +36,7 @@ export class AuthController {
 		} catch (error) {
 			return {
 				status: 'fail',
-				message: 'Credential Taken!',
+				message: 'Invalid username or password!',
 			};
 		}
 	}

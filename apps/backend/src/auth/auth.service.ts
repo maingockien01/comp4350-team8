@@ -1,17 +1,15 @@
-import {
-	Injectable,
-	UnauthorizedException,
-	BadRequestException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException, BadRequestException, Res } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { LogInDto, SignUpDto } from '@team8/types/dtos/auth';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './createUser.dto';
 import { User } from '../entities/user.entity';
+import { JwtService } from '@nestjs/jwt';
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
-	constructor(private usersService: UsersService) {}
+	constructor(private usersService: UsersService, private jwtService: JwtService) {}
 
 	async signUp(dto: SignUpDto): Promise<User> {
 		const saltOrRounds = 10;
@@ -24,7 +22,7 @@ export class AuthService {
 		return user;
 	}
 
-	async logIn(dto: LogInDto): Promise<User> {
+	async logIn(dto: LogInDto, response: Response): Promise<User> {
 		//TODO: Return message according to error
 		const user = await this.usersService.findOneByUsername(dto.username);
 		if (!user) {
@@ -33,8 +31,12 @@ export class AuthService {
 		if (!(await bcrypt.compare(dto.password, user.hashPassword))) {
 			throw new UnauthorizedException();
 		}
-		// TODO: Generate a JWT and return it here
-		// instead of the user object
+
+		const payload = { username: user.username, sub: user.uid };
+		response.cookie('uid', user.uid);
+		response.cookie('username', user.username);
+		response.cookie('access_token', this.jwtService.sign(payload));
+
 		return user;
 	}
 }
