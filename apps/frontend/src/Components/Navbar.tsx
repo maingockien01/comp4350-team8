@@ -55,11 +55,16 @@ const Navbar = (props: { handleLogout: HandleLogoutFunction }) => {
 		setAnchorElNav(null);
 	};
 
-	const handleCloseUserMenu = (menuItem: string) => {
-		if (menuItem == 'Logout') {
+	const handleCloseUserMenu = () => {
+		setAnchorElUser(null);
+	};
+
+	const handleOnClickMenuItem = (menuItem: string) => {
+		if (menuItem == 'Profile') {
+			//Implement this
+		} else if (menuItem == 'Logout') {
 			props.handleLogout();
 		}
-		setAnchorElUser(null);
 	};
 
 	return (
@@ -124,7 +129,7 @@ const Navbar = (props: { handleLogout: HandleLogoutFunction }) => {
 								onClose={handleCloseUserMenu}
 							>
 								{settings.map((setting) => (
-									<MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
+									<MenuItem key={setting} onClick={() => handleOnClickMenuItem(setting)}>
 										<Typography textAlign="center">{setting}</Typography>
 									</MenuItem>
 								))}
