@@ -1,6 +1,6 @@
 export interface CourseDTO {
 	cid: number;
-	courseNumber: string;
+	courseNumber: number;
 	courseName: string;
 	department: string;
 	description: string;
