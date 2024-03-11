@@ -3,12 +3,17 @@ import { PersonalRoadmapService } from '../../../src/roadmap/personal.roadmap.se
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../../../src/entities/user.entity';
 import { makeApp } from '../_global/setup';
+import { teardownApp } from '../_global/teardown';
 
 describe('PersonalRoadmapService', () => {
 	let app: INestApplication;
 
 	beforeAll(async () => {
 		app = await makeApp();
+	});
+
+	afterAll(async () => {
+		await teardownApp(app);
 	});
 
 	it('should be defined', () => {
