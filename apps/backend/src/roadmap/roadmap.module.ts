@@ -8,6 +8,6 @@ import { User } from '../entities/user.entity';
 	imports: [TypeOrmModule.forFeature([User])],
 	controllers: [RoadmapController],
 	providers: [PersonalRoadmapService],
-	exports: [PersonalRoadmapService],
+	exports: [],
 })
 export class RoadmapModule {}
