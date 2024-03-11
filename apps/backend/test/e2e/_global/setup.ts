@@ -13,6 +13,7 @@ const setup = async () => {
 
   const app: INestApplication = module.createNestApplication();
   global.app = app;
+  global.testingModules = module;
   await app.init();
 };
 

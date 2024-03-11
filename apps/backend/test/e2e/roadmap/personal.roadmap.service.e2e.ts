@@ -4,10 +4,11 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../../../src/entities/user.entity';
 
 const app: INestApplication = global.app;
+const testingModules = global.testingModules;
 
 describe('PersonalRoadmapService', () => {
 	it('should be defined', () => {
 		expect(app.get(getRepositoryToken(User))).toBeDefined();
-		expect(app.get(PersonalRoadmapService, { strict: false })).toBeDefined();
+		expect(testingModules.get(PersonalRoadmapService, { strict: false })).toBeDefined();
 	});
 });
