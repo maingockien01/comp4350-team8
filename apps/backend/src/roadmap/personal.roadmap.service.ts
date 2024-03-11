@@ -11,7 +11,14 @@ export class PersonalRoadmapService {
 		private readonly userRepository: Repository<User>,
 	) {}
 	async getPersonalRoadmap(userId: number): Promise<Roadmap> {
-		return null;
+		const user = await this.userRepository.findOneOrFail({
+			where: {
+				uid: userId,
+			},
+			relations: ['plannedCourses'],
+		});
+
+		return new Roadmap(user.plannedCourses);
 	}
 
 	savePersonalRoadmap(userId: number): Roadmap {
