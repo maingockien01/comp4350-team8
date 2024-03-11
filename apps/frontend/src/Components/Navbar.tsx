@@ -19,7 +19,7 @@ import { Link } from 'react-router-dom';
 import { getUsernameFromCookie } from '../Utils/CookieFunctions';
 
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Logout'];
 const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
 	color: 'white',
 	fontWeight: 500,
