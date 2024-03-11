@@ -15,7 +15,9 @@ export class PersonalRoadmapService {
 			where: {
 				uid: userId,
 			},
-			relations: ['plannedCourses'],
+			relations: {
+				plannedCourses: true,
+			},
 		});
 
 		return new Roadmap(user.plannedCourses);
