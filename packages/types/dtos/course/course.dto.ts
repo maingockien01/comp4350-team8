@@ -1,10 +1,8 @@
-import { HasPrerequisites } from "../../domain/roadmap.model";
-
 export interface CourseDTO {
-  cid: number;
-  courseName: string;
-  department: string;
-  courseNumber: string;
-  description: string;
-  prerequisites: CourseDTO[];
+	cid: number;
+	courseNumber: number;
+	courseName: string;
+	department: string;
+	description: string;
+	prerequisites: CourseDTO[];
 }

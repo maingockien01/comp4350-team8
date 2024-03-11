@@ -6,6 +6,7 @@ import { UserCourseModule } from './users/user.course.module';
 import { AuthModule } from './auth/auth.module';
 import { ProfileModule } from './profile/profile.module';
 import { RoadmapModule } from './roadmap/roadmap.module';
+import { CourseModule } from './courses/course.module';
 
 @Module({
 	imports: [
@@ -13,6 +14,7 @@ import { RoadmapModule } from './roadmap/roadmap.module';
 		DegreeModule,
 		UserCourseModule,
 		AuthModule,
+		CourseModule,
 		RoadmapModule,
 		RouterModule.register([
 			{
@@ -37,6 +39,10 @@ import { RoadmapModule } from './roadmap/roadmap.module';
 					{
 						path: '/user',
 						module: UserCourseModule,
+					},
+					{
+						path: '/course',
+						module: CourseModule,
 					},
 					{
 						path: '/roadmap',

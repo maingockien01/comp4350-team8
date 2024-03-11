@@ -13,13 +13,13 @@ export class Course implements HasPrerequisites {
 	cid: number;
 
 	@Column()
-	courseNumber: string;
+	department: string;
+
+	@Column()
+	courseNumber: number;
 
 	@Column()
 	courseName: string;
-
-	@Column()
-	department: string;
 
 	@Column()
 	description: string;

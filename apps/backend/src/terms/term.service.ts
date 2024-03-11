@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Term } from '../entities/term.entity';
 import { CourseDTO } from '@team8/types/dtos/course/course.dto';
-import { TermDTO } from "@team8/types/dtos/term/term.dto";
+import { TermDTO } from '@team8/types/dtos/term/term.dto';
 
 @Injectable()
 export class TermService {
@@ -13,26 +13,26 @@ export class TermService {
 	) {}
 
 	// Responsibility: handle business logic - make DB requests
-	async findAll(): Promise<TermDTO[]>{
+	async findAll(): Promise<TermDTO[]> {
 		return await this.termRepository.find();
 	}
 
-	async findCurrentTerm():Promise<number>{
+	async findCurrentTerm(): Promise<number> {
 		const terms = await this.findAll();
-		const maxTid = Math.max(...terms.map(term => term.tid));
+		const maxTid = Math.max(...terms.map((term) => term.tid));
 		return maxTid;
 	}
 
-	async find(tid: any, department: string): Promise<CourseDTO[]>{
+	async find(tid: any, department: string): Promise<CourseDTO[]> {
 		const termCourse = await this.termRepository.findOne({
-			relations:{
-				courses:true
+			relations: {
+				courses: true,
 			},
 			where: {
-				tid: tid
-			}
+				tid: tid,
+			},
 		});
-
-		return termCourse.courses.filter(CourseDTO => CourseDTO.department === department);
+		department = department.split(',')[0];
+		return termCourse.courses.filter((CourseDTO) => CourseDTO.department === department);
 	}
 }

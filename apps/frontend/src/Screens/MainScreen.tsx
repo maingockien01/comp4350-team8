@@ -11,6 +11,7 @@ import { BarChart } from '@mui/x-charts/BarChart';
 import ScrollMenu from 'react-horizontal-scroll-menu';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import { getUidFromCookie, getTokenFromCookie } from '../Utils/CookieFunctions';
 
 const uData = [4];
 const xLabels = ['Overall GPA'];
@@ -24,32 +25,19 @@ const MenuItem = ({ text, selected }: { text: any; selected: any }) => {
 				borderRadius: 2,
 				width: 250,
 				height: 100,
-				justifyContent:'center'
+				justifyContent: 'center',
 			}}
 			className={`menu-item ${selected ? 'active' : ''}`}
 		>
 			<Typography sx={{ color: 'white' }} variant="h5">
 				{text.courseName}
 			</Typography>
-			<Typography sx={{ color: 'white', fontSize:10 }} >
-				{text.time}
-			</Typography>
+			<Typography sx={{ color: 'white', fontSize: 10 }}>{text.time}</Typography>
 			<Typography sx={{ color: 'white' }} variant="h6">
 				{text.location}
 			</Typography>
 		</Stack>
 	);
-};
-
-export const getUidCookie = () => {
-	const cookies = document.cookie.split(';');
-	for (let i = 0; i < cookies.length; i++) {
-		const cookie = cookies[i].trim();
-		if (cookie.startsWith('uid=')) {
-			return cookie.substring('uid='.length, cookie.length);
-		}
-	}
-	return undefined;
 };
 
 // All items component
@@ -80,27 +68,31 @@ const MainScreen = () => {
 	};
 
 	useEffect(() => {
-		const uid = getUidCookie();
-		// Fetch current term
-		fetch('/rest-api/term/searchCurrent')
-			.then((res) => res.json())
-			.then((res) => {
-				return fetch(
-					`/rest-api/user/searchActive?uid=${uid}&tid=${res}`,
-				);
-			})
-			.then((res) => res.json())
-			.then((res) => {
-				setActiveList(res);
-				return fetch(`/rest-api/user/search?uid=${uid}`,);
-			})
-			.then((res) => res.json())
-			.then((res) => {
-				setUserInfo(res)
-			})
-			.catch((error) => {
+		const fetchData = async () => {
+			const uid = getUidFromCookie();
+			const token = getTokenFromCookie();
+
+			try {
+				const res1 = await fetch('/rest-api/term/searchCurrent');
+				const res1Json = await res1.json();
+
+				const res2 = await fetch(`/rest-api/user/searchActive?uid=${uid}&tid=${res1Json}`, {
+					headers: { Authorization: `Bearer ${token}` },
+				});
+				const res2Json = await res2.json();
+
+				setActiveList(res2Json);
+
+				const res3 = await fetch(`/rest-api/user/search?uid=${uid}`);
+				const res3Json = await res3.json();
+
+				setUserInfo(res3Json);
+			} catch (error) {
 				console.error('Error fetching data:', error);
-			});
+			}
+		};
+
+		fetchData();
 	}, []);
 
 	React.useEffect(() => {
@@ -145,27 +137,17 @@ const MainScreen = () => {
 									fontWeight={'bold'}
 									className="userName"
 								>
-									{userInfo? userInfo.fullName : ''}
+									{userInfo ? userInfo.fullName : ''}
 								</Typography>
-								<Typography
-									color="#502C1E"
-									fontSize={18}
-									className="Major"
-								>
+								<Typography color="#502C1E" fontSize={18} className="Major">
 									B.Sc. Computer Science
 								</Typography>
 							</Stack>
 							<Stack>
-								<Typography
-									color="#502C1E"
-									fontSize={20}
-									fontWeight={'bold'}
-								>
+								<Typography color="#502C1E" fontSize={20} fontWeight={'bold'}>
 									Process
 								</Typography>
-								<Divider
-									sx={{ bgcolor: 'black', marginBottom: 2 }}
-								></Divider>
+								<Divider sx={{ bgcolor: 'black', marginBottom: 2 }}></Divider>
 								<Grid container>
 									<Grid item xs={1.6}>
 										<Stack
@@ -176,24 +158,13 @@ const MainScreen = () => {
 											}}
 											spacing={1}
 										>
-											<Typography color="#502C1E">
-												Degree Core
-											</Typography>
-											<Typography color="#502C1E">
-												Elective
-											</Typography>
+											<Typography color="#502C1E">Degree Core</Typography>
+											<Typography color="#502C1E">Elective</Typography>
 										</Stack>
 									</Grid>
 									<Grid item xs={0.2} />
-									<Grid
-										item
-										xs={8}
-										sx={{ border: '2px solid #000' }}
-									>
-										<Stack
-											spacing={1.5}
-											sx={{ mt: 1, mb: 1 }}
-										>
+									<Grid item xs={8} sx={{ border: '2px solid #000' }}>
+										<Stack spacing={1.5} sx={{ mt: 1, mb: 1 }}>
 											<LinearProgress
 												color="secondary"
 												sx={{ height: '20px' }}
@@ -212,11 +183,7 @@ const MainScreen = () => {
 							</Stack>
 						</Container>
 					</Grid>
-					<Grid
-						item
-						xs={1}
-						sx={{ boxShadow: 'none', backgroundColor: '#FAD37D' }}
-					/>
+					<Grid item xs={1} sx={{ boxShadow: 'none', backgroundColor: '#FAD37D' }} />
 					<Grid
 						item
 						xs={3}
@@ -229,11 +196,7 @@ const MainScreen = () => {
 					>
 						<Container maxWidth="xl" sx={{ mt: 1, mb: 1 }}>
 							<Stack>
-								<Typography
-									color="#502C1E"
-									fontSize={20}
-									fontWeight={'bold'}
-								>
+								<Typography color="#502C1E" fontSize={20} fontWeight={'bold'}>
 									GPA
 								</Typography>
 								<BarChart
@@ -241,14 +204,10 @@ const MainScreen = () => {
 									width={150}
 									height={250}
 									series={[{ data: uData, id: 'GPA' }]}
-									xAxis={[
-										{ data: xLabels, scaleType: 'band' },
-									]}
+									xAxis={[{ data: xLabels, scaleType: 'band' }]}
 									yAxis={[
 										{
-											data: [
-												0, 1, 2, 2.5, 3, 3.5, 4, 4.5,
-											],
+											data: [0, 1, 2, 2.5, 3, 3.5, 4, 4.5],
 											scaleType: 'linear',
 											min: 0,
 											max: 5,
@@ -264,20 +223,20 @@ const MainScreen = () => {
 					<Typography sx={{ mt: 6 }} color="#502C1E" fontSize={25}>
 						Active Courses
 					</Typography>
-					<Divider
-						sx={{ bgcolor: 'brown', marginBottom: 2 }}
-					></Divider>
+					<Divider sx={{ bgcolor: 'brown', marginBottom: 2 }}></Divider>
 				</Stack>
 				<Box>
-					{activeList.length === 0 ? 'You have not registered for the current Term' :
+					{activeList.length === 0 ? (
+						'You have not registered for the current Term'
+					) : (
 						<ScrollMenu
-						data={menuItems}
-						arrowLeft={<ChevronLeftIcon />} // Assuming ArrowLeft is a component
-						arrowRight={<ChevronRightIcon />} // Assuming ArrowRight is a component
-						selected={selected}
-						onSelect={onSelect}
-					/>
-					}
+							data={menuItems}
+							arrowLeft={<ChevronLeftIcon />} // Assuming ArrowLeft is a component
+							arrowRight={<ChevronRightIcon />} // Assuming ArrowRight is a component
+							selected={selected}
+							onSelect={onSelect}
+						/>
+					)}
 				</Box>
 			</Container>
 		</>

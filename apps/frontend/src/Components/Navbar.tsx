@@ -16,6 +16,7 @@ import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import { styled } from '@mui/material/styles';
 import { brown } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
+import { getUsernameFromCookie } from '../Utils/CookieFunctions';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -39,24 +40,9 @@ interface HandleLogoutFunction {
 	(): void;
 }
 
-const getUsernameCookie = () => {
-	const cookies = document.cookie.split(';');
-	for (let i = 0; i < cookies.length; i++) {
-		const cookie = cookies[i].trim();
-		if (cookie.startsWith('username=')) {
-			return cookie.substring('username='.length, cookie.length);
-		}
-	}
-	return undefined;
-};
-
 const Navbar = (props: { handleLogout: HandleLogoutFunction }) => {
-	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-		null,
-	);
-	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-		null,
-	);
+	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
 	const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorElNav(event.currentTarget);
@@ -77,10 +63,7 @@ const Navbar = (props: { handleLogout: HandleLogoutFunction }) => {
 	};
 
 	return (
-		<AppBar
-			sx={{ backgroundColor: 'white', boxShadow: 'none' }}
-			position="static"
-		>
+		<AppBar sx={{ backgroundColor: 'white', boxShadow: 'none' }} position="static">
 			<Container maxWidth="lg">
 				<Stack spacing={1} sx={{ mt: 3 }}>
 					<Toolbar disableGutters>
@@ -92,11 +75,7 @@ const Navbar = (props: { handleLogout: HandleLogoutFunction }) => {
 								fontSize: 80,
 							}}
 						/>
-						<Divider
-							orientation="vertical"
-							variant="middle"
-							flexItem
-						/>
+						<Divider orientation="vertical" variant="middle" flexItem />
 						<Typography
 							variant="h5"
 							noWrap
@@ -123,18 +102,9 @@ const Navbar = (props: { handleLogout: HandleLogoutFunction }) => {
 						></Box>
 						<Box sx={{ flexGrow: 0 }}>
 							<Tooltip title="Open settings">
-								<IconButton
-									onClick={handleOpenUserMenu}
-									sx={{ p: 0 }}
-								>
-									<Typography>
-										{getUsernameCookie()}
-									</Typography>
-									<Avatar
-										alt="Remy Sharp"
-										src=""
-										sx={{ ml: 2 }}
-									/>
+								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+									<Typography>{getUsernameFromCookie()}</Typography>
+									<Avatar alt="Remy Sharp" src="" sx={{ ml: 2 }} />
 								</IconButton>
 							</Tooltip>
 							<Menu
@@ -154,15 +124,8 @@ const Navbar = (props: { handleLogout: HandleLogoutFunction }) => {
 								onClose={handleCloseUserMenu}
 							>
 								{settings.map((setting) => (
-									<MenuItem
-										key={setting}
-										onClick={() =>
-											handleCloseUserMenu(setting)
-										}
-									>
-										<Typography textAlign="center">
-											{setting}
-										</Typography>
+									<MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
+										<Typography textAlign="center">{setting}</Typography>
 									</MenuItem>
 								))}
 							</Menu>
@@ -174,24 +137,16 @@ const Navbar = (props: { handleLogout: HandleLogoutFunction }) => {
 							<ColorButton variant="contained">Home</ColorButton>
 						</Link>
 						<Link to="/lookup">
-							<ColorButton variant="contained">
-								Courses Look Up
-							</ColorButton>
+							<ColorButton variant="contained">Courses Look Up</ColorButton>
 						</Link>
 						<Link to="/add-drop">
-							<ColorButton variant="contained">
-								Add/Drop Courses
-							</ColorButton>
+							<ColorButton variant="contained">Add/Drop Courses</ColorButton>
 						</Link>
 						<Link to="/calendar">
-							<ColorButton variant="contained">
-								Calendar
-							</ColorButton>
+							<ColorButton variant="contained">Calendar</ColorButton>
 						</Link>
 						<Link to="/roadmap">
-							<ColorButton variant="contained">
-								Roadmap
-							</ColorButton>
+							<ColorButton variant="contained">Roadmap</ColorButton>
 						</Link>
 					</Toolbar>
 				</Stack>

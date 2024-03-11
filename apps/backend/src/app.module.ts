@@ -10,6 +10,7 @@ import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
 import { ProfileModule } from './profile/profile.module';
 import { RoadmapModule } from './roadmap/roadmap.module';
+import { CourseModule } from './courses/course.module';
 
 @Module({
 	imports: [
@@ -28,6 +29,7 @@ import { RoadmapModule } from './roadmap/roadmap.module';
 		UsersModule,
 		ProfileModule,
 		RoadmapModule,
+		CourseModule,
 	],
 	controllers: [],
 	providers: [],
