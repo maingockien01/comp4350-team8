@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable, Relation } from 'typeorm';
 import { Degree } from './degree.entity';
 import { Section } from './section.entity';
+import { Course } from './course.entity';
 
 @Entity()
 export class User {
@@ -24,4 +25,8 @@ export class User {
 
 	@ManyToMany(() => Section, (section) => section.users)
 	sections: Relation<Section[]>;
+
+	@ManyToMany(() => Course, (course) => course.inPlanOfUsers)
+	@JoinTable()
+	plannedCourses: Relation<Course[]>;
 }

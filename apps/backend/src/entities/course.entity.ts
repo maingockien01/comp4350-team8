@@ -3,6 +3,7 @@ import { Section } from './section.entity';
 import { HasPrerequisites } from '@team8/types/domain/roadmap.model';
 import { Degree } from './degree.entity';
 import { Term } from './term.entity';
+import { User } from './user.entity';
 
 // TODO: PREREQUISITE of COURSES
 
@@ -38,4 +39,8 @@ export class Course implements HasPrerequisites {
 
 	@ManyToMany(() => Term, (term) => term.courses)
 	terms: Relation<Term[]>;
+
+	@ManyToMany(() => User, (user) => user.plannedCourses)
+	@JoinTable()
+	inPlanOfUsers: Relation<User[]>;
 }

@@ -5,6 +5,7 @@ import { DegreeModule } from './degrees/degree.module';
 import { UserCourseModule } from './users/user.course.module';
 import { AuthModule } from './auth/auth.module';
 import { ProfileModule } from './profile/profile.module';
+import { RoadmapModule } from './roadmap/roadmap.module';
 
 @Module({
 	imports: [
@@ -12,6 +13,7 @@ import { ProfileModule } from './profile/profile.module';
 		DegreeModule,
 		UserCourseModule,
 		AuthModule,
+		RoadmapModule,
 		RouterModule.register([
 			{
 				path: '/rest-api',
@@ -35,6 +37,10 @@ import { ProfileModule } from './profile/profile.module';
 					{
 						path: '/user',
 						module: UserCourseModule,
+					},
+					{
+						path: '/roadmap',
+						module: RoadmapModule,
 					},
 				],
 			},
