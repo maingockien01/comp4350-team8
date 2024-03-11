@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import { APPS_NAME } from '@team8/constants/apps';
-import MainScreen, { getUidCookie } from './Screens/MainScreen';
+import MainScreen from './Screens/MainScreen';
 import Calendar from './Screens/Calendar';
 import AddDropCourses from './Screens/AddDropCourses';
 import Roadmap from './Screens/Roadmap/Roadmap';
@@ -11,11 +11,12 @@ import CoursesScreen from './Screens/CoursesScreen';
 import Navbar from './Components/Navbar';
 import LoginScreen from './Screens/LoginScreen';
 import SignupScreen from './Screens/SignupScreen';
+import { getUidFromCookie } from './Utils/CookieFunctions';
 
 const App = () => {
 	const navigate = useNavigate();
 
-	const [isLoggedIn, setLoggedIn] = useState(getUidCookie() !== undefined);
+	const [isLoggedIn, setLoggedIn] = useState(getUidFromCookie() !== undefined);
 
 	const handleLogin = () => {
 		setLoggedIn(true);
