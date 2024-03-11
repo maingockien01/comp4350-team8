@@ -3,7 +3,6 @@ import { AuthService } from './auth.service';
 import { Response } from 'express';
 import { LogInDto, SignUpDto } from '@team8/types/dtos/auth';
 import { ReturnDto } from 'packages/types/dtos/auth/Return.dto';
-import { JWTAuthGuard } from './jwt-auth.guard';
 
 @Controller()
 export class AuthController {
@@ -40,12 +39,5 @@ export class AuthController {
 				message: 'Invalid username or password!',
 			};
 		}
-	}
-
-	//For testing
-	@UseGuards(JWTAuthGuard)
-	@Get('protected')
-	getHello(@Request() req): string {
-		return req.user;
 	}
 }
