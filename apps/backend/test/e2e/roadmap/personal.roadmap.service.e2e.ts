@@ -8,6 +8,6 @@ const app: INestApplication = global.app;
 describe('PersonalRoadmapService', () => {
 	it('should be defined', () => {
 		expect(app.get(getRepositoryToken(User))).toBeDefined();
-		expect(app.get(PersonalRoadmapService)).toBeDefined();
+		expect(app.get(PersonalRoadmapService, { strict: false })).toBeDefined();
 	});
 });
