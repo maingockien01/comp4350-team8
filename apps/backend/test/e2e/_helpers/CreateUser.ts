@@ -8,6 +8,7 @@ export function createUser(app: INestApplication, overrides: Partial<User> = {})
 		username: randomStringGenerator(),
 		hashPassword: randomStringGenerator(),
 		pictureProfile: randomStringGenerator(),
+		fullName: randomStringGenerator(),
 		...overrides,
 	});
 }
