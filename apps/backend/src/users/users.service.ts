@@ -2,8 +2,9 @@ import { Injectable, ForbiddenException } from '@nestjs/common';
 import { Repository, QueryFailedError } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UpdateDto } from '@team8/types/dtos/profile/update.dto';
+import { UpdateUserDto } from '@team8/types/dtos/profile/update.dto';
 import { CreateUserDto } from '../auth/createUser.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -25,14 +26,29 @@ export class UsersService {
 		}
 	}
 
+	async updateUserInfo(uid: number, dto: UpdateUserDto) {
+		try {
+			const saltOrRounds = 10;
+			const user = await this.findOneById(uid);
+			if (dto.username !== null) user.username = dto.username;
+			if (dto.fullName !== null) user.fullName = dto.fullName;
+			if (dto.password !== null) user.hashPassword = await bcrypt.hash(dto.password, saltOrRounds);
+			await this.usersRepository.save(user);
+			return user;
+		} catch (error) {
+			if (error instanceof QueryFailedError) {
+				if (error.driverError.code === 'ER_DUP_ENTRY') {
+					throw new ForbiddenException('Credential taken');
+				}
+			}
+		}
+	}
+
 	async findOneByUsername(username: string) {
 		return this.usersRepository.findOneBy({ username });
 	}
 
-	async update(dto: UpdateDto) {
-		const user = await this.findOneByUsername(dto.username);
-		if (dto.fullName !== null) user.fullName = dto.fullName;
-		if (dto.pictureProfile !== null) user.pictureProfile = dto.pictureProfile;
-		await this.usersRepository.save(user);
+	async findOneById(uid: number) {
+		return this.usersRepository.findOneBy({ uid });
 	}
 }

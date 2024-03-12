@@ -7,27 +7,27 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-INSERT INTO `user` (`uid`, `fullName`, `username`, `hashPassword`, `pictureProfile`, `degreeDid`) VALUES
-(1, 'compuser', 'Computer Science User', '123', 'default', 1),
-(2, 'statuser', 'Statistics User', '123', 'default', 2),
-(3, 'mathuser', 'Mathematics User', '123', 'default', 3),
-(4, 'datauser', 'Data Science User', '123', 'default', 4),
-(5, 'Daniel Brown', 'danielbrown', '123', 'default', 1),
-(6, 'Olivia Jones', 'oliviajones', '123', 'default', 1),
-(7, 'Matthew Davis', 'matthewdavis', '123', 'default', 1),
-(8, 'Ava Miller', 'avamiller', '123', 'default', 1),
-(9, 'William Wilson', 'williamwilson', '123', 'default', 1),
-(10, 'Sophia Moore', 'sophiamoore', '123', 'default', 1),
-(11, 'James Taylor', 'jamestaylor', '123', 'default', 1),
-(12, 'Charlotte Anderson', 'charlotteanderson', '123', 'default', 1),
-(13, 'Benjamin Thomas', 'benjaminthomas', '123', 'default', 1),
-(14, 'Amelia Jackson', 'ameliajackson', '123', 'default', 1),
-(15, 'Alexander White', 'alexanderwhite', '123', 'default', 1),
-(16, 'Mia Harris', 'miaharris', '123', 'default', 1),
-(17, 'Ethan Martinez', 'ethanmartinez', '123', 'default', 1),
-(18, 'Harper Thompson', 'harperthompson', '123', 'default', 1),
-(19, 'Daniel Garcia', 'danielgarcia', '123', 'default', 1),
-(20, 'Evelyn Lopez', 'evelynlopez', '123', 'default', 1);
+INSERT INTO `user` (`uid`, `fullName`, `username`, `hashPassword`, `degreeDid`) VALUES
+(1, 'Computer Science User', 'compuser', '123', 1),
+(2, 'Statistics User', 'statuser', '123', 2),
+(3, 'Mathematics User', 'mathuser', '123', 3),
+(4, 'Data Science User', 'datauser', '123', 4),
+(5, 'Daniel Brown', 'danielbrown', '123', 1),
+(6, 'Olivia Jones', 'oliviajones', '123', 1),
+(7, 'Matthew Davis', 'matthewdavis', '123', 1),
+(8, 'Ava Miller', 'avamiller', '123', 1),
+(9, 'William Wilson', 'williamwilson', '123', 1),
+(10, 'Sophia Moore', 'sophiamoore', '123', 1),
+(11, 'James Taylor', 'jamestaylor', '123', 1),
+(12, 'Charlotte Anderson', 'charlotteanderson', '123', 1),
+(13, 'Benjamin Thomas', 'benjaminthomas', '123', 1),
+(14, 'Amelia Jackson', 'ameliajackson', '123', 1),
+(15, 'Alexander White', 'alexanderwhite', '123', 1),
+(16, 'Mia Harris', 'miaharris', '123', 1),
+(17, 'Ethan Martinez', 'ethanmartinez', '123', 1),
+(18, 'Harper Thompson', 'harperthompson', '123', 1),
+(19, 'Daniel Garcia', 'danielgarcia', '123', 1),
+(20, 'Evelyn Lopez', 'evelynlopez', '123', 1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
