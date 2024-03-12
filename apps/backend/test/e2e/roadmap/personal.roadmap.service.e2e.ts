@@ -79,7 +79,7 @@ describe('PersonalRoadmapService', () => {
 			await personalRoadmapService.savePersonalRoadmap(user.uid, [anotherCourse.cid, course.cid]);
 
 			const roadmap = await personalRoadmapService.getPersonalRoadmap(user.uid);
-			expect(roadmap.recommendedCourses).toHaveLength(1);
+			expect(roadmap.courses).toHaveLength(2);
 		});
 	});
 });
