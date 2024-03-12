@@ -55,23 +55,17 @@ describe('RoadmapController', () => {
 
 		it('should update roadmap for existing user', async () => {
 			const courses = await saveCourses(app, 10);
-			console.log(courses);
 			const user = await saveUser(app, { plannedCourses: courses });
-			console.log(user);
 			const token = await getJWTToken(app, user);
-			console.log(token);
 			const newCourses = await saveCourses(app, 2);
-			console.log(newCourses);
 			return request(app.getHttpServer())
 				.post('/rest-api/roadmap/personal')
 				.set('Authorization', `Bearer ${token}`)
 				.send({ courses: newCourses })
 				.expect(200)
 				.then((response) => {
-					expect(
-						response.body.courses
-							.map((course) => course.cid)
-							.toEqual(newCourses.map((course) => course.cid)),
+					expect(response.body.courses.map((course) => course.cid)).toEqual(
+						newCourses.map((course) => course.cid),
 					);
 				});
 		});
