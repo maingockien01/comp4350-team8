@@ -1,6 +1,5 @@
-export interface UserDTO{
-    uid: number;
-    fullName: string;
-    username: string;
-    pictureProfile: string;
+export interface UserDTO {
+	uid: number;
+	fullName: string;
+	username: string;
 }
