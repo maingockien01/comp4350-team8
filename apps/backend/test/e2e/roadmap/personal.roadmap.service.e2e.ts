@@ -76,7 +76,7 @@ describe('PersonalRoadmapService', () => {
 			const course = await saveCourse(app);
 			const anotherCourse = await saveCourse(app, { prerequisites: [course] });
 			const user = await saveUser(app);
-			await personalRoadmapService.savePersonalRoadmap(user.uid, [anotherCourse.cid]);
+			await personalRoadmapService.savePersonalRoadmap(user.uid, [anotherCourse.cid, course.cid]);
 
 			const roadmap = await personalRoadmapService.getPersonalRoadmap(user.uid);
 			expect(roadmap.recommendedCourses).toHaveLength(1);
