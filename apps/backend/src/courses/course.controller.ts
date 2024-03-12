@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Query } from '@nestjs/common';
 import { CoursesService } from './course.service';
 import { CourseDTO } from '@team8/types/dtos/course/course.dto';
+import { Section } from '../entities/section.entity';
 
 @Controller()
 export class CoursesController {
@@ -16,8 +17,18 @@ export class CoursesController {
 		//return this.courseService.findCurrentTerm();
 	}
 
-	@Get('test')
+	@Get('one')
+	async findCourseById(@Query('cid') cid: number): Promise<CourseDTO> {
+		return await this.courseService.getCourseById(cid);
+	}
+
+	@Get('prerequisites')
 	async findPrerequisite(@Query('cid') cid: number): Promise<CourseDTO[]> {
 		return await this.courseService.getPrerequisite(cid);
+	}
+
+	@Get('sections')
+	async findSection(@Query('cid') cid: number): Promise<Section[]> {
+		return await this.courseService.getSections(cid);
 	}
 }

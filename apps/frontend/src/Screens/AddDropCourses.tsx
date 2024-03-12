@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Section } from '@team8/backend/src/entities/section.entity';
+import { SectionDTO } from 'packages/types/dtos/section/section.dto';
 
 const AddDropCourses = () => {
 	const token = getTokenFromCookie();

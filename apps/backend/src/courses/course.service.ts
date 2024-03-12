@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Course } from '../entities/course.entity';
 import { CourseDTO } from '@team8/types/dtos/course/course.dto';
+import { Section } from '../entities/section.entity';
 
 @Injectable()
 export class CoursesService {
@@ -49,5 +50,29 @@ export class CoursesService {
 		});
 
 		return courses.prerequisites;
+	}
+
+	async getSections(cid: number): Promise<Section[]> {
+		const courses = await this.courseRepository.findOne({
+			relations: {
+				sections: {
+					location: true,
+					term: true,
+				},
+			},
+			where: {
+				cid: cid,
+			},
+		});
+
+		return courses.sections;
+	}
+
+	async getCourseById(cid: number): Promise<CourseDTO> {
+		return await this.courseRepository.findOne({
+			where: {
+				cid: cid,
+			},
+		});
 	}
 }
