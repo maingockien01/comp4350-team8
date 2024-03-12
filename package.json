@@ -40,6 +40,7 @@
 	},
 	"dependencies": {
 		"@daypilot/daypilot-lite-react": "^3.20.1",
+		"ics": "^3.7.2",
 		"react-timetable-events": "^2.0.0"
 	}
 }
