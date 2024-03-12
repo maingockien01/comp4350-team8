@@ -28,7 +28,7 @@ export class Roadmap {
 
 	private hasPrerequisites(course: HasPrerequisites): boolean {
 		const prerequisites = course.prerequisites;
-		if (prerequisites.length === 0) {
+		if (!prerequisites || prerequisites.length === 0) {
 			return true;
 		}
 
