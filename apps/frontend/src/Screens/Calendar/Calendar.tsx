@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Container from '@mui/material/Container';
 import Timetable from 'react-timetable-events';
-import { getCurrentUserID } from '../../Utils/getCurrentUserID';
+import { getTokenFromCookie, getUidFromCookie } from '../../Utils/CookieFunctions';
 import { SectionDTO } from '@team8/types/dtos/section/section.dto';
-import '../../css/Calendar.css';
 import Button, { ButtonProps } from '@mui/material/Button';
 import styled from '@emotion/styled';
 import { brown } from '@mui/material/colors';
 import exportCalendar from './exportCalendar';
-
+import '../../css/Calendar.css';
+import { DayHeaderPreviewProps, HourPreviewProps } from 'react-timetable-events/dist/types';
+import brown from '@mui/material/colors/brown';
 interface Class {
 	id: number;
 	name: string;
@@ -59,16 +60,21 @@ const Calendar = () => {
 	});
 
 	useEffect(() => {
-		const uid = getCurrentUserID();
-		fetch('/rest-api/term/searchCurrent')
-			.then((res) => res.json())
-			.then((tid) => {
-				return fetch(`/rest-api/user/searchActive?uid=${uid}&tid=${tid}`);
-			})
-			.then((res) => res.json())
-			.then((res) => {
-				for (let i = 0; i < res.length; i++) {
-					const events = res[i].time.split(',');
+		const fetchData = async () => {
+			const uid = getUidFromCookie();
+			const token = getTokenFromCookie();
+
+			try {
+				const res1 = await fetch('/rest-api/term/searchCurrent');
+				const res1Json = await res1.json();
+
+				const res2 = await fetch(`/rest-api/user/searchActive?uid=${uid}&tid=${res1Json}`, {
+					headers: { Authorization: `Bearer ${token}` },
+				});
+				const res2Json = await res2.json();
+
+				for (let i = 0; i < res2Json.length; i++) {
+					const events = res2Json[i].time.split(',');
 					const day = [];
 					for (const e of events) {
 						const dayAbbr = e.charAt(0);
@@ -85,22 +91,22 @@ const Calendar = () => {
 						setTimetable(
 							weeklySchedule[dayName].push({
 								id: 1,
-								name: res[i].courseName + ' [' + res[i].location + ']',
+								name: res2Json[i].courseName + ' [' + res2Json[i].location + ']',
 								startTime: startTime,
 								endTime: endTime,
+								location: res2Json[i].location,
 							}),
 						);
 					}
 				}
-			})
-			.catch((error) => {
+			} catch (error) {
 				console.error('Error fetching data:', error);
-			});
+			}
+		};
+
+		fetchData();
 	}, []);
 
-	/*const exportCalendar = () => {
-		alert('Exporting calendar...');
-	};*/
 	return (
 		<Container maxWidth="lg">
 			<div className="header">
@@ -109,7 +115,11 @@ const Calendar = () => {
 					Export
 				</ColorButton>
 			</div>
-			<Timetable events={weeklySchedule} style={{ height: '500px' }} />
+			<Timetable
+				events={weeklySchedule}
+				style={{ height: '70vh' }}
+				hoursInterval={{ from: 7, to: 20 }}
+			/>
 		</Container>
 	);
 };
