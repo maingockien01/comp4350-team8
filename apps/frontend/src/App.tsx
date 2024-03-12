@@ -13,6 +13,7 @@ import LoginScreen from './Screens/LoginScreen';
 import SignupScreen from './Screens/SignupScreen';
 import DetailScreen from './Screens/DetailScreen';
 import { getTokenFromCookie } from './Utils/CookieFunctions';
+import UserProfileScreen from './Screens/UserProfileScreen';
 
 const App = () => {
 	const navigate = useNavigate();
@@ -73,6 +74,10 @@ const App = () => {
 				<Route
 					path="/roadmap"
 					element={isLoggedIn ? <Roadmap /> : <Navigate to="/login" replace />}
+				/>
+				<Route
+					path="/profile"
+					element={isLoggedIn ? <UserProfileScreen /> : <Navigate to="/login" replace />}
 				/>
 				<Route path="/login" element={<LoginScreen handleLogin={handleLogin} />} />
 				<Route path="/signup" element={<SignupScreen />} />
