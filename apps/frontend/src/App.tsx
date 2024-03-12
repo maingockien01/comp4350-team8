@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { APPS_NAME } from '@team8/constants/apps';
 import MainScreen from './Screens/MainScreen';
-import Calendar from './Screens/Calendar';
+import { getUidFromCookie } from './Utils/CookieFunctions';
+import Calendar from './Screens/Calendar/Calendar';
 import AddDropCourses from './Screens/AddDropCourses';
 import Roadmap from './Screens/Roadmap/Roadmap';
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
@@ -11,13 +12,20 @@ import CoursesScreen from './Screens/CoursesScreen';
 import Navbar from './Components/Navbar';
 import LoginScreen from './Screens/LoginScreen';
 import SignupScreen from './Screens/SignupScreen';
-import { getUidFromCookie } from './Utils/CookieFunctions';
 import DetailScreen from './Screens/DetailScreen';
+import { getTokenFromCookie } from './Utils/CookieFunctions';
+import UserProfileScreen from './Screens/UserProfileScreen';
 
 const App = () => {
 	const navigate = useNavigate();
 
-	const [isLoggedIn, setLoggedIn] = useState(getUidFromCookie() !== undefined);
+	const [isLoggedIn, setLoggedIn] = useState(getTokenFromCookie() !== undefined);
+
+	useEffect(() => {
+		if (isLoggedIn && (window.location.pathname === '/login' || window.location.pathname === '/signup')) {
+			navigate('/home');
+		}
+	}, [isLoggedIn, navigate]);
 
 	const handleLogin = () => {
 		setLoggedIn(true);
@@ -67,6 +75,10 @@ const App = () => {
 				<Route
 					path="/roadmap"
 					element={isLoggedIn ? <Roadmap /> : <Navigate to="/login" replace />}
+				/>
+				<Route
+					path="/profile"
+					element={isLoggedIn ? <UserProfileScreen /> : <Navigate to="/login" replace />}
 				/>
 				<Route path="/login" element={<LoginScreen handleLogin={handleLogin} />} />
 				<Route path="/signup" element={<SignupScreen />} />
