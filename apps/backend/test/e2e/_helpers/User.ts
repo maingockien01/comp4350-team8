@@ -7,7 +7,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 
 export function saveUser(app: INestApplication, overrides: Partial<User> = {}): Promise<User> {
 	console.log('getRepositoryToken(User)', getRepositoryToken(User));
-	console.log('saveUser', app.get<Repository<User>>(getRepositoryToken(User)));
+	console.log('saveUser', overrides);
 	return app.get<Repository<User>>(getRepositoryToken(User)).save({
 		username: randomStringGenerator(),
 		hashPassword: randomStringGenerator(),
