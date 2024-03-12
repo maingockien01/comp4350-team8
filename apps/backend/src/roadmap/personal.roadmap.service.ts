@@ -19,7 +19,9 @@ export class PersonalRoadmapService {
 				uid: userId,
 			},
 			relations: {
-				plannedCourses: true,
+				plannedCourses: {
+					prerequisites: true,
+				},
 			},
 		});
 
@@ -30,6 +32,9 @@ export class PersonalRoadmapService {
 		const courses = await this.courseRepository.find({
 			where: {
 				cid: In(cids),
+			},
+			relations: {
+				prerequisites: true,
 			},
 		});
 
