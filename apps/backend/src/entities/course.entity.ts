@@ -4,6 +4,7 @@ import { HasPrerequisites } from '@team8/types/domain/roadmap.model';
 import { Degree } from './degree.entity';
 import { Term } from './term.entity';
 import { User } from './user.entity';
+import { GetterDefault } from "@team8/utils/decorator/GetterDefault";
 
 // TODO: PREREQUISITE of COURSES
 
@@ -33,6 +34,7 @@ export class Course implements HasPrerequisites {
 	@ManyToMany(() => Course, (course) => course.prerequisites)
 	dependents: Relation<Course[]>;
 
+	@GetterDefault({ defaultValue: [] })
 	@ManyToMany(() => Course, (course) => course.dependents)
 	@JoinTable({ name: 'courses_prerequisite_relation' })
 	prerequisites: Relation<Course[]>;
