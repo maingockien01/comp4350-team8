@@ -32,5 +32,5 @@ export function saveCourses(
 			...overrides,
 		});
 	}
-	return app.get<Repository<Course>>(getRepositoryToken(Course)).save(courses, { reload: true });
+	return app.get<Repository<Course>>(getRepositoryToken(Course)).save(courses);
 }
