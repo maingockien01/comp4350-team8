@@ -41,19 +41,21 @@ const Calendar = () => {
 	});
 
 	useEffect(() => {
-		let uid = getUidFromCookie();
-		const token = getTokenFromCookie();
-		fetch('/rest-api/term/searchCurrent')
-			.then((res) => res.json())
-			.then((tid) => {
-				return fetch(`/rest-api/user/searchActive?tid=${tid}`, {
+		const fetchData = async () => {
+			const uid = getUidFromCookie();
+			const token = getTokenFromCookie();
+
+			try {
+				const res1 = await fetch('/rest-api/term/searchCurrent');
+				const res1Json = await res1.json();
+
+				const res2 = await fetch(`/rest-api/user/searchActive?uid=${uid}&tid=${res1Json}`, {
 					headers: { Authorization: `Bearer ${token}` },
 				});
-			})
-			.then((res) => res.json())
-			.then((res) => {
-				for (let i = 0; i < res.length; i++) {
-					const events = res[i].time.split(',');
+				const res2Json = await res2.json();
+
+				for (let i = 0; i < res2Json.length; i++) {
+					const events = res2Json[i].time.split(',');
 					let day = [];
 					for (const e of events) {
 						let dayAbbr = e.charAt(0);
@@ -70,17 +72,19 @@ const Calendar = () => {
 						setTimetable(
 							weeklySchedule[dayName].push({
 								id: 1,
-								name: res[i].courseName + ' [' + res[i].location + ']',
+								name: res2Json[i].courseName + ' [' + res2Json[i].location + ']',
 								startTime: startTime,
 								endTime: endTime,
 							}),
 						);
 					}
 				}
-			})
-			.catch((error) => {
+			} catch (error) {
 				console.error('Error fetching data:', error);
-			});
+			}
+		};
+
+		fetchData();
 	}, []);
 
 	return (

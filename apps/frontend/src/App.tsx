@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { APPS_NAME } from '@team8/constants/apps';
 import MainScreen from './Screens/MainScreen';
@@ -11,13 +11,19 @@ import CoursesScreen from './Screens/CoursesScreen';
 import Navbar from './Components/Navbar';
 import LoginScreen from './Screens/LoginScreen';
 import SignupScreen from './Screens/SignupScreen';
-import { getUidFromCookie } from './Utils/CookieFunctions';
 import DetailScreen from './Screens/DetailScreen';
+import { getTokenFromCookie } from './Utils/CookieFunctions';
 
 const App = () => {
 	const navigate = useNavigate();
 
-	const [isLoggedIn, setLoggedIn] = useState(getUidFromCookie() !== undefined);
+	const [isLoggedIn, setLoggedIn] = useState(getTokenFromCookie() !== undefined);
+
+	useEffect(() => {
+		if (isLoggedIn && (window.location.pathname === '/login' || window.location.pathname === '/signup')) {
+			navigate('/home');
+		}
+	}, [isLoggedIn, navigate]);
 
 	const handleLogin = () => {
 		setLoggedIn(true);
