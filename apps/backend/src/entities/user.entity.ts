@@ -29,10 +29,6 @@ export class User {
 	@ManyToMany(() => Course, (course) => course.inPlanOfUsers, {
 		cascade: true,
 	})
-	@JoinTable({
-		name: 'planned_courses_user',
-		joinColumn: { name: 'personal_roadmap_uid' },
-		inverseJoinColumn: { name: 'personal_roadmap_cid' },
-	})
+	@JoinTable({ name: 'planned_courses_user' })
 	plannedCourses: Relation<Course[]>;
 }
