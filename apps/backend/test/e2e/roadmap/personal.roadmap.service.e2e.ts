@@ -71,5 +71,15 @@ describe('PersonalRoadmapService', () => {
 			const roadmap = await personalRoadmapService.getPersonalRoadmap(user.uid);
 			expect(roadmap.recommendedCourses).toHaveLength(courses.length);
 		});
+
+		it('should save roadmap for user with prerequisites', async () => {
+			const course = await saveCourse(app);
+			const anotherCourse = await saveCourse(app, { prerequisites: [course] });
+			const user = await saveUser(app);
+			await personalRoadmapService.savePersonalRoadmap(user.uid, [anotherCourse.cid]);
+
+			const roadmap = await personalRoadmapService.getPersonalRoadmap(user.uid);
+			expect(roadmap.recommendedCourses).toHaveLength(1);
+		});
 	});
 });
