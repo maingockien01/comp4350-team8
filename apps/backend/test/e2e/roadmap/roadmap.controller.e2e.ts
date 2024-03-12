@@ -7,8 +7,8 @@ import { saveCourse, saveCourses } from '../_helpers/Course';
 import { Repository } from 'typeorm';
 import { Course } from '../../../src/entities/course.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { User } from "../../../src/entities/user.entity";
-import { randomStringGenerator } from "@nestjs/common/utils/random-string-generator.util";
+import { User } from '../../../src/entities/user.entity';
+import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
 
 describe('RoadmapController', () => {
 	let app: INestApplication;
@@ -39,16 +39,20 @@ describe('RoadmapController', () => {
 
 		it('should return roadmap for existing user', async () => {
 			const courses = await saveCourses(app, 2);
-			const coursesFromDB = await app.get<Repository<Course>>(getRepositoryToken(Course)).find();
-			console.log('coursesFromDB', coursesFromDB);
 
-			const user = await app.get<Repository<User>>(getRepositoryToken(User)).save({
-				username: randomStringGenerator(),
-				hashPassword: randomStringGenerator(),
-				pictureProfile: randomStringGenerator(),
-				fullName: randomStringGenerator(),
-				plannedCourses: courses,
-			});
+			const user = await app.get<Repository<User>>(getRepositoryToken(User)).save(
+				{
+					username: randomStringGenerator(),
+					hashPassword: randomStringGenerator(),
+					pictureProfile: randomStringGenerator(),
+					fullName: randomStringGenerator(),
+					plannedCourses: courses,
+				},
+				{
+					reload: true,
+					transaction: true,
+				},
+			);
 
 			console.log('user', user);
 			const token = await getJWTToken(app, user);
