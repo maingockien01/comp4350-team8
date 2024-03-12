@@ -18,7 +18,6 @@ import { join } from 'path';
 				),
 				synchronize: config.getOrThrow<boolean>('DB_SYNCHRONIZE'),
 				entities: [join(__dirname, '../**/*.entity{.ts,.js}')],
-				debug: true,
 			}),
 			inject: [ConfigService],
 		}),
