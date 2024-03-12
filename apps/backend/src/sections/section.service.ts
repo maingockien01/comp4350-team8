@@ -8,7 +8,17 @@ import { SectionDTO } from '@team8/types/dtos/section/section.dto';
 export class SectionService {
 	constructor(
 		@InjectRepository(Section)
-		private SectionRepository: Repository<Section>,
+		private sectionRepository: Repository<Section>,
 	) {}
 
+	async find(sid: number): Promise<Section> {
+		return await this.sectionRepository.findOne({
+			relations: {
+				term: true,
+			},
+			where: {
+				sid: sid,
+			},
+		});
+	}
 }

@@ -12,6 +12,7 @@ import Navbar from './Components/Navbar';
 import LoginScreen from './Screens/LoginScreen';
 import SignupScreen from './Screens/SignupScreen';
 import { getUidFromCookie } from './Utils/CookieFunctions';
+import DetailScreen from './Screens/DetailScreen';
 
 const App = () => {
 	const navigate = useNavigate();
@@ -50,6 +51,10 @@ const App = () => {
 				<Route
 					path="/courses"
 					element={isLoggedIn ? <CoursesScreen /> : <Navigate to="/login" replace />}
+				/>
+				<Route
+					path="/detail"
+					element={isLoggedIn ? <DetailScreen /> : <Navigate to="/login" replace />}
 				/>
 				<Route
 					path="/add-drop"

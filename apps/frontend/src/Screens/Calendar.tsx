@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Container from '@mui/material/Container';
 import Timetable from 'react-timetable-events';
-import { getUidFromCookie } from '../Utils/CookieFunctions';
+import { getTokenFromCookie, getUidFromCookie } from '../Utils/CookieFunctions';
 import { SectionDTO } from '@team8/types/dtos/section/section.dto';
 
 interface Class {
@@ -42,10 +42,13 @@ const Calendar = () => {
 
 	useEffect(() => {
 		let uid = getUidFromCookie();
+		const token = getTokenFromCookie();
 		fetch('/rest-api/term/searchCurrent')
 			.then((res) => res.json())
 			.then((tid) => {
-				return fetch(`/rest-api/user/searchActive?uid=${uid}&tid=${tid}`);
+				return fetch(`/rest-api/user/searchActive?tid=${tid}`, {
+					headers: { Authorization: `Bearer ${token}` },
+				});
 			})
 			.then((res) => res.json())
 			.then((res) => {

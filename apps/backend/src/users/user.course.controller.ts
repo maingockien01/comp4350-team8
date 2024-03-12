@@ -1,4 +1,4 @@
-import { Controller, Get, Query, UseGuards, Request } from '@nestjs/common';
+import { Controller, Get, Query, UseGuards, Request, Post, Delete } from '@nestjs/common';
 import { UserCourseService } from './user.course.service';
 import { UserDTO } from '@team8/types/dtos/user/user.dto';
 import { SectionDTO } from '@team8/types/dtos/section/section.dto';
@@ -23,19 +23,28 @@ export class UserCourseController {
 		return this.userService.find(tid);
 	}
 
+	@UseGuards(JWTAuthGuard)
 	@Get('searchSection')
-	async findSection(@Query('uid') uid: number, @Query('tid') tid: number): Promise<Section[]> {
-		return this.userService.findSection(uid, tid);
+	async findSection(@Query('tid') tid: number, @Request() req): Promise<Section[]> {
+		return this.userService.findSection(req.user.uid, tid);
 	}
 
 	@UseGuards(JWTAuthGuard)
 	@Get('searchActive')
-	async findActive(
-		@Query('uid') uid: number,
-		@Query('tid') tid: number,
-		@Request() req,
-	): Promise<SectionDTO[]> {
+	async findActive(@Query('tid') tid: number, @Request() req): Promise<SectionDTO[]> {
 		console.log(req.user);
-		return this.userService.findActive(uid, tid);
+		return this.userService.findActive(req.user.uid, tid);
+	}
+
+	@UseGuards(JWTAuthGuard)
+	@Get('add')
+	async addUserWithSection(@Query('sid') sid: number, @Request() req): Promise<void> {
+		await this.userService.registerSection(req.user.uid, sid);
+	}
+
+	@UseGuards(JWTAuthGuard)
+	@Get('remove')
+	async removeUserFromSection(@Query('sid') sid: number, @Request() req): Promise<void> {
+		await this.userService.deleteUserFromSection(sid, req.user.uid);
 	}
 }

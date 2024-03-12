@@ -15,4 +15,9 @@ export class CoursesController {
 		return 1;
 		//return this.courseService.findCurrentTerm();
 	}
+
+	@Get('test')
+	async findPrerequisite(@Query('cid') cid: number): Promise<CourseDTO[]> {
+		return await this.courseService.getPrerequisite(cid);
+	}
 }

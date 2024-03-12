@@ -37,4 +37,17 @@ export class CoursesService {
 
 		return courses;
 	}
+
+	async getPrerequisite(cid: number): Promise<CourseDTO[]> {
+		const courses = await this.courseRepository.findOne({
+			relations: {
+				prerequisites: true,
+			},
+			where: {
+				cid: cid,
+			},
+		});
+
+		return courses.prerequisites;
+	}
 }
