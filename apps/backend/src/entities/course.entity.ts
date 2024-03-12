@@ -4,7 +4,7 @@ import { HasPrerequisites } from '@team8/types/domain/roadmap.model';
 import { Degree } from './degree.entity';
 import { Term } from './term.entity';
 import { User } from './user.entity';
-import { GetterDefault } from '@team8/utils/decorator/GetterDefault';
+import { GetterDefault } from "@team8/utils/decorator/GetterDefault";
 
 // TODO: PREREQUISITE of COURSES
 
