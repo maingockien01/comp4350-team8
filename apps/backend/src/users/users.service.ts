@@ -31,9 +31,9 @@ export class UsersService {
 			const saltOrRounds = 10;
 			const user = await this.findOneById(uid);
 			if (user) {
-				if (dto.username !== null) user.username = dto.username;
-				if (dto.fullName !== null) user.fullName = dto.fullName;
-				if (dto.password !== null) user.hashPassword = await bcrypt.hash(dto.password, saltOrRounds);
+				if (dto.username !== '') user.username = dto.username;
+				if (dto.fullName !== '') user.fullName = dto.fullName;
+				if (dto.password !== '') user.hashPassword = await bcrypt.hash(dto.password, saltOrRounds);
 				await this.usersRepository.save(user);
 				return user;
 			} else {
@@ -42,7 +42,7 @@ export class UsersService {
 		} catch (error) {
 			if (error instanceof QueryFailedError) {
 				if (error.driverError.code === 'ER_DUP_ENTRY') {
-					throw new ForbiddenException('Credential Taken!');
+					throw new ForbiddenException('Username is already taken!');
 				}
 			}
 		}

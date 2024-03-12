@@ -8,10 +8,17 @@ export class ProfileService {
 
 	async updateUserInfo(uid: number, dto: UpdateUserDto): Promise<any> {
 		//TODO: Hash the password
-		const user = await this.usersService.updateUserInfo(uid, dto);
-		if (!user) {
-			throw new UnauthorizedException();
+		try {
+			await this.usersService.updateUserInfo(uid, dto);
+			return {
+				message: 'Updated user profile successfully',
+				status: 'success',
+			};
+		} catch (error) {
+			return {
+				message: error.message,
+				status: 'fail',
+			};
 		}
-		return user;
 	}
 }

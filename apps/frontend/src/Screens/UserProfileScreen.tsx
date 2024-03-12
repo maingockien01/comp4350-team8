@@ -1,10 +1,11 @@
 import React from 'react';
 import '../css/UserProfileScreen.css';
+import UserProfileForm from '../Components/UserProfileForm';
 
 const UserProfileScreen = () => {
 	return (
 		<div className="UserProfileScreen">
-			<h1>This is Profile Page!</h1>
+			<UserProfileForm />
 		</div>
 	);
 };
