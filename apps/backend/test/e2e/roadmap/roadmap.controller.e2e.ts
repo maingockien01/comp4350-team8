@@ -33,9 +33,8 @@ describe('RoadmapController', () => {
 		});
 
 		it('should return roadmap for existing user', async () => {
-			const user = await saveUser(app, {
-				plannedCourses: await saveCourses(app, 2),
-			});
+			const courses = await saveCourses(app, 10);
+			const user = await saveUser(app, { plannedCourses: courses });
 			const token = await getJWTToken(app, user);
 			return request(app.getHttpServer())
 				.get('/rest-api/roadmap/personal')
@@ -57,9 +56,8 @@ describe('RoadmapController', () => {
 		});
 
 		it('should update roadmap for existing user', async () => {
-			const user = await saveUser(app, {
-				plannedCourses: await saveCourses(app, 2),
-			});
+			const courses = await saveCourses(app, 10);
+			const user = await saveUser(app, { plannedCourses: courses });
 			const token = await getJWTToken(app, user);
 			const newCourses = await saveCourses(app, 2);
 			return request(app.getHttpServer())
@@ -77,9 +75,8 @@ describe('RoadmapController', () => {
 		});
 
 		it('should throw error for invalid courses', async () => {
-			const user = await saveUser(app, {
-				plannedCourses: await saveCourses(app, 2),
-			});
+			const courses = await saveCourses(app, 10);
+			const user = await saveUser(app, { plannedCourses: courses });
 			const token = await getJWTToken(app, user);
 			const newCourses = await saveCourses(app, 2);
 			return request(app.getHttpServer())
@@ -90,9 +87,8 @@ describe('RoadmapController', () => {
 		});
 
 		it('should throw error for invalid roadmap with invalid prerequisites', async () => {
-			const user = await saveUser(app, {
-				plannedCourses: await saveCourses(app, 2),
-			});
+			const courses = await saveCourses(app, 10);
+			const user = await saveUser(app, { plannedCourses: courses });
 			const token = await getJWTToken(app, user);
 			const course = await saveCourse(app);
 			const course2 = await saveCourse(app, { prerequisites: [course] });
