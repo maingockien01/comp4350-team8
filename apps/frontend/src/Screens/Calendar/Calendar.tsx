@@ -9,7 +9,7 @@ import { brown } from '@mui/material/colors';
 import exportCalendar from './exportCalendar';
 import '../../css/Calendar.css';
 import { DayHeaderPreviewProps, HourPreviewProps } from 'react-timetable-events/dist/types';
-import brown from '@mui/material/colors/brown';
+
 interface Class {
 	id: number;
 	name: string;
