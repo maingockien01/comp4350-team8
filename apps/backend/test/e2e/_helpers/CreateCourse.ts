@@ -6,8 +6,10 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 
 export function createCourse(app: INestApplication, overrides: Partial<Course> = {}): Promise<Course> {
 	return app.get<Repository<Course>>(getRepositoryToken(Course)).save({
-		title: randomStringGenerator(),
 		description: randomStringGenerator(),
+		department: randomStringGenerator(),
+		courseNumber: Math.random(),
+		courseName: randomStringGenerator(),
 		...overrides,
 	});
 }
