@@ -27,7 +27,7 @@ describe('PersonalRoadmapService', () => {
 			const user = await saveUser(app);
 			const roadmap = await personalRoadmapService.getPersonalRoadmap(user.uid);
 
-			expect(roadmap.recommendedCourses).toEqual([]);
+			expect(roadmap.courses).toEqual([]);
 		});
 
 		it('should return roadmap for user with planned courses', async () => {
@@ -35,7 +35,7 @@ describe('PersonalRoadmapService', () => {
 			const user = await saveUser(app, { plannedCourses: courses });
 			const roadmap = await personalRoadmapService.getPersonalRoadmap(user.uid);
 
-			expect(roadmap.recommendedCourses).toHaveLength(courses.length);
+			expect(roadmap.courses).toHaveLength(courses.length);
 		});
 	});
 
@@ -69,7 +69,7 @@ describe('PersonalRoadmapService', () => {
 			);
 
 			const roadmap = await personalRoadmapService.getPersonalRoadmap(user.uid);
-			expect(roadmap.recommendedCourses).toHaveLength(courses.length);
+			expect(roadmap.courses).toHaveLength(courses.length);
 		});
 
 		it('should save roadmap for user with prerequisites', async () => {

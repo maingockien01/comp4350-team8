@@ -1,7 +1,10 @@
+import { RoadmapDto } from '../dtos/roadmap/Roadmap.dto';
+import { CourseDTO } from '../dtos/course/course.dto';
+
 export class Roadmap {
 	private cids: number[];
 
-	constructor(private courses: HasPrerequisites[]) {
+	constructor(public courses: HasPrerequisites[]) {
 		this.cids = courses.map((course) => course.cid);
 	}
 
@@ -13,8 +16,10 @@ export class Roadmap {
 		return this.courses.every((course) => this.hasPrerequisites(course));
 	}
 
-	get recommendedCourses(): HasPrerequisites[] {
-		return this.courses;
+	get dto(): RoadmapDto {
+		return {
+			courses: this.courses as CourseDTO[],
+		};
 	}
 
 	recommendCourses(...courses: HasPrerequisites[]) {
