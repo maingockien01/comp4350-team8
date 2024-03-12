@@ -1,4 +1,14 @@
-import { BadRequestException, Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import {
+	BadRequestException,
+	Body,
+	Controller,
+	Get,
+	HttpCode,
+	HttpStatus,
+	Post,
+	Request,
+	UseGuards,
+} from '@nestjs/common';
 import { PersonalRoadmapService } from './personal.roadmap.service';
 import { JWTAuthGuard } from '../auth/jwt-auth.guard';
 import { RoadmapDto } from '@team8/types/dtos/roadmap/Roadmap.dto';
@@ -18,6 +28,7 @@ export class RoadmapController {
 
 	@UseGuards(JWTAuthGuard)
 	@Post('personal')
+	@HttpCode(HttpStatus.OK)
 	async updatePersonalRoadmap(@Request() req, @Body() newRoadmap: RoadmapDto) {
 		const userId = req.user.uid;
 
