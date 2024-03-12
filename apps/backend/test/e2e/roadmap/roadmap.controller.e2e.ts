@@ -63,7 +63,7 @@ describe('RoadmapController', () => {
 			return request(app.getHttpServer())
 				.post('/rest-api/roadmap/personal')
 				.set('Authorization', `Bearer ${token}`)
-				.send({ courses: newCourses.map((course) => ({ cid: course.cid })) })
+				.send({ courses: newCourses })
 				.expect(200)
 				.then((response) => {
 					expect(response.body).toEqual({
