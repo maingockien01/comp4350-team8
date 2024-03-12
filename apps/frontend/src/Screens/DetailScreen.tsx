@@ -1,4 +1,5 @@
 import {
+	Alert,
 	Box,
 	Button,
 	Checkbox,
@@ -7,6 +8,7 @@ import {
 	List,
 	ListItem,
 	ListItemText,
+	Snackbar,
 	Stack,
 	Typography,
 } from '@mui/material';
@@ -20,6 +22,8 @@ const DetailScreen = () => {
 	const token = getTokenFromCookie();
 	const navigate = useNavigate();
 
+	const [openSnackbar, setOpenSnackbar] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
 	const [sections, setSections] = useState<Section[]>([]);
 	const [prerequisite, setPrerequisite] = useState<CourseDTO[]>([]);
 	const [course, setCourse] = useState<CourseDTO>();
@@ -41,9 +45,18 @@ const DetailScreen = () => {
 			});
 			if (response.ok) {
 				navigate('/add-drop');
+			} else {
+				const errorData = await response.json();
+				if (errorData && errorData.message) {
+					setErrorMessage(errorData.message); // Display error message
+					setOpenSnackbar(true);
+				} else {
+					console.error('Failed to add section:', response.statusText);
+				}
 			}
 		} catch (error) {
 			console.error('Failed to add section:', error);
+			setOpenSnackbar(true);
 		}
 	};
 
@@ -89,6 +102,10 @@ const DetailScreen = () => {
 		}
 	};
 
+	const handleCloseSnackbar = () => {
+		setOpenSnackbar(false);
+	};
+
 	return (
 		<>
 			<Container maxWidth="lg" sx={{ mt: 2 }}>
@@ -112,7 +129,8 @@ const DetailScreen = () => {
 								<Typography key={section.sid}>
 									Section ID: {section.sid} ({section.sectionName}) | Professor:{' '}
 									{section.professor} | Location: {section.location.building}{' '}
-									{section.location.roomNumber} | Time: {section.time}
+									{section.location.roomNumber} | Time: {section.time} | Term:{' '}
+									{section.term.season} {section.term.year}
 									{section.term.tid === 12 && (
 										<Button onClick={() => handleAddSections(section.sid)}>
 											Add section
@@ -124,6 +142,15 @@ const DetailScreen = () => {
 					</Stack>
 				</Stack>
 			</Container>
+			<Snackbar
+				open={openSnackbar}
+				autoHideDuration={6000} // Adjust duration as needed
+				onClose={handleCloseSnackbar}
+			>
+				<Alert elevation={6} variant="filled" severity="error" onClose={handleCloseSnackbar}>
+					{errorMessage}
+				</Alert>
+			</Snackbar>
 		</>
 	);
 };

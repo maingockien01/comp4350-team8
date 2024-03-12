@@ -24,4 +24,7 @@ export class User {
 
 	@ManyToMany(() => Section, (section) => section.users)
 	sections: Relation<Section[]>;
+
+	@ManyToMany(() => Section, (section) => section.doneUsers)
+	doneSections: Relation<Section[]>;
 }

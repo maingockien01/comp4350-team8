@@ -47,4 +47,9 @@ export class UserCourseController {
 	async removeUserFromSection(@Query('sid') sid: number, @Request() req): Promise<void> {
 		await this.userService.deleteUserFromSection(sid, req.user.uid);
 	}
+
+	@Get('done')
+	async addDoneSection(@Query('uid') uid: number, @Query('sid') sid: number): Promise<void> {
+		await this.userService.addDoneCourse(uid, sid);
+	}
 }

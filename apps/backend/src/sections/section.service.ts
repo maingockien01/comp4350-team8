@@ -15,6 +15,7 @@ export class SectionService {
 		return await this.sectionRepository.findOne({
 			relations: {
 				term: true,
+				course: true,
 			},
 			where: {
 				sid: sid,

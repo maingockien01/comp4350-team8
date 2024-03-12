@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, Query } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
@@ -6,6 +6,8 @@ import { UserDTO } from '@team8/types/dtos/user/user.dto';
 import { Section } from '../entities/section.entity';
 import { SectionService } from '../sections/section.service';
 import { TermService } from '../terms/term.service';
+import { CoursesService } from '../courses/course.service';
+import { CourseDTO } from 'packages/types/dtos/course/course.dto';
 
 @Injectable()
 export class UserCourseService {
@@ -14,6 +16,7 @@ export class UserCourseService {
 		private userRepository: Repository<User>,
 		private readonly sectionService: SectionService,
 		private readonly termService: TermService,
+		private readonly courseService: CoursesService,
 	) {}
 
 	async findAll(): Promise<UserDTO[]> {
@@ -64,10 +67,30 @@ export class UserCourseService {
 		return res;
 	}
 
+	// Helper function
+	async addDoneCourse(uid: number, sid: number): Promise<void> {
+		const user = await this.userRepository.findOne({
+			relations: {
+				doneSections: true,
+			},
+			where: {
+				uid: uid,
+			},
+		});
+
+		const section = await this.sectionService.find(sid);
+		console.log('done');
+		user.doneSections.push(section);
+		await this.userRepository.save(user);
+	}
+
 	async registerSection(uid: number, sid: number): Promise<void> {
 		const user = await this.userRepository.findOne({
 			relations: {
 				sections: true,
+				doneSections: {
+					course: true,
+				},
 			},
 			where: {
 				uid: uid,
@@ -76,7 +99,19 @@ export class UserCourseService {
 
 		// Fetch section by ID
 		const currentTerm = await this.termService.findCurrentTerm();
+		const doneSec: Section[] = user.doneSections;
 		const section = await this.sectionService.find(sid);
+		const prerequisites = await this.courseService.getPrerequisite(section.course.cid);
+
+		const prerequisitesCovered = prerequisites.every((prerequisite) =>
+			doneSec.some((done) => done.course.cid === prerequisite.cid),
+		);
+
+		if (!prerequisitesCovered) {
+			throw new BadRequestException(
+				'User has not completed all the prerequisites to register this course .',
+			);
+		}
 
 		if (!section || section.term.tid !== currentTerm) {
 			throw new NotFoundException(
@@ -84,7 +119,6 @@ export class UserCourseService {
 			);
 		}
 
-		// Assuming you have a relationship between User and Section
 		user.sections.push(section);
 
 		// Save user with updated section to the database
