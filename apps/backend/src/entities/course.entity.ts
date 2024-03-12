@@ -39,8 +39,4 @@ export class Course implements HasPrerequisites {
 
 	@ManyToMany(() => Term, (term) => term.courses)
 	terms: Relation<Term[]>;
-
-	@ManyToMany(() => User, (user) => user.plannedCourses)
-	@JoinTable({ name: 'planned_courses_user' })
-	inPlanOfUsers: Relation<User[]>;
 }

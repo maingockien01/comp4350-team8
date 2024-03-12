@@ -26,9 +26,7 @@ export class User {
 	@ManyToMany(() => Section, (section) => section.users)
 	sections: Relation<Section[]>;
 
-	@ManyToMany(() => Course, (course) => course.inPlanOfUsers, {
-		cascade: true,
-	})
+	@ManyToMany(() => Course)
 	@JoinTable({ name: 'planned_courses_user' })
 	plannedCourses: Relation<Course[]>;
 }
