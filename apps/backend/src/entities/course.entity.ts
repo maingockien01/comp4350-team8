@@ -34,7 +34,11 @@ export class Course implements HasPrerequisites {
 	dependents: Relation<Course[]>;
 
 	@ManyToMany(() => Course, (course) => course.dependents)
-	@JoinTable({ name: 'courses_prerequisite_relation' })
+	@JoinTable({
+		name: 'courses_prerequisite_relation',
+		joinColumn: { name: 'prerequisite_cid' },
+		inverseJoinColumn: { name: 'dependent_cid' },
+	})
 	prerequisites: Relation<Course[]>;
 
 	@ManyToMany(() => Term, (term) => term.courses)
