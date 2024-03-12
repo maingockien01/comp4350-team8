@@ -3,9 +3,12 @@ import { INestApplication } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
 import { AuthService } from '../../../src/auth/auth.service';
+import { getRepositoryToken } from '@nestjs/typeorm';
 
 export function saveUser(app: INestApplication, overrides: Partial<User> = {}): Promise<User> {
-	return app.get<Repository<User>>('UserRepository').save({
+	console.log('getRepositoryToken(User)', getRepositoryToken(User));
+	console.log('saveUser', app.get<Repository<User>>(getRepositoryToken(User)));
+	return app.get<Repository<User>>(getRepositoryToken(User)).save({
 		username: randomStringGenerator(),
 		hashPassword: randomStringGenerator(),
 		pictureProfile: randomStringGenerator(),

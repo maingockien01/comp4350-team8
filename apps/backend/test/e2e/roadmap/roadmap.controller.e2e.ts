@@ -10,6 +10,7 @@ describe('RoadmapController', () => {
 
 	beforeAll(async () => {
 		app = await makeApp();
+		await app.init();
 	});
 
 	afterAll(async () => {
