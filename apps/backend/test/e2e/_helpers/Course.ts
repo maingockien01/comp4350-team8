@@ -5,23 +5,32 @@ import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
 export function saveCourse(app: INestApplication, overrides: Partial<Course> = {}): Promise<Course> {
-	return app.get<Repository<Course>>(getRepositoryToken(Course)).save({
-		description: randomStringGenerator(),
-		department: randomStringGenerator(),
-		courseNumber: Math.random(),
-		courseName: randomStringGenerator(),
-		...overrides,
-	});
+	return app.get<Repository<Course>>(getRepositoryToken(Course)).save(
+		{
+			description: randomStringGenerator(),
+			department: randomStringGenerator(),
+			courseNumber: Math.random(),
+			courseName: randomStringGenerator(),
+			...overrides,
+		},
+		{ reload: true },
+	);
 }
 
-export async function saveCourses(
+export function saveCourses(
 	app: INestApplication,
 	count: number,
 	overrides: Partial<Course> = {},
 ): Promise<Course[]> {
 	const courses = [];
 	for (let i = 0; i < count; i++) {
-		courses.push(await saveCourse(app, overrides));
+		courses.push({
+			description: randomStringGenerator(),
+			department: randomStringGenerator(),
+			courseNumber: Math.random(),
+			courseName: randomStringGenerator(),
+			...overrides,
+		});
 	}
-	return courses;
+	return app.get<Repository<Course>>(getRepositoryToken(Course)).save(courses, { reload: true });
 }

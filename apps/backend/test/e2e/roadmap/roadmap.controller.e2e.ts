@@ -4,13 +4,16 @@ import { teardownApp } from '../_global/teardown';
 import * as request from 'supertest';
 import { getJWTToken, saveUser } from '../_helpers/User';
 import { saveCourse, saveCourses } from '../_helpers/Course';
+import { Repository } from 'typeorm';
+import { Course } from '../../../src/entities/course.entity';
+import { getRepositoryToken } from '@nestjs/typeorm';
 
 describe('RoadmapController', () => {
 	let app: INestApplication;
 
 	beforeAll(async () => {
 		app = await makeApp();
-		// await app.init();
+		await app.init();
 	});
 
 	afterAll(async () => {
@@ -34,6 +37,9 @@ describe('RoadmapController', () => {
 
 		it('should return roadmap for existing user', async () => {
 			const courses = await saveCourses(app, 10);
+			const coursesFromDB = app.get<Repository<Course>>(getRepositoryToken(Course)).find();
+			console.log('coursesFromDB', coursesFromDB);
+
 			const user = await saveUser(app, { plannedCourses: courses });
 			const token = await getJWTToken(app, user);
 			return request(app.getHttpServer())
