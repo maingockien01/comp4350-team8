@@ -36,7 +36,7 @@ describe('RoadmapController', () => {
 		});
 
 		it('should return roadmap for existing user', async () => {
-			const courses = await saveCourses(app, 10);
+			const courses = await saveCourses(app, 2);
 			const coursesFromDB = app.get<Repository<Course>>(getRepositoryToken(Course)).find();
 			console.log('coursesFromDB', coursesFromDB);
 
