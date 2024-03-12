@@ -1,15 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Container from '@mui/material/Container';
 import Timetable from 'react-timetable-events';
-import { getTokenFromCookie, getUidFromCookie } from '../../Utils/CookieFunctions';
+import { getTokenFromCookie, getUidFromCookie } from '../Utils/CookieFunctions';
 import { SectionDTO } from '@team8/types/dtos/section/section.dto';
-import Button, { ButtonProps } from '@mui/material/Button';
-import styled from '@emotion/styled';
-import { brown } from '@mui/material/colors';
-import exportCalendar from './exportCalendar';
-import '../../css/Calendar.css';
-import { DayHeaderPreviewProps, HourPreviewProps } from 'react-timetable-events/dist/types';
-import brown from '@mui/material/colors/brown';
+
 interface Class {
 	id: number;
 	name: string;
@@ -26,7 +20,7 @@ const dayMappings: {
 	F: 'friday',
 };
 
-const weeklySchedule: {
+let weeklySchedule: {
 	[K: string]: any;
 } = {
 	monday: [],
@@ -35,19 +29,6 @@ const weeklySchedule: {
 	thursday: [],
 	friday: [],
 };
-
-const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
-	color: 'white',
-	fontWeight: 500,
-	backgroundColor: '#F5A800',
-	width: '150px',
-	'&:hover': {
-		backgroundColor: brown[600],
-	},
-	'&:focus': {
-		backgroundColor: '#502C1E',
-	},
-}));
 
 const Calendar = () => {
 	const [courses, setCourses] = useState<any>(null);
@@ -75,18 +56,18 @@ const Calendar = () => {
 
 				for (let i = 0; i < res2Json.length; i++) {
 					const events = res2Json[i].time.split(',');
-					const day = [];
+					let day = [];
 					for (const e of events) {
-						const dayAbbr = e.charAt(0);
-						const dayName = dayMappings[dayAbbr];
-						const [st, et] = e.substring(1).split('-');
+						let dayAbbr = e.charAt(0);
+						let dayName = dayMappings[dayAbbr];
+						let [st, et] = e.substring(1).split('-');
 
 						// Construct the date strings
-						const startDateStr = `2020-12-12T${st}:00`;
-						const endDateStr = `2020-12-12T${et}:00`;
+						let startDateStr = `2020-12-12T${st}:00`;
+						let endDateStr = `2020-12-12T${et}:00`;
 						// Create the date objects
-						const startTime = new Date(startDateStr);
-						const endTime = new Date(endDateStr);
+						let startTime = new Date(startDateStr);
+						let endTime = new Date(endDateStr);
 
 						setTimetable(
 							weeklySchedule[dayName].push({
@@ -94,7 +75,6 @@ const Calendar = () => {
 								name: res2Json[i].courseName + ' [' + res2Json[i].location + ']',
 								startTime: startTime,
 								endTime: endTime,
-								location: res2Json[i].location,
 							}),
 						);
 					}
@@ -109,20 +89,10 @@ const Calendar = () => {
 
 	return (
 		<Container maxWidth="lg">
-			<div className="header">
-				<h2 id="title">Weekly Schedule</h2>
-				<ColorButton variant="contained" onClick={() => exportCalendar(weeklySchedule)}>
-					Export
-				</ColorButton>
-			</div>
-			<Timetable
-				events={weeklySchedule}
-				style={{ height: '70vh' }}
-				hoursInterval={{ from: 7, to: 20 }}
-			/>
+			<h2>Weekly Schedule</h2>
+			<Timetable events={weeklySchedule} style={{ height: '500px' }} />
 		</Container>
 	);
 };
 
 export default Calendar;
-export type { weeklySchedule };
