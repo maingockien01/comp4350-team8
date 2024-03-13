@@ -49,13 +49,12 @@ const Calendar = () => {
 	// Fetch the data from the server
 	useEffect(() => {
 		const fetchData = async () => {
-			const uid = getUidFromCookie();
 			const token = getTokenFromCookie();
 			try {
 				const res1 = await fetch('/rest-api/term/searchCurrent');
 				const res1Json = await res1.json();
 
-				const res2 = await fetch(`/rest-api/user/searchActive?uid=${uid}&tid=${res1Json}`, {
+				const res2 = await fetch(`/rest-api/user/searchActive?tid=${res1Json}`, {
 					headers: { Authorization: `Bearer ${token}` },
 				});
 				const res2Json = await res2.json();

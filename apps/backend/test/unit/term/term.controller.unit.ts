@@ -7,6 +7,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Term } from '../../../src/entities/term.entity';
 import { Repository } from 'typeorm';
 import { CourseDTO } from '@team8/types/dtos/course/course.dto';
+import { Course } from 'apps/backend/src/entities/course.entity';
 
 const moduleMocker = new ModuleMocker(global);
 
@@ -92,7 +93,7 @@ describe('TermController', () => {
 
 	describe('find', () => {
 		it('it should return an array of Courses', async () => {
-			const result: CourseDTO[] = [
+			const result: Course[] = [
 				{
 					cid: 1,
 					courseName: 'COMP 101',
@@ -100,6 +101,10 @@ describe('TermController', () => {
 					courseNumber: 101,
 					description: 'An introductory course covering fundamental concepts of computer science.',
 					prerequisites: [],
+					degrees: [],
+					sections: [],
+					dependents: [],
+					terms: [],
 				},
 				{
 					cid: 11,
@@ -109,6 +114,10 @@ describe('TermController', () => {
 					description:
 						'Introduction to web development technologies, including HTML, CSS, JavaScript, and server-side scripting languages.',
 					prerequisites: [],
+					degrees: [],
+					sections: [],
+					dependents: [],
+					terms: [],
 				},
 			];
 

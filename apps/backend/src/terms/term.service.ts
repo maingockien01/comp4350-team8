@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Term } from '../entities/term.entity';
 import { CourseDTO } from '@team8/types/dtos/course/course.dto';
 import { TermDTO } from '@team8/types/dtos/term/term.dto';
+import { Course } from '../entities/course.entity';
 
 @Injectable()
 export class TermService {
@@ -23,7 +24,7 @@ export class TermService {
 		return maxTid;
 	}
 
-	async find(tid: any, department: string): Promise<CourseDTO[]> {
+	async find(tid: any, department: string): Promise<Course[]> {
 		const termCourse = await this.termRepository.findOne({
 			relations: {
 				courses: true,
@@ -33,6 +34,6 @@ export class TermService {
 			},
 		});
 		department = department.split(',')[0];
-		return termCourse.courses.filter((CourseDTO) => CourseDTO.department === department);
+		return termCourse.courses.filter((Course) => Course.department === department);
 	}
 }
