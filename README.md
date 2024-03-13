@@ -73,4 +73,5 @@ The vision of "ScheduleMaster" is to empower students through a holistic and use
 11. As a user, I want to always receive responses from the web application within 300 milliseconds so that I do not need to wait for too long.
 
 # System Architecture (Block Diagram):
-![bbbbb](https://github.com/maingockien01/comp4350-team8/assets/84072576/4266d3fb-7051-47d5-adb8-bd8fa6f7ece2)
+
+![architecture](https://github.com/maingockien01/comp4350-team8/assets/84072576/96f5608d-b4eb-4db6-88be-be71393cfcde)
