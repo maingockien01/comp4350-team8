@@ -1,11 +1,19 @@
+require('ts-node').register({
+  transpileOnly: true,
+});
+
 import { INestApplication } from "@nestjs/common"
-import { Test, TestingModule } from "@nestjs/testing";
+import { Test } from "@nestjs/testing";
 import { AppModule } from "../../../src/app.module";
 
-export const makeApp = async (): Promise<INestApplication> => {
-  const module: TestingModule = await Test.createTestingModule({
+const setup = async () => {
+  const module = await Test.createTestingModule({
     imports: [AppModule]
   }).compile();
 
-  return module.createNestApplication();
+  const app: INestApplication = module.createNestApplication();
+  global.app = app;
+  await app.init();
 };
+
+export default setup;
