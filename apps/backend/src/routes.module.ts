@@ -5,6 +5,7 @@ import { DegreeModule } from './degrees/degree.module';
 import { UserCourseModule } from './users/user.course.module';
 import { AuthModule } from './auth/auth.module';
 import { ProfileModule } from './profile/profile.module';
+import { RoadmapModule } from './roadmap/roadmap.module';
 import { CourseModule } from './courses/course.module';
 import { SectionModule } from './sections/section.module';
 
@@ -15,6 +16,7 @@ import { SectionModule } from './sections/section.module';
 		UserCourseModule,
 		AuthModule,
 		CourseModule,
+		RoadmapModule,
 		SectionModule,
 		RouterModule.register([
 			{
@@ -47,6 +49,10 @@ import { SectionModule } from './sections/section.module';
 					{
 						path: '/section',
 						module: SectionModule,
+					},
+					{
+						path: '/roadmap',
+						module: RoadmapModule,
 					},
 				],
 			},

@@ -18,7 +18,7 @@ const courseTree = ({
 
     const [courseChips, setCourseChips] = useState<CourseChipProps[]>(
         courses
-        .sort((a, b) => b.courseNumber-a.courseNumber)
+            // .sort((a, b) => b.courseNumber-a.courseNumber) //TODO: sort by course number
         .map((course: CourseDTO) => {
             return {
                 course,

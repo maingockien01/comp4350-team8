@@ -38,7 +38,11 @@ export class AuthService {
 
 		const payload = { username: user.username, sub: user.uid };
 		response.cookie('access_token', this.jwtService.sign(payload));
-
 		return user;
+	}
+
+	generateToken(user: User): string {
+		const payload = { username: user.username, sub: user.uid };
+		return this.jwtService.sign(payload);
 	}
 }
