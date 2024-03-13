@@ -7,6 +7,7 @@ import styled from '@emotion/styled';
 import { brown } from '@mui/material/colors';
 import exportCalendar from './exportCalendar';
 import '../../css/Calendar.css';
+import { Course, WeeklySchedule } from './types';
 
 const DAY_MAPPINGS: {
 	[key: string]: string;
@@ -18,22 +19,13 @@ const DAY_MAPPINGS: {
 	F: 'friday',
 };
 
-const SCHEDULE_STRUCTURE: {
-	[K: string]: any;
-} = {
+const SCHEDULE_STRUCTURE: WeeklySchedule = {
 	monday: [],
 	tuesday: [],
 	wednesday: [],
 	thursday: [],
 	friday: [],
 };
-
-interface Course {
-	id: number;
-	courseName: string;
-	time: string;
-	location: string;
-}
 
 const ExportButton = styled(Button)<ButtonProps>(() => ({
 	color: 'white',
