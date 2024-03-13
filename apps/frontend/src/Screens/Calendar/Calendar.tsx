@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Container from '@mui/material/Container';
 import Timetable from 'react-timetable-events';
-import { getTokenFromCookie, getUidFromCookie } from '../../Utils/CookieFunctions';
+import { getTokenFromCookie } from '../../Utils/CookieFunctions';
 import { SectionDTO } from '@team8/types/dtos/section/section.dto';
 import Button, { ButtonProps } from '@mui/material/Button';
 import styled from '@emotion/styled';

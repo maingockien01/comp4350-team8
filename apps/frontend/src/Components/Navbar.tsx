@@ -16,8 +16,9 @@ import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import { styled } from '@mui/material/styles';
 import { brown } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
-import { getUsernameFromCookie } from '../Utils/CookieFunctions';
+import { getTokenFromCookie, getUsernameFromCookie } from '../Utils/CookieFunctions';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const settings = ['Profile', 'Logout'];
 const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({

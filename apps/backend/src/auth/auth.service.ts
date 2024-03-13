@@ -37,8 +37,6 @@ export class AuthService {
 		}
 
 		const payload = { username: user.username, sub: user.uid };
-		response.cookie('uid', user.uid);
-		response.cookie('username', user.username);
 		response.cookie('access_token', this.jwtService.sign(payload));
 
 		return user;
