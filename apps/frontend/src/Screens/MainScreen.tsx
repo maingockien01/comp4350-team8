@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../Components/Navbar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -13,10 +12,11 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { getUidFromCookie, getTokenFromCookie } from '../Utils/CookieFunctions';
 
+// Assuming these values are placeholders and will be replaced with actual data
 const uData = [4];
 const xLabels = ['Overall GPA'];
 
-// selected prop will be passed
+// MenuItem component representing each item in the ScrollMenu
 const MenuItem = ({ text, selected }: { text: any; selected: any }) => {
 	return (
 		<Stack
@@ -40,52 +40,52 @@ const MenuItem = ({ text, selected }: { text: any; selected: any }) => {
 	);
 };
 
-// All items component
-// Important! add unique key
+// Function to render all items in the ScrollMenu
 const Menu = (list: any[], selected: any) =>
 	list.map((el) => {
 		const { name } = el;
-
 		return <MenuItem text={el} key={name} selected={selected} />;
 	});
 
 const MainScreen = () => {
 	const [progress, setProgress] = React.useState(0);
 	const [elective, setElective] = React.useState(0);
-	const [selected, setSelected] = useState<any>(); // Assuming selected is of type Term
-	const [menuItems, setMenuItems] = useState<any[]>([]); // Assuming menuItems is an array
-	const [activeList, setActiveList] = useState<any[]>([]);
-	const [userInfo, setUserInfo] = useState<any>(null);
+	const [selected, setSelected] = useState<any>(); // State to keep track of selected item in ScrollMenu
+	const [menuItems, setMenuItems] = useState<any[]>([]); // State to hold items for ScrollMenu
+	const [activeList, setActiveList] = useState<any[]>([]); // State to hold active courses list
+	const [userInfo, setUserInfo] = useState<any>(null); // State to hold user information
 
 	useEffect(() => {
-		// Call Menu function to get menu items
-		const items = Menu(activeList, selected); // Assuming list and selected are defined elsewhere
+		// Generate items for the ScrollMenu
+		const items = Menu(activeList, selected);
 		setMenuItems(items);
-	}, [activeList]); // Run effect when selected changes
+	}, [activeList]); // Run effect when activeList changes
 
 	const onSelect = (item: any) => {
 		setSelected(item);
 	};
 
 	useEffect(() => {
+		// Fetch user data
 		const fetchData = async () => {
 			const uid = getUidFromCookie();
 			const token = getTokenFromCookie();
 
 			try {
+				// Fetch current term
 				const res1 = await fetch('/rest-api/term/searchCurrent');
 				const res1Json = await res1.json();
 
+				// Fetch active courses
 				const res2 = await fetch(`/rest-api/user/searchActive?uid=${uid}&tid=${res1Json}`, {
 					headers: { Authorization: `Bearer ${token}` },
 				});
 				const res2Json = await res2.json();
-
 				setActiveList(res2Json);
 
+				// Fetch user information
 				const res3 = await fetch(`/rest-api/user/search?uid=${uid}`);
 				const res3Json = await res3.json();
-
 				setUserInfo(res3Json);
 			} catch (error) {
 				console.error('Error fetching data:', error);
@@ -95,21 +95,21 @@ const MainScreen = () => {
 		fetchData();
 	}, []);
 
-	React.useEffect(() => {
+	useEffect(() => {
+		// Simulate progress update for degree core
 		const timer = setInterval(() => {
 			setProgress(70);
 		}, 500);
-
 		return () => {
 			clearInterval(timer);
 		};
 	}, []);
 
-	React.useEffect(() => {
+	useEffect(() => {
+		// Simulate progress update for elective
 		const timer = setInterval(() => {
 			setElective(30);
 		}, 500);
-
 		return () => {
 			clearInterval(timer);
 		};
@@ -119,6 +119,7 @@ const MainScreen = () => {
 		<>
 			<Container maxWidth="lg" sx={{ mt: 2 }}>
 				<Grid container>
+					{/* Left side with user information */}
 					<Grid
 						item
 						xs={8}
@@ -143,11 +144,12 @@ const MainScreen = () => {
 									B.Sc. Computer Science
 								</Typography>
 							</Stack>
+							{/* Degree core and elective progress */}
 							<Stack>
 								<Typography color="#502C1E" fontSize={20} fontWeight={'bold'}>
 									Process
 								</Typography>
-								<Divider sx={{ bgcolor: 'black', marginBottom: 2 }}></Divider>
+								<Divider sx={{ bgcolor: 'black', marginBottom: 2 }} />
 								<Grid container>
 									<Grid item xs={1.6}>
 										<Stack
@@ -165,6 +167,7 @@ const MainScreen = () => {
 									<Grid item xs={0.2} />
 									<Grid item xs={8} sx={{ border: '2px solid #000' }}>
 										<Stack spacing={1.5} sx={{ mt: 1, mb: 1 }}>
+											{/* Progress bars for degree core and elective */}
 											<LinearProgress
 												color="secondary"
 												sx={{ height: '20px' }}
@@ -183,6 +186,7 @@ const MainScreen = () => {
 							</Stack>
 						</Container>
 					</Grid>
+					{/* Right side with GPA chart */}
 					<Grid item xs={1} sx={{ boxShadow: 'none', backgroundColor: '#FAD37D' }} />
 					<Grid
 						item
@@ -199,6 +203,7 @@ const MainScreen = () => {
 								<Typography color="#502C1E" fontSize={20} fontWeight={'bold'}>
 									GPA
 								</Typography>
+								{/* GPA bar chart */}
 								<BarChart
 									sx={{ mt: -5 }}
 									width={150}
@@ -219,20 +224,22 @@ const MainScreen = () => {
 					</Grid>
 				</Grid>
 
+				{/* Active courses section */}
 				<Stack>
 					<Typography sx={{ mt: 6 }} color="#502C1E" fontSize={25}>
 						Active Courses
 					</Typography>
-					<Divider sx={{ bgcolor: 'brown', marginBottom: 2 }}></Divider>
+					<Divider sx={{ bgcolor: 'brown', marginBottom: 2 }} />
 				</Stack>
 				<Box>
 					{activeList.length === 0 ? (
 						'You have not registered for the current Term'
 					) : (
+						// ScrollMenu to display active courses
 						<ScrollMenu
 							data={menuItems}
-							arrowLeft={<ChevronLeftIcon />} // Assuming ArrowLeft is a component
-							arrowRight={<ChevronRightIcon />} // Assuming ArrowRight is a component
+							arrowLeft={<ChevronLeftIcon />}
+							arrowRight={<ChevronRightIcon />}
 							selected={selected}
 							onSelect={onSelect}
 						/>
