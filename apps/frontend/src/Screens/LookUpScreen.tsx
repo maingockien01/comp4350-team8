@@ -25,9 +25,7 @@ const LookUpScreen = () => {
 
 	const handleSubmit = () => {
 		if (selectDegree !== undefined && selectTerm !== undefined) {
-			fetch(
-				`/rest-api/term/search?tid=${selectTerm.tid}&department=${selectDegree.name}`,
-			)
+			fetch(`/rest-api/term/search?tid=${selectTerm.tid}&department=${selectDegree.name}`)
 				.then((res) => res.json())
 				.then((res) => {
 					navigate('/courses', { state: { res } });
@@ -80,22 +78,15 @@ const LookUpScreen = () => {
 									{degree.map((degrees) => (
 										<ListItem key={degrees.did}>
 											<ListItemButton
-												onClick={() =>
-													handleSeclectDegree(degrees)
-												}
+												onClick={() => handleSeclectDegree(degrees)}
 												sx={{
-													background:
-														selectDegree === degrees
-															? 'red'
-															: 'inherit',
+													background: selectDegree === degrees ? 'red' : 'inherit',
 													'&:hover': {
 														backgroundColor: 'red',
 													},
 												}}
 											>
-												<ListItemText
-													primary={`${degrees.name}`}
-												/>
+												<ListItemText primary={`${degrees.name}`} />
 											</ListItemButton>
 										</ListItem>
 									))}
@@ -121,22 +112,15 @@ const LookUpScreen = () => {
 									{term.map((terms) => (
 										<ListItem key={terms.tid}>
 											<ListItemButton
-												onClick={() =>
-													handleSeclectTerm(terms)
-												}
+												onClick={() => handleSeclectTerm(terms)}
 												sx={{
-													background:
-														selectTerm === terms
-															? 'red'
-															: 'inherit',
+													background: selectTerm === terms ? 'red' : 'inherit',
 													'&:hover': {
 														backgroundColor: 'red',
 													},
 												}}
 											>
-												<ListItemText
-													primary={`${terms.season} ${terms.year}`}
-												/>
+												<ListItemText primary={`${terms.season} ${terms.year}`} />
 											</ListItemButton>
 										</ListItem>
 									))}
@@ -147,10 +131,7 @@ const LookUpScreen = () => {
 				</Grid>
 				<Container maxWidth="xl" sx={{ mt: 4, mb: 1 }}>
 					<Box sx={{ display: 'flex', justifyContent: 'center' }}>
-						<Button
-							onClick={() => handleSubmit()}
-							sx={{ background: 'grey' }}
-						>
+						<Button onClick={() => handleSubmit()} sx={{ background: 'grey' }}>
 							Apply
 						</Button>
 					</Box>

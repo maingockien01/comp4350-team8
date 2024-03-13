@@ -12,6 +12,7 @@ import CoursesScreen from './Screens/CoursesScreen';
 import Navbar from './Components/Navbar';
 import LoginScreen from './Screens/LoginScreen';
 import SignupScreen from './Screens/SignupScreen';
+import DetailScreen from './Screens/DetailScreen';
 import { getTokenFromCookie } from './Utils/CookieFunctions';
 import UserProfileScreen from './Screens/UserProfileScreen';
 
@@ -58,6 +59,10 @@ const App = () => {
 				<Route
 					path="/courses"
 					element={isLoggedIn ? <CoursesScreen /> : <Navigate to="/login" replace />}
+				/>
+				<Route
+					path="/detail"
+					element={isLoggedIn ? <DetailScreen /> : <Navigate to="/login" replace />}
 				/>
 				<Route
 					path="/add-drop"
