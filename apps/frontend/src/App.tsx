@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import { APPS_NAME } from '@team8/constants/apps';
 import MainScreen from './Screens/MainScreen';
-import { getUidFromCookie } from './Utils/CookieFunctions';
 import Calendar from './Screens/Calendar/Calendar';
 import AddDropCourses from './Screens/AddDropCourses';
 import Roadmap from './Screens/Roadmap/Roadmap';
