@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
 import { ProfileModule } from './profile/profile.module';
+import { RoadmapModule } from './roadmap/roadmap.module';
 import { CourseModule } from './courses/course.module';
 
 @Module({
@@ -27,6 +28,7 @@ import { CourseModule } from './courses/course.module';
 		AuthModule,
 		UsersModule,
 		ProfileModule,
+		RoadmapModule,
 		CourseModule,
 	],
 	controllers: [],
