@@ -18,9 +18,10 @@ export class UserCourseController {
 		return this.userService.findAll();
 	}
 
+	@UseGuards(JWTAuthGuard)
 	@Get('search')
-	async findOne(@Query('uid') tid: number): Promise<UserDTO> {
-		return this.userService.find(tid);
+	async findOne(@Request() req): Promise<UserDTO> {
+		return this.userService.find(req.user.uid);
 	}
 
 	@UseGuards(JWTAuthGuard)

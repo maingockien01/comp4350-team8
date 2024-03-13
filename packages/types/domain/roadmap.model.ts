@@ -4,7 +4,7 @@ import { CourseDTO } from '../dtos/course/course.dto';
 export class Roadmap {
 	private cids: number[];
 
-	constructor(public courses: HasPrerequisites[]) {
+	constructor(public courses: CourseDTO[]) {
 		this.cids = courses.map((course) => course.cid);
 	}
 
@@ -13,25 +13,41 @@ export class Roadmap {
 			return true;
 		}
 
-		return this.courses.every((course) => this.hasPrerequisites(course));
+		return this.courses.every((course) => this.hasPrerequisite(course));
 	}
 
 	get dto(): RoadmapDto {
 		return {
-			courses: this.courses as CourseDTO[],
+			courses: this.courses,
 		};
 	}
 
-	recommendCourses(...courses: HasPrerequisites[]) {
+	addCourse(...courses: CourseDTO[]): Roadmap {
 		for (const course of courses) {
-			if (!this.hasPrerequisites(course)) {
+			if (this.courses.find((thisCourse) => thisCourse.cid === course.cid)) {
+				throw new Error(`Roadmap already contain course`);
+			}
+			if (!this.hasPrerequisite(course)) {
 				throw new RoadmapDoesNotContainPrerequisitesForCourseException(course);
 			}
 			this.courses.push(course);
 		}
+
+		return new Roadmap(this.courses);
 	}
 
-	private hasPrerequisites(course: HasPrerequisites): boolean {
+	removeCourse(course: CourseDTO): Roadmap {
+		for (const thisCourse of this.courses) {
+			if (thisCourse.prerequisites.map((v) => v.cid).includes(course.cid)) {
+				throw new Error(`The course is reprequesite of ${course.department}-${course.courseNumber} ${course.courseName}  in roadmap`);
+			}
+		}
+
+		const newCourses = this.courses.filter((thisCourse) => thisCourse.cid !== course.cid);
+		return new Roadmap(newCourses);
+	}
+
+	private hasPrerequisite(course: CourseDTO): boolean {
 		const prerequisites = course.prerequisites;
 		if (!prerequisites || prerequisites.length === 0) {
 			return true;
@@ -43,8 +59,8 @@ export class Roadmap {
 }
 
 export class RoadmapDoesNotContainPrerequisitesForCourseException extends Error {
-	constructor(public course: HasPrerequisites) {
-		super(`Roadmap does not contain prerequisites for course ${course.cid}`);
+	constructor(public course: CourseDTO) {
+		super(`Roadmap does not contain prerequisites for course ${course.department}-${course.courseNumber} ${course.courseName}`);
 	}
 }
 
@@ -52,9 +68,4 @@ export class InvalidRoadmapException extends Error {
 	constructor() {
 		super(`Roadmap is invalid`);
 	}
-}
-
-export interface HasPrerequisites {
-	cid: number;
-	prerequisites: HasPrerequisites[];
 }
