@@ -1,5 +1,5 @@
-export interface TermDTO{
-    tid: number;
-    year: number;
-    season: string;
+export interface TermDTO {
+	tid: number;
+	year: number;
+	season: string;
 }

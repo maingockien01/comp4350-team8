@@ -17,9 +17,6 @@ export class User {
 	@Column()
 	hashPassword: string;
 
-	@Column({ default: '' })
-	pictureProfile: string;
-
 	@ManyToOne(() => Degree, (degree) => degree.users)
 	degree: Relation<Degree>;
 
@@ -29,4 +26,7 @@ export class User {
 	@ManyToMany(() => Course)
 	@JoinTable({ name: 'planned_courses_user' })
 	plannedCourses: Relation<Course[]>;
+
+	@ManyToMany(() => Section, (section) => section.doneUsers)
+	doneSections: Relation<Section[]>;
 }

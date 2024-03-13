@@ -32,7 +32,8 @@ INSERT INTO `section` (`sectionName`, `time`, `professor`, `courseCid`, `termTid
 ('A04', 'T11:00-12:00,R11:00-12:00', 'Prof. Garcia', 26, 6, 14),
 ('A01', 'M16:00-17:00,W16:00-17:00,F16:00-17:00', 'Dr. Martinez', 39, 12, 5),
 ('A02', 'T12:00-13:00,R12:00-13:00', 'Prof. Hernandez', 17, 9, 2),
-('A03', 'M14:00-15:00,W14:00-15:00,F14:00-15:00', 'Dr. Rodriguez', 31, 7, 10);
+('A03', 'M14:00-15:00,W14:00-15:00,F14:00-15:00', 'Dr. Rodriguez', 31, 7, 10), 
+('A01', 'M14:00-15:00,W14:00-15:00,F14:00-15:00', 'Dr. Heinz Doofenshmirtz', 15, 12, 10),;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -17,8 +17,8 @@ import { styled } from '@mui/material/styles';
 import { brown } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
 import { getUsernameFromCookie } from '../Utils/CookieFunctions';
+import { useNavigate } from 'react-router-dom';
 
-const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Logout'];
 const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
 	color: 'white',
@@ -43,6 +43,7 @@ interface HandleLogoutFunction {
 const Navbar = (props: { handleLogout: HandleLogoutFunction }) => {
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+	const navigate = useNavigate();
 
 	const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorElNav(event.currentTarget);
@@ -61,7 +62,7 @@ const Navbar = (props: { handleLogout: HandleLogoutFunction }) => {
 
 	const handleOnClickMenuItem = (menuItem: string) => {
 		if (menuItem == 'Profile') {
-			//Implement this
+			navigate('/profile');
 		} else if (menuItem == 'Logout') {
 			props.handleLogout();
 		}
