@@ -6,6 +6,7 @@ import { getUidFromCookie } from './Utils/CookieFunctions';
 import Calendar from './Screens/Calendar/Calendar';
 import AddDropCourses from './Screens/AddDropCourses';
 import Roadmap from './Screens/Roadmap/Roadmap';
+import PersonalizedRoadmap from './Screens/PersonalizedRoadmap/PersonalizedRoadmap';
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import LookUpScreen from './Screens/LookUpScreen';
 import CoursesScreen from './Screens/CoursesScreen';
@@ -79,6 +80,10 @@ const App = () => {
 				<Route
 					path="/profile"
 					element={isLoggedIn ? <UserProfileScreen /> : <Navigate to="/login" replace />}
+				/>
+				<Route
+					path="/roadmap/personal"
+					element={isLoggedIn ? <PersonalizedRoadmap /> : <Navigate to="/login" replace />}
 				/>
 				<Route path="/login" element={<LoginScreen handleLogin={handleLogin} />} />
 				<Route path="/signup" element={<SignupScreen />} />

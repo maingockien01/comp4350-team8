@@ -154,6 +154,9 @@ const Navbar = (props: { handleLogout: HandleLogoutFunction }) => {
 						<Link to="/roadmap">
 							<ColorButton variant="contained">Roadmap</ColorButton>
 						</Link>
+						<Link to="/roadmap/personal">
+							<ColorButton variant="contained">Personal roadmap</ColorButton>
+						</Link>
 					</Toolbar>
 				</Stack>
 			</Container>

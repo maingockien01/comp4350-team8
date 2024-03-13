@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import { fetchAvailableDegrees, fetchDegreeWithRoadmap } from './data'
 import { CourseDTO } from '@team8/types/dtos/course/course.dto';
 import CourseTree from '../../Components/CourseTree/CourseTree';
+import { Grid, Link } from '@mui/material';
 
 const Roadmap = () => {
 
@@ -18,28 +19,34 @@ const Roadmap = () => {
     }, [])
 
     return (
-        <Container maxWidth="lg">
-            <h1>Roadmap</h1>
-            <p>Select a degree to view its recommended roadmap</p>
-            <Autocomplete 
-                sx={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} label="Select a degree" />}
-                options={availableDegrees}
-                getOptionLabel={(option) => option.name}
-                renderOption={(props, option) => (
-                    <Box component="li" {...props}>
-                        {option.name}
-                    </Box>
-                )}
-                onChange={(event, newValue) => {
-                    if(newValue) {
-                        fetchDegreeWithRoadmap(newValue.did).then((response) => setSelectedDegree(response.data));
-                    }
-                }}
-            />
-            
-            {selectedDegree && <CourseTree courses={selectedDegree.recommendedCourses as CourseDTO[]} key={selectedDegree.did}/>}
-        </Container>
+        <Grid container spacing={2} maxWidth="lg">
+            <Grid item xs={8}>
+                <h1>Roadmap</h1>
+                <br/>
+                <p>Select a degree to view its recommended roadmap</p>
+                <Autocomplete 
+                    sx={{ width: 300 }}
+                    renderInput={(params) => <TextField {...params} label="Select a degree" />}
+                    options={availableDegrees}
+                    getOptionLabel={(option) => option.name}
+                    renderOption={(props, option) => (
+                        <Box component="li" {...props}>
+                            {option.name}
+                        </Box>
+                    )}
+                    onChange={(event, newValue) => {
+                        if(newValue) {
+                            fetchDegreeWithRoadmap(newValue.did).then((response) => setSelectedDegree(response.data));
+                        }
+                    }}
+                />
+                
+                {selectedDegree && <CourseTree courses={selectedDegree.recommendedCourses as CourseDTO[]} key={selectedDegree.did}/>}
+            </Grid>
+            <Grid item xs={4}>
+
+            </Grid>
+        </Grid>
     )
 }
 

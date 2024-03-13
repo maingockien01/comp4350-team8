@@ -1,6 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable, Relation } from 'typeorm';
 import { Section } from './section.entity';
-import { HasPrerequisites } from '@team8/types/domain/roadmap.model';
 import { Degree } from './degree.entity';
 import { Term } from './term.entity';
 import { User } from './user.entity';
@@ -8,7 +7,7 @@ import { User } from './user.entity';
 // TODO: PREREQUISITE of COURSES
 
 @Entity()
-export class Course implements HasPrerequisites {
+export class Course {
 	@PrimaryGeneratedColumn()
 	cid: number;
 

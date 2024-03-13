@@ -4,7 +4,8 @@ import { Chip } from '@mui/material';
 
 export interface CourseTreeProps {
     courses: CourseDTO[],
-}
+    onRemoveCourse: (course: CourseDTO) => void | undefined,
+};
 
 interface CourseChipProps {
     course: CourseDTO;
@@ -13,7 +14,8 @@ interface CourseChipProps {
 }
 
 const courseTree = ({
-    courses
+    courses,
+    onRemoveCourse,
 }: CourseTreeProps) => {
 
     const [courseChips, setCourseChips] = useState<CourseChipProps[]>(
@@ -58,6 +60,9 @@ const courseTree = ({
                     variant='filled'
                     onMouseOver={() => toggleHightlightCourses(course, course.prerequisites, true)}
                     onMouseOut={() => toggleHightlightCourses(course, course.prerequisites, false)}
+                    onDelete={() => {
+                        onRemoveCourse(course)
+                    }}
                 />
             ))}
 
