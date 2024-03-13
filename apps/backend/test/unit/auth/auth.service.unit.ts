@@ -49,6 +49,7 @@ describe('AuthService', () => {
 		},
 		sections: [],
 		doneSections: [],
+		plannedCourses: [],
 	};
 
 	describe('signUp', () => {

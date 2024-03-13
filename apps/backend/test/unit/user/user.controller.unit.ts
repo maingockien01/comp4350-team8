@@ -49,7 +49,7 @@ describe('UserController', () => {
 			];
 			jest.spyOn(userService, 'findActive').mockImplementation(() => Promise.resolve(result));
 			expect(
-				await userController.findActive(1, 10, {
+				await userController.findActive(10, {
 					user: {
 						uid: 1,
 					},

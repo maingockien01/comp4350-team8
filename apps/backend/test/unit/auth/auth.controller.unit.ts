@@ -47,6 +47,7 @@ describe('AuthController', () => {
 		},
 		sections: [],
 		doneSections: [],
+		plannedCourses: [],
 	};
 
 	describe('signUp', () => {
