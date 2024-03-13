@@ -3,11 +3,10 @@ import Navbar from '../Components/Navbar';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import { CourseDTO } from '@team8/types/dtos/course/course.dto';
-import { Course } from 'apps/backend/src/entities/course.entity';
 
 const CoursesScreen = () => {
 	const location = useLocation();
-	const courses: Course[] = location.state.res;
+	const courses: CourseDTO[] = location.state.res;
 	const navigate = useNavigate();
 
 	const handleCourseClick = (cid: number) => {

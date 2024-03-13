@@ -25,7 +25,7 @@ export class UserCourseController {
 
 	@UseGuards(JWTAuthGuard)
 	@Get('searchSection')
-	async findSection(@Query('tid') tid: number, @Request() req): Promise<Section[]> {
+	async findSection(@Query('tid') tid: number, @Request() req): Promise<SectionDTO[]> {
 		return this.userService.findSection(req.user.uid, tid);
 	}
 

@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Section } from 'apps/backend/src/entities/section.entity';
+import { SectionDTO } from 'packages/types/dtos/section/section.dto';
 import { CourseDTO } from 'packages/types/dtos/course/course.dto';
 import { getTokenFromCookie } from '../Utils/CookieFunctions';
 
@@ -24,7 +24,7 @@ const DetailScreen = () => {
 
 	const [openSnackbar, setOpenSnackbar] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
-	const [sections, setSections] = useState<Section[]>([]);
+	const [sections, setSections] = useState<SectionDTO[]>([]);
 	const [prerequisite, setPrerequisite] = useState<CourseDTO[]>([]);
 	const [course, setCourse] = useState<CourseDTO>();
 

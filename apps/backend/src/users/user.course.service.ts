@@ -8,6 +8,7 @@ import { SectionService } from '../sections/section.service';
 import { TermService } from '../terms/term.service';
 import { CoursesService } from '../courses/course.service';
 import { CourseDTO } from 'packages/types/dtos/course/course.dto';
+import { SectionDTO } from 'packages/types/dtos/section/section.dto';
 
 @Injectable()
 export class UserCourseService {

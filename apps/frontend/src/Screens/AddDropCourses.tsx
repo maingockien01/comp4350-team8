@@ -14,13 +14,12 @@ import {
 	DialogActions,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Section } from '@team8/backend/src/entities/section.entity';
 import { SectionDTO } from 'packages/types/dtos/section/section.dto';
 
 const AddDropCourses = () => {
 	const token = getTokenFromCookie();
 	const [sidInput, setSidInput] = useState('');
-	const [sections, setSections] = useState<Section[]>([]);
+	const [sections, setSections] = useState<SectionDTO[]>([]);
 	const [deleteSectionId, setDeleteSectionId] = useState<number | null>(null); // To store the id of the section to delete
 	const [confirmationDialogOpen, setConfirmationDialogOpen] = useState(false); // To control the visibility of the confirmation dialog
 	const [errorMessage, setErrorMessage] = useState('');
