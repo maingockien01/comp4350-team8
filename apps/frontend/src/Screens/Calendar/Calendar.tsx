@@ -9,13 +9,7 @@ import { brown } from '@mui/material/colors';
 import exportCalendar from './exportCalendar';
 import '../../css/Calendar.css';
 import { DayHeaderPreviewProps, HourPreviewProps } from 'react-timetable-events/dist/types';
-
-interface Class {
-	id: number;
-	name: string;
-	startTime: Date;
-	endTime: Date;
-}
+import { WeekendOutlined } from '@mui/icons-material';
 const dayMappings: {
 	[key: string]: string;
 } = {
@@ -50,19 +44,12 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
 }));
 
 const Calendar = () => {
-	const [courses, setCourses] = useState<any>(null);
-	const [timetable, setTimetable] = useState({
-		monday: [], // "M"
-		tuesday: [],
-		wednesday: [],
-		thursday: [],
-		friday: [],
-	});
-
+	const [timetable, setTimetable] = useState(weeklySchedule);
+	const [hasActiveCourses, setHasActiveCourses] = useState(false);
+	// Fetch the data from the server
 	useEffect(() => {
 		const fetchData = async () => {
 			const token = getTokenFromCookie();
-
 			try {
 				const res1 = await fetch('/rest-api/term/searchCurrent');
 				const res1Json = await res1.json();
@@ -71,33 +58,37 @@ const Calendar = () => {
 					headers: { Authorization: `Bearer ${token}` },
 				});
 				const res2Json = await res2.json();
+				if (res2Json.length !== 0) {
+					setHasActiveCourses(true);
+					const newSchedule = structuredClone(weeklySchedule);
+					for (let i = 0; i < res2Json.length; i++) {
+						const events = res2Json[i].time.split(',');
+						for (const e of events) {
+							const dayAbbr = e.charAt(0);
+							const dayName = dayMappings[dayAbbr];
+							const [st, et] = e.substring(1).split('-');
 
-				for (let i = 0; i < res2Json.length; i++) {
-					const events = res2Json[i].time.split(',');
-					const day = [];
-					for (const e of events) {
-						const dayAbbr = e.charAt(0);
-						const dayName = dayMappings[dayAbbr];
-						const [st, et] = e.substring(1).split('-');
+							// Construct the date strings
+							const startDateStr = `2020-12-12T${st}:00`;
+							const endDateStr = `2020-12-12T${et}:00`;
+							// Create the date objects
+							const startTime = new Date(startDateStr);
+							const endTime = new Date(endDateStr);
 
-						// Construct the date strings
-						const startDateStr = `2020-12-12T${st}:00`;
-						const endDateStr = `2020-12-12T${et}:00`;
-						// Create the date objects
-						const startTime = new Date(startDateStr);
-						const endTime = new Date(endDateStr);
-
-						setTimetable(
-							weeklySchedule[dayName].push({
-								id: 1,
+							newSchedule[dayName].push({
+								id: i,
 								name: res2Json[i].courseName + ' [' + res2Json[i].location + ']',
 								startTime: startTime,
 								endTime: endTime,
 								location: res2Json[i].location,
-							}),
-						);
+							});
+						}
 					}
+					setTimetable(newSchedule);
+				} else {
+					setHasActiveCourses(false);
 				}
+				console.log('timetable', timetable);
 			} catch (error) {
 				console.error('Error fetching data:', error);
 			}
@@ -110,15 +101,15 @@ const Calendar = () => {
 		<Container maxWidth="lg">
 			<div className="header">
 				<h2 id="title">Weekly Schedule</h2>
-				<ColorButton variant="contained" onClick={() => exportCalendar(weeklySchedule)}>
+				<ColorButton
+					variant="contained"
+					disabled={!hasActiveCourses}
+					onClick={hasActiveCourses ? () => exportCalendar(timetable) : undefined}
+				>
 					Export
 				</ColorButton>
 			</div>
-			<Timetable
-				events={weeklySchedule}
-				style={{ height: '70vh' }}
-				hoursInterval={{ from: 7, to: 20 }}
-			/>
+			<Timetable events={timetable} style={{ height: '70vh' }} hoursInterval={{ from: 7, to: 20 }} />
 		</Container>
 	);
 };
