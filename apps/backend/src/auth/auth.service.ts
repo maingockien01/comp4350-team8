@@ -32,10 +32,11 @@ export class AuthService {
 			throw new UnauthorizedException();
 		}
 
+		const payload = { username: user.username, sub: user.uid };
 		response.cookie('uid', user.uid);
 		response.cookie('username', user.username);
-		response.cookie('access_token', this.jwtService.sign(this.generateToken(user)));
-
+		// response.cookie('access_token', this.jwtService.sign(this.generateToken(user)));
+		response.cookie('access_token', this.jwtService.sign(payload));
 		return user;
 	}
 
