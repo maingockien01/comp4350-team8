@@ -6,6 +6,11 @@ import { Repository } from 'typeorm';
 import { User } from '../../../src/entities/user.entity';
 import { SectionDTO } from 'packages/types/dtos/section/section.dto';
 import { Section } from '../../../src/entities/section.entity';
+import { Term } from '../../../src/entities/term.entity';
+import { Course } from '../../../src/entities/course.entity';
+import { SectionService } from '../../../src/sections/section.service';
+import { TermService } from '../../../src/terms/term.service';
+import { CoursesService } from '../../../src/courses/course.service';
 
 describe('UserController', () => {
 	let userController: UserCourseController;
@@ -18,6 +23,21 @@ describe('UserController', () => {
 				UserCourseService,
 				{
 					provide: getRepositoryToken(User),
+					useClass: Repository,
+				},
+				SectionService,
+				{
+					provide: getRepositoryToken(Section),
+					useClass: Repository,
+				},
+				TermService,
+				{
+					provide: getRepositoryToken(Term),
+					useClass: Repository,
+				},
+				CoursesService,
+				{
+					provide: getRepositoryToken(Course),
 					useClass: Repository,
 				},
 			],
@@ -37,7 +57,13 @@ describe('UserController', () => {
 				pictureProfile: 'default',
 			};
 			jest.spyOn(userService, 'find').mockImplementation(() => Promise.resolve(result));
-			expect(await userController.findOne(1)).toBe(result);
+			expect(
+				await userController.findOne({
+					user: {
+						uid: 1,
+					},
+				}),
+			).toBe(result);
 		});
 	});
 
