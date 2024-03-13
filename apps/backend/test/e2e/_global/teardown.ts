@@ -1,9 +1,7 @@
-require('ts-node').register({
-    transpileOnly: true,
-  });
+import { INestApplication } from "@nestjs/common";
 
-const teardown = async () => {
-    await global.app.close();
-}
-
-export default teardown;
+export const teardownApp = async (app: INestApplication) => {
+    try {
+        await app.close();
+    } catch (e) {}
+};
