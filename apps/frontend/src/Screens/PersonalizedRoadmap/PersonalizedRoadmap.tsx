@@ -12,6 +12,11 @@ const PersonalRoadmap = () => {
     const [courses, setCourses] = useState<CourseDTO[]>([]);
     const [selectedCourse, setSelectedCourse] = useState<CourseDTO>();
     const [doesRoadmapChange, setRoadmapChange] = useState<boolean>(false);
+    const [roadmapTimestamp, setRoadmapTimestamp] = useState<number>(Date.now())
+    const onRoadmapChange = (doesRoadmapChange = true) => {
+        setRoadmapChange(doesRoadmapChange);
+        setRoadmapTimestamp(Date.now());
+    }
 
     const [roadmap, setRoadmap] = useState<Roadmap>(new Roadmap([])); 
 
@@ -27,7 +32,7 @@ const PersonalRoadmap = () => {
     const addCourseToRoadmap = (course: CourseDTO) => {
         try {
             setRoadmap(roadmap.addCourse(course));
-            setRoadmapChange(true);
+            onRoadmapChange();
         } catch (e: any) {
             alert(e.message);
         }
@@ -36,7 +41,7 @@ const PersonalRoadmap = () => {
     const removeCourseFromRoadmap = (course: CourseDTO) => {
         try {
             setRoadmap(roadmap.removeCourse(course));
-            setRoadmapChange(true);
+            onRoadmapChange();
         } catch (e: any) {
             alert(e.messsage);
         }
@@ -45,7 +50,7 @@ const PersonalRoadmap = () => {
     const saveRoadmap = (roadmap: Roadmap) => {
         makeAuthRequest('/rest-api/roadmap/personal', 'POST', roadmap.dto).then((response) => {
             setRoadmap(new Roadmap(response.data.courses));
-            setRoadmapChange(false);
+            onRoadmapChange(false);
         })        
         .catch((e) => {
             alert(e);
@@ -58,7 +63,7 @@ const PersonalRoadmap = () => {
                 <h1>Personal roadmap</h1>
                 {
                     roadmap.dto.courses.length >0 
-                    ? <CourseTree courses={roadmap.dto.courses as CourseDTO[]} onRemoveCourse={removeCourseFromRoadmap} key={roadmap?.dto?.courses}/>
+                    ? <CourseTree courses={roadmap.dto.courses as CourseDTO[]} onRemoveCourse={removeCourseFromRoadmap} key={roadmapTimestamp}/>
                     : <p>User has empty roadmap</p>
                 }
                 <Button 
