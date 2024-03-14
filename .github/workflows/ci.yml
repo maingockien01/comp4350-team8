@@ -174,4 +174,4 @@ jobs:
         run: docker run --name app -d -p 3000:3000 --network ${{ job.container.network }} ${{ env.DOCKER_TAG }}
       - name: Run cypress tests
         id: cypress
-        run: docker run --name cypress --network ${{ job.container.network }} cypress
+        run: docker run --name cypress --network ${{ job.container.network }} ${{ env.CYPRESS_TAG }}
