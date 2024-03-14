@@ -1,5 +1,4 @@
 {
   "testFiles": "tests/*.cy.ts",
   "integrationFolder": "cypress/tests",
-  "baseUrl": "http://app:3000"
 }
