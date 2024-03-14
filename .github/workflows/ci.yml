@@ -133,6 +133,10 @@ jobs:
         uses: docker/setup-buildx-action@v3
       - name: Build Cypress image
         run: docker build -t cypress -f ./docker/cypress/Dockerfile .
+      - name: Create network
+        run: docker network create cypress
+      - name: Run app
+        run: docker run --name app -d -p 3000:3000 --network cypress ${{ env.DOCKER_TAG }}
       - name: Run cypress tests
         id: cypress
-        run: docker run --name cypress cypress
+        run: docker run --name cypress --network cypress cypress
