@@ -1,0 +1,4 @@
+{
+  "baseUrl": "localhost:3000",
+  "testFiles": "tests/*.cy.ts"
+}
