@@ -130,7 +130,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Set up Docker
-        uses: docker/setup-buildx-action@3
+        uses: docker/setup-buildx-action@v3
       - name: Build Cypress image
         run: docker build -t cypress -f ./docker/cypress/Dockerfile .
       - name: Run cypress tests
