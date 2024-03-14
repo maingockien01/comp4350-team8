@@ -1,4 +1,4 @@
 {
   "testFiles": "tests/*.cy.ts",
-  "integrationFolder": "cypress/tests"
+  "integrationFolder": "tests"
 }
