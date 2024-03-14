@@ -121,7 +121,7 @@ jobs:
   tests-cypress:
     name: cypress tests
     runs-on: ubuntu-latest
-    needs: build
+#    needs: build
     concurrency:
       group: tests-cypress-${{ github.sha }}
       cancel-in-progress: true
