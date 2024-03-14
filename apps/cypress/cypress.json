@@ -1,4 +1,3 @@
 {
-  "baseUrl": "http://app:3000",
   "testFiles": "tests/*.cy.ts"
 }
