@@ -135,4 +135,4 @@ jobs:
         run: docker build -t cypress -f ./docker/cypress/Dockerfile .
       - name: Run cypress tests
         id: cypress
-        run: docker run --network ${{ job.container.network }} --name cypress cypress
+        run: docker run --name cypress cypress
