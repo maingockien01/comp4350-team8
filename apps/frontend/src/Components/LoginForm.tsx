@@ -67,20 +67,11 @@ const LoginForm = (props: { handleLogin: HandleLoginFunction }) => {
 					<LockOutlinedIcon className="icon" />
 				</div>
 
-				<div className="remember-forgot">
-					<label>
-						<input type="checkbox" />
-						Remember me
-					</label>
-					<a href="#">Forgot password?</a>
-				</div>
-
 				<button type="submit">Login</button>
 
 				<div className="register-link">
 					<p>
-						Don't have an account?{' '}
-						<Link to="/signup">Register</Link>
+						Don't have an account? <Link to="/signup">Register</Link>
 					</p>
 				</div>
 			</form>
