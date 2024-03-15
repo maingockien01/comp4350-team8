@@ -1,5 +1,5 @@
 import { UserCourseService } from '../../../src/users/user.course.service';
-import { INestApplication } from '@nestjs/common';
+import { BadRequestException, INestApplication } from '@nestjs/common';
 import { makeApp } from '../_global/setup';
 import { teardownApp } from '../_global/teardown';
 import * as request from 'supertest';
@@ -20,7 +20,6 @@ describe('UserCourseService', () => {
 
 	describe('findAll()', () => {
 		it('should return an array', async () => {
-			const user = await saveUser(app);
 			const result = await userCourseService.findAll();
 			expect(result).toBeInstanceOf(Array);
 		});
@@ -47,6 +46,12 @@ describe('UserCourseService', () => {
 	});
 
 	describe('findSection()', () => {
+		it('should return empty ', async () => {
+			await expect(() => userCourseService.findSection(10000, 100000)).rejects.toThrow(
+				BadRequestException,
+			);
+		});
+
 		it('should return an Array type', async () => {
 			const result = await userCourseService.findSection(1, 1);
 			expect(result).toBeInstanceOf(Array);
@@ -54,6 +59,12 @@ describe('UserCourseService', () => {
 	});
 
 	describe('findActive()', () => {
+		it('should return empty', async () => {
+			await expect(() => userCourseService.findActive(10000, 100000)).rejects.toThrow(
+				BadRequestException,
+			);
+		});
+
 		it('should return an Array type', async () => {
 			const result = await userCourseService.findActive(1, 1);
 			expect(result).toBeInstanceOf(Array);

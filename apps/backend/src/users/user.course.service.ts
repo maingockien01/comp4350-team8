@@ -49,6 +49,12 @@ export class UserCourseService {
 			},
 		});
 
+		if (!userSection) {
+			throw new BadRequestException('User does not exist');
+		}
+		if (!userSection.sections) {
+			throw new BadRequestException('Invalid Section ID');
+		}
 		return userSection.sections.filter((SectionDTO) => SectionDTO.term.tid == tid);
 	}
 
@@ -80,7 +86,6 @@ export class UserCourseService {
 		});
 
 		const section = await this.sectionService.find(sid);
-		console.log('done');
 		user.doneSections.push(section);
 		await this.userRepository.save(user);
 	}
@@ -163,6 +168,9 @@ export class UserCourseService {
 		const currentTerm = await this.termService.findCurrentTerm();
 		const doneSec: Section[] = user.doneSections;
 		const section = await this.sectionService.find(sid);
+		if (!section) {
+			throw new BadRequestException('Section ID does not exist');
+		}
 		const prerequisites = await this.courseService.getPrerequisite(section.course.cid);
 
 		const courseRegistered = user.sections.some((sec) => sec.course.cid == section.course.cid);

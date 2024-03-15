@@ -42,6 +42,18 @@ describe('DegreeController', () => {
 			jest.spyOn(degreeService, 'findAll').mockImplementation(() => Promise.resolve(result));
 			expect(await degreeController.findAll()).toBe(result);
 		});
+
+		it('should return an array instance', async () => {
+			const result: DegreeDTO[] = [
+				{
+					did: 1,
+					name: 'Computer Science',
+				},
+			];
+
+			jest.spyOn(degreeService, 'findAll').mockImplementation(() => Promise.resolve(result));
+			expect(await degreeController.findAll()).toBeInstanceOf(Array);
+		});
 	});
 
 	describe('getDegreeWithRoadmap', () => {

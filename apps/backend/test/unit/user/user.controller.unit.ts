@@ -67,7 +67,22 @@ describe('UserController', () => {
 		});
 	});
 
-	describe('find', () => {
+	describe('findActive', () => {
+		it('should return an array', async () => {
+			const result = [
+				{ courseName: 'COMP 702', time: '11:00 AM', location: 'T501' },
+				{ courseName: 'COMP 1202', time: '11:00 AM', location: 'D401' },
+			];
+			jest.spyOn(userService, 'findActive').mockImplementation(() => Promise.resolve(result));
+			expect(
+				await userController.findActive(10, {
+					user: {
+						uid: 1,
+					},
+				}),
+			).toBeInstanceOf(Array);
+		});
+
 		it('should return an array of Courses with time and building with matched uid and tid', async () => {
 			const result = [
 				{ courseName: 'COMP 702', time: '11:00 AM', location: 'T501' },
@@ -85,6 +100,20 @@ describe('UserController', () => {
 	});
 
 	describe('findAll', () => {
+		it('should return an array', async () => {
+			const result = [
+				{
+					uid: 1,
+					fullName: 'Jack Nguyen',
+					username: 'jacknguyen',
+					hashPassword: 'jack123',
+					pictureProfile: 'default',
+				},
+			];
+			jest.spyOn(userService, 'findAll').mockImplementation(() => Promise.resolve(result));
+			expect(await userController.findAll()).toBeInstanceOf(Array);
+		});
+
 		it('should return an array of all Users', async () => {
 			const result = [
 				{
