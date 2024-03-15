@@ -1,0 +1,13 @@
+{
+  "name": "@team8/cypress",
+  "description": "Cypress tests for Team 8",
+  "version": "1.0.0",
+  "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
+  },
+  "devDependencies": {
+    "cypress": "^3.1.5",
+    "typescript": "^5.4.2"
+  }
+}

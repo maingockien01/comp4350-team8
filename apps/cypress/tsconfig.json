@@ -1,0 +1,11 @@
+{
+	"extends": "./../../tsconfig.json",
+	"compilerOptions": {
+		"module": "commonjs",
+		"outDir": ".",
+		"rootDir": ".",
+		"baseUrl": "./",
+		"types": ["node", "cypress"],
+	},
+	"exclude": ["node_modules", "dist", "test", "**/*spec.ts"]
+}
