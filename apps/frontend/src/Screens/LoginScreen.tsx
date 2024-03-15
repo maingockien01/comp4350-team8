@@ -11,7 +11,7 @@ const LoginScreen = (props: { handleLogin: HandleLoginFunction }) => {
 	return (
 		<div className="LoginScreen">
 			<LoginForm handleLogin={props.handleLogin} />
-			<ToastContainer autoClose={2000} closeOnClick pauseOnFocusLoss={false} />
+			<ToastContainer autoClose={2000} closeOnClick pauseOnFocusLoss={false} theme="dark" />
 		</div>
 	);
 };

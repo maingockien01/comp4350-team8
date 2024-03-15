@@ -30,19 +30,26 @@ export class AuthService {
 		}
 	}
 
-	async logIn(dto: LogInDto, response: Response): Promise<User> {
-		//TODO: Return message according to error
-		const user = await this.usersService.findOneByUsername(dto.username);
-		if (!user) {
-			throw new UnauthorizedException();
+	async logIn(dto: LogInDto, response: Response): Promise<ReturnDto> {
+		try {
+			const user = await this.usersService.findOneByUsername(dto.username);
+			if (user) {
+				if (await bcrypt.compare(dto.password, user.hashPassword)) {
+					const payload = { username: user.username, sub: user.uid };
+					response.cookie('access_token', this.jwtService.sign(payload));
+					return {
+						status: 'success',
+						message: 'Login successfully!',
+					};
+				}
+			}
+			return {
+				status: 'fail',
+				message: 'Incorrect username or password!',
+			};
+		} catch (error) {
+			console.log(error);
 		}
-		if (!(await bcrypt.compare(dto.password, user.hashPassword))) {
-			throw new UnauthorizedException();
-		}
-
-		const payload = { username: user.username, sub: user.uid };
-		response.cookie('access_token', this.jwtService.sign(payload));
-		return user;
 	}
 
 	generateToken(user: User): string {

@@ -15,18 +15,10 @@ export class AuthController {
 
 	@HttpCode(HttpStatus.OK)
 	@Post('login')
-	async logIn(@Body() logInDto: LogInDto, @Res({ passthrough: true }) response: Response): Promise<any> {
-		try {
-			const user = await this.authService.logIn(logInDto, response);
-			return {
-				status: 'success',
-				message: 'Login successfully!',
-			};
-		} catch (error) {
-			return {
-				status: 'fail',
-				message: 'Invalid username or password!',
-			};
-		}
+	async logIn(
+		@Body() logInDto: LogInDto,
+		@Res({ passthrough: true }) response: Response,
+	): Promise<ReturnDto> {
+		return await this.authService.logIn(logInDto, response);
 	}
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/SignupScreen.css';
 import SignupForm from '../Components/SignupForm';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 const SignupScreen = () => {
 	return (
