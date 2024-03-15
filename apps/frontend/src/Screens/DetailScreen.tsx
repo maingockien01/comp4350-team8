@@ -111,7 +111,9 @@ const DetailScreen = () => {
 					<Stack direction="row" spacing={2}>
 						<Typography>Prerequisites:</Typography>
 						{prerequisite.map((pre) => (
-							<Typography key={pre.cid}>COMP {pre.courseNumber}</Typography>
+							<Typography key={pre.cid}>
+								{pre.department.slice(0, 4)} {pre.courseNumber}
+							</Typography>
 						))}
 					</Stack>
 					<Divider />
