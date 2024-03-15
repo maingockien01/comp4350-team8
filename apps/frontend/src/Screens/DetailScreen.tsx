@@ -103,6 +103,7 @@ const DetailScreen = () => {
 				<Stack spacing={2}>
 					<Typography variant="h5">Information: </Typography>
 					{/* Displaying course details */}
+					//TODO: Could extract this to be Course Detail Component
 					<Typography>Course Name: {course?.courseName}</Typography>
 					<Typography>Department: {course?.department}</Typography>
 					<Typography>Course number: {course?.courseNumber}</Typography>
@@ -111,9 +112,11 @@ const DetailScreen = () => {
 					<Stack direction="row" spacing={2}>
 						<Typography>Prerequisites:</Typography>
 						{prerequisite.map((pre) => (
+
 							<Typography key={pre.cid}>
 								{pre.department.slice(0, 4)} {pre.courseNumber}
 							</Typography>
+
 						))}
 					</Stack>
 					<Divider />
