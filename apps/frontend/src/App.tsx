@@ -25,6 +25,19 @@ const App = () => {
 		if (isLoggedIn && (window.location.pathname === '/login' || window.location.pathname === '/signup')) {
 			navigate('/home');
 		}
+		if (
+			!isLoggedIn &&
+			(window.location.pathname === '/home' ||
+				window.location.pathname === '/lookup' ||
+				window.location.pathname === '/courses' ||
+				window.location.pathname === '/detail' ||
+				window.location.pathname === '/add-drop' ||
+				window.location.pathname === '/calendar' ||
+				window.location.pathname === '/roadmap' ||
+				window.location.pathname === '/profile')
+		) {
+			navigate('/login');
+		}
 	}, [isLoggedIn, navigate]);
 
 	const handleLogin = () => {
