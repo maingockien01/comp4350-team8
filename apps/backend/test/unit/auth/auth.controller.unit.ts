@@ -64,7 +64,10 @@ describe('AuthController', () => {
 			};
 			jest.spyOn(authService, 'signUp').mockImplementation((dto: SignUpDto) => {
 				expect(dto).toEqual(signupDto);
-				return Promise.resolve(user);
+				return Promise.resolve({
+					status: 'success',
+					message: 'New user created!',
+				});
 			});
 			expect(await authController.signUp(signupDto)).toStrictEqual(result);
 		});
@@ -72,10 +75,13 @@ describe('AuthController', () => {
 		it('should return a message with fail status', async () => {
 			const result = {
 				status: 'fail',
-				message: 'Credential Taken!',
+				message: 'Credential taken',
 			};
 			jest.spyOn(authService, 'signUp').mockImplementation((dto: SignUpDto) => {
-				throw new BadRequestException();
+				return Promise.resolve({
+					status: 'fail',
+					message: 'Credential taken',
+				});
 			});
 			expect(await authController.signUp(signupDto)).toStrictEqual(result);
 		});
@@ -97,7 +103,10 @@ describe('AuthController', () => {
 			} as unknown as Response;
 			jest.spyOn(authService, 'logIn').mockImplementation((dto: LogInDto, res: Response) => {
 				expect(dto).toEqual(loginDto);
-				return Promise.resolve(user);
+				return Promise.resolve({
+					status: 'success',
+					message: 'Login successfully!',
+				});
 			});
 			expect(await authController.logIn(loginDto, mockResponse)).toStrictEqual(result);
 		});

@@ -4,6 +4,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import '../css/LoginForm.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 interface HandleLoginFunction {
 	(): void;
@@ -32,6 +33,8 @@ const LoginForm = (props: { handleLogin: HandleLoginFunction }) => {
 				if (response.data.status == 'success') {
 					console.log(response);
 					props.handleLogin();
+				} else {
+					toast.error(response.data.message);
 				}
 			})
 			.catch((error) => {
@@ -67,20 +70,11 @@ const LoginForm = (props: { handleLogin: HandleLoginFunction }) => {
 					<LockOutlinedIcon className="icon" />
 				</div>
 
-				<div className="remember-forgot">
-					<label>
-						<input type="checkbox" />
-						Remember me
-					</label>
-					<a href="#">Forgot password?</a>
-				</div>
-
 				<button type="submit">Login</button>
 
 				<div className="register-link">
 					<p>
-						Don't have an account?{' '}
-						<Link to="/signup">Register</Link>
+						Don't have an account? <Link to="/signup">Register</Link>
 					</p>
 				</div>
 			</form>

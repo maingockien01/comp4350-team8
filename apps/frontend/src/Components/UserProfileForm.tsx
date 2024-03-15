@@ -29,16 +29,9 @@ const UserProfileForm = () => {
 			} else {
 				navigate('/login');
 			}
-		} catch (error) {}
-	};
-
-	const clearAllFields = () => {
-		setFormState({
-			username: '',
-			fullName: '',
-			password: '',
-			confirm_pwd: '',
-		});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,12 +55,10 @@ const UserProfileForm = () => {
 					});
 					// Handle the response from the backend
 					if (res.data.status === 'success') {
-						toast.success(res.data.message);
+						window.location.reload();
 					} else {
 						toast.error(res.data.message);
 					}
-					clearAllFields();
-					getUserInfo();
 				} catch (error) {
 					// Handle any errors that occurred during the request
 					console.error(error);

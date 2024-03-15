@@ -10,34 +10,15 @@ export class AuthController {
 
 	@Post('signup')
 	async signUp(@Body() signupDto: SignUpDto): Promise<ReturnDto> {
-		try {
-			await this.authService.signUp(signupDto);
-			return {
-				status: 'success',
-				message: 'New user created!',
-			};
-		} catch (error) {
-			return {
-				status: 'fail',
-				message: 'Credential Taken!',
-			};
-		}
+		return await this.authService.signUp(signupDto);
 	}
 
 	@HttpCode(HttpStatus.OK)
 	@Post('login')
-	async logIn(@Body() logInDto: LogInDto, @Res({ passthrough: true }) response: Response): Promise<any> {
-		try {
-			const user = await this.authService.logIn(logInDto, response);
-			return {
-				status: 'success',
-				message: 'Login successfully!',
-			};
-		} catch (error) {
-			return {
-				status: 'fail',
-				message: 'Invalid username or password!',
-			};
-		}
+	async logIn(
+		@Body() logInDto: LogInDto,
+		@Res({ passthrough: true }) response: Response,
+	): Promise<ReturnDto> {
+		return await this.authService.logIn(logInDto, response);
 	}
 }

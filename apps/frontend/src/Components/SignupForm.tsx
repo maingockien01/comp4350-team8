@@ -5,6 +5,7 @@ import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRen
 import '../css/SignupForm.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const SignupForm = () => {
 	const navigate = useNavigate();
@@ -31,6 +32,8 @@ const SignupForm = () => {
 				// Handle the response from the backend
 				if (response.data.status == 'success') {
 					navigate('/login');
+				} else {
+					toast.error(response.data.message);
 				}
 			})
 			.catch((error) => {
