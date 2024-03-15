@@ -32,6 +32,19 @@ describe('TermController', () => {
 	});
 
 	describe('findAll', () => {
+		it('should return an array', async () => {
+			const result: TermDTO[] = [
+				{
+					tid: 1,
+					year: 2014,
+					season: 'Winter',
+				},
+			];
+
+			jest.spyOn(termService, 'findAll').mockImplementation(() => Promise.resolve(result));
+			expect(await termController.findAll()).toBeInstanceOf(Array);
+		});
+
 		it('should return an array of Terms', async () => {
 			const result: TermDTO[] = [
 				{
@@ -123,6 +136,26 @@ describe('TermController', () => {
 
 			jest.spyOn(termService, 'find').mockImplementation(() => Promise.resolve(result));
 			expect(await termController.find(1, 'Computer Science')).toBe(result);
+		});
+
+		it('it should return an array ', async () => {
+			const result: Course[] = [
+				{
+					cid: 1,
+					courseName: 'COMP 101',
+					department: 'Computer Science',
+					courseNumber: 101,
+					description: 'An introductory course covering fundamental concepts of computer science.',
+					prerequisites: [],
+					degrees: [],
+					sections: [],
+					dependents: [],
+					terms: [],
+				},
+			];
+
+			jest.spyOn(termService, 'find').mockImplementation(() => Promise.resolve(result));
+			expect(await termController.find(1, 'Computer Science')).toBeInstanceOf(Array);
 		});
 	});
 
