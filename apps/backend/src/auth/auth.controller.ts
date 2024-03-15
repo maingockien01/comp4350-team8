@@ -10,18 +10,7 @@ export class AuthController {
 
 	@Post('signup')
 	async signUp(@Body() signupDto: SignUpDto): Promise<ReturnDto> {
-		try {
-			await this.authService.signUp(signupDto);
-			return {
-				status: 'success',
-				message: 'New user created!',
-			};
-		} catch (error) {
-			return {
-				status: 'fail',
-				message: 'Credential Taken!',
-			};
-		}
+		return await this.authService.signUp(signupDto);
 	}
 
 	@HttpCode(HttpStatus.OK)

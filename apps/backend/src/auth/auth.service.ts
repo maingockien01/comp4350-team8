@@ -6,23 +6,27 @@ import { CreateUserDto } from './createUser.dto';
 import { User } from '../entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
+import { ReturnDto } from 'packages/types/dtos/auth/Return.dto';
 
 @Injectable()
 export class AuthService {
 	constructor(private usersService: UsersService, private jwtService: JwtService) {}
 
-	async signUp(dto: SignUpDto): Promise<User> {
+	async signUp(dto: SignUpDto): Promise<ReturnDto> {
 		const saltOrRounds = 10;
 		const userDto = new CreateUserDto(dto);
 		userDto.hashPassword = await bcrypt.hash(dto.password, saltOrRounds);
 		try {
 			const user = await this.usersService.create(userDto);
-			if (!user) {
-				throw new BadRequestException();
-			}
-			return user;
+			return {
+				status: 'success',
+				message: 'New user created!',
+			};
 		} catch (error) {
-			throw error;
+			return {
+				status: 'fail',
+				message: error.message,
+			};
 		}
 	}
 
