@@ -1,5 +1,5 @@
 import { UserCourseService } from '../../../src/users/user.course.service';
-import { INestApplication } from '@nestjs/common';
+import { BadRequestException, INestApplication } from '@nestjs/common';
 import { makeApp } from '../_global/setup';
 import { teardownApp } from '../_global/teardown';
 import * as request from 'supertest';
@@ -47,8 +47,9 @@ describe('UserCourseService', () => {
 
 	describe('findSection()', () => {
 		it('should return empty ', async () => {
-			const result = await userCourseService.findSection(100, 1000);
-			expect(result).toEqual([]); // Asserting that the result is an empty array
+			await expect(() => userCourseService.findSection(10000, 100000)).rejects.toThrow(
+				BadRequestException,
+			);
 		});
 
 		it('should return an Array type', async () => {
@@ -59,8 +60,9 @@ describe('UserCourseService', () => {
 
 	describe('findActive()', () => {
 		it('should return empty', async () => {
-			const result = await userCourseService.findActive(100, 1000);
-			expect(result).toEqual([]); // Asserting that the result is an empty array
+			await expect(() => userCourseService.findActive(10000, 100000)).rejects.toThrow(
+				BadRequestException,
+			);
 		});
 
 		it('should return an Array type', async () => {
