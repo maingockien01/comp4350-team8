@@ -34,6 +34,6 @@ export class TermService {
 			},
 		});
 		department = department.split(',')[0];
-		return termCourse.courses.filter((Course) => Course.department === department);
+		return termCourse.courses.filter((Course) => Course.departmentName === department);
 	}
 }

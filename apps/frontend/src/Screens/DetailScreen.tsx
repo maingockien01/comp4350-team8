@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { SectionDTO } from 'packages/types/dtos/section/section.dto';
 import { CourseDTO } from 'packages/types/dtos/course/course.dto';
 import { getTokenFromCookie } from '../Utils/CookieFunctions';
+import axios from 'axios';
+import CourseDetail from '../Components/CourseDetail/CourseDetail';
 
 const DetailScreen = () => {
 	const token = getTokenFromCookie();
@@ -11,8 +13,6 @@ const DetailScreen = () => {
 
 	const [openSnackbar, setOpenSnackbar] = useState(false); // State to control snackbar visibility
 	const [errorMessage, setErrorMessage] = useState(''); // State to store error message
-	const [sections, setSections] = useState<SectionDTO[]>([]); // State to store sections
-	const [prerequisite, setPrerequisite] = useState<CourseDTO[]>([]); // State to store prerequisites
 	const [course, setCourse] = useState<CourseDTO>(); // State to store course details
 
 	const location = useLocation();
@@ -20,8 +20,6 @@ const DetailScreen = () => {
 
 	useEffect(() => {
 		fetchCourse(); // Fetch course details
-		fetchPrerequisites(); // Fetch prerequisites
-		fetchSections(); // Fetch sections
 	}, []);
 
 	// Function to handle adding sections
@@ -48,48 +46,14 @@ const DetailScreen = () => {
 	};
 
 	// Function to fetch course details
-	const fetchCourse = async () => {
-		try {
-			const response = await fetch(`/rest-api/course/one?cid=${cid}`);
-			if (response.ok) {
-				const data = await response.json();
-				setCourse(data); // Update state with course details
-			} else {
-				console.error('Failed to fetch sections:', response.statusText);
-			}
-		} catch (error) {
-			console.error('Failed to fetch sections:', error);
-		}
-	};
-
-	// Function to fetch sections
-	const fetchSections = async () => {
-		try {
-			const response = await fetch(`/rest-api/course/sections?cid=${cid}`);
-			if (response.ok) {
-				const data = await response.json();
-				setSections(data); // Update state with sections
-			} else {
-				console.error('Failed to fetch sections:', response.statusText);
-			}
-		} catch (error) {
-			console.error('Failed to fetch sections:', error);
-		}
-	};
-
-	// Function to fetch prerequisites
-	const fetchPrerequisites = async () => {
-		try {
-			const response = await fetch(`/rest-api/course/prerequisites?cid=${cid}`);
-			if (response.ok) {
-				const data = await response.json();
-				setPrerequisite(data); // Update state with prerequisites
-			} else {
-				console.error('Failed to fetch prerequisites:', response.statusText);
-			}
-		} catch (error) {
-			console.error('Failed to fetch prerequisites:', error);
-		}
+	const fetchCourse = () => {
+		axios.get(`/rest-api/course/${cid}`)
+			.then((response) => {
+				setCourse(response.data); // Update state with course details
+			})
+			.catch((error: Error) => {
+				setErrorMessage(error.message); // Set error message
+			});
 	};
 
 	// Function to handle closing snackbar
@@ -101,26 +65,12 @@ const DetailScreen = () => {
 		<>
 			<Container maxWidth="lg" sx={{ mt: 2 }}>
 				<Stack spacing={2}>
-					<Typography variant="h5">Information: </Typography>
-					{/* Displaying course details */}
-					//TODO: Could extract this to be Course Detail Component
-					<Typography>Course Name: {course?.courseName}</Typography>
-					<Typography>Department: {course?.department}</Typography>
-					<Typography>Course number: {course?.courseNumber}</Typography>
-					<Typography>Description: {course?.description}</Typography>
-					{/* Displaying prerequisites */}
-					<Stack direction="row" spacing={2}>
-						<Typography>Prerequisites:</Typography>
-						{prerequisite.map((pre) => (
-							//TODO: fix hardcoded COMP
-							<Typography key={pre.cid}>COMP {pre.courseNumber}</Typography>
-						))}
-					</Stack>
+					<CourseDetail course={course} />
 					<Divider />
 					<Typography variant="h5">Sections:</Typography>
 					{/* Displaying sections */}
 					<Stack spacing={2}>
-						{sections.map((section) => (
+						{course?.sections.map((section: SectionDTO) => (
 							<>
 								<Typography key={section.sid}>
 									Section ID: {section.sid} ({section.sectionName}) | Professor:{' '}
@@ -139,6 +89,7 @@ const DetailScreen = () => {
 					</Stack>
 				</Stack>
 			</Container>
+			//TODO: make this global component so any error can be displayed
 			{/* Snackbar to display error message */}
 			<Snackbar
 				open={openSnackbar}

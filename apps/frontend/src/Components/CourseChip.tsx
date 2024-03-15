@@ -3,13 +3,18 @@ import { Chip } from "@mui/material";
 
 export interface CourseChipProps {
 	course: CourseDTO;
-	onClick?: (course: CourseDTO) => void;
+	onChipClick?: (course: CourseDTO) => void;
+	onChipDelete?: (course: CourseDTO) => void;
 }
 const CourseCip = (props: CourseChipProps) => {
 
-	return (
-		<Chip label={props.course.courseName} />
-	)
+	const course = props.course;
+
+	return ({
+		onChipDelete
+		? <Chip label={`${course.deparment.name} ${course.courseNumber} ${course.courseName}`} onClick={() => props.onChipClick(course)} />
+		: <Chip label={`${course.deparment.name} ${course.courseNumber} ${course.courseName}`} onClick={() => props.onChipClick(course)} onDelete={() => props.onChipDelete(course)} />
+	})
 }
 
 export default CourseCip;
