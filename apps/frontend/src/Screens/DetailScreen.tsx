@@ -65,7 +65,7 @@ const DetailScreen = () => {
 		<>
 			<Container maxWidth="lg" sx={{ mt: 2 }}>
 				<Stack spacing={2}>
-					<CourseDetail course={course} />
+					course && <CourseDetail course={course!} />
 					<Divider />
 					<Typography variant="h5">Sections:</Typography>
 					{/* Displaying sections */}

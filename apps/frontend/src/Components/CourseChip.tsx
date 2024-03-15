@@ -9,12 +9,18 @@ export interface CourseChipProps {
 const CourseCip = (props: CourseChipProps) => {
 
 	const course = props.course;
+	const label = `${course.department.name} ${course.courseNumber} ${course.courseName}`;
+	const isDeletable = !!props.onChipDelete;
 
-	return ({
-		onChipDelete
-		? <Chip label={`${course.deparment.name} ${course.courseNumber} ${course.courseName}`} onClick={() => props.onChipClick(course)} />
-		: <Chip label={`${course.deparment.name} ${course.courseNumber} ${course.courseName}`} onClick={() => props.onChipClick(course)} onDelete={() => props.onChipDelete(course)} />
-	})
+	return (
+		isDeletable
+		? (<Chip label
+			onClick={() => props.onChipClick && props.onChipClick(course)}
+		/>)
+		: (<Chip label
+				onClick={() => props.onChipClick && props.onChipClick(course)}
+				onDelete={() =>  { props.onChipDelete && props.onChipDelete(course) }} />)
+	)
 }
 
 export default CourseCip;

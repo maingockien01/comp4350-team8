@@ -1,4 +1,4 @@
-export class DepartmentDto {
+export interface DepartmentDto {
 	did: number;
 	name: string;
 	abbreviation: string;

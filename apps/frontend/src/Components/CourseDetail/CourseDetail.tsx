@@ -13,7 +13,7 @@ const CourseDetail = (props: CourseDetailProps) => {
 		<Stack spacing={2}>
 			<Typography variant="h4">Course Name: {course.courseName}</Typography>
 			<Typography variant="h6">Description: {course.description}</Typography>
-			<Typography variant="h6">Department: {course.department}</Typography>
+			<Typography variant="h6">Department: {course.department.name}</Typography>
 			<Typography variant="h6">Course number: {course.courseNumber}</Typography>
 			<Stack direction="row" spacing={2}>
 				<Typography variant="h6">Prerequisites: </Typography>

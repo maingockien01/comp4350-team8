@@ -5,6 +5,7 @@ import { Roadmap } from '@team8/types/domain/roadmap.model';
 import axios from 'axios';
 import { makeAuthRequest } from '../../Utils/Request';
 import CourseTree from '../../Components/CourseTree/CourseTree';
+import CourseDetail from '../../Components/CourseDetail/CourseDetail';
 
 const PersonalRoadmap = () => {
 	const [courses, setCourses] = useState<CourseDTO[]>([]);
@@ -88,7 +89,7 @@ const PersonalRoadmap = () => {
 					getOptionLabel={(option) => option.courseName}
 					renderOption={(props, option) => (
 						<Box component="li" {...props}>
-							{option.department}-{option.courseNumber} {option.courseName}
+							{option.department.abbreviation}-{option.courseNumber} {option.courseName}
 						</Box>
 					)}
 					onChange={(event, newValue) => {
@@ -97,25 +98,7 @@ const PersonalRoadmap = () => {
 						}
 					}}
 				/>
-				<Paper>
-					<h2>{selectedCourse?.courseName}</h2>
-					<p>{selectedCourse?.description}</p>
-					{selectedCourse?.prerequisites && (
-						<div>
-							<h3>Prerequisites</h3>
-							<ul>
-								{selectedCourse?.prerequisites.map((prerequisite: CourseDTO) => {
-									return (
-										<li>
-											{prerequisite.department}-{prerequisite.courseNumber}{' '}
-											{prerequisite.courseName}
-										</li>
-									);
-								})}
-							</ul>
-						</div>
-					)}
-				</Paper>
+				(selectedCourse && <CourseDetail course={selectedCourse!} />)
 
 				<Button
 					variant="contained"
