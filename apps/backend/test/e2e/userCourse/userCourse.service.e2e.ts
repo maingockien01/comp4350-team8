@@ -20,7 +20,6 @@ describe('UserCourseService', () => {
 
 	describe('findAll()', () => {
 		it('should return an array', async () => {
-			const user = await saveUser(app);
 			const result = await userCourseService.findAll();
 			expect(result).toBeInstanceOf(Array);
 		});
@@ -47,6 +46,11 @@ describe('UserCourseService', () => {
 	});
 
 	describe('findSection()', () => {
+		it('should return empty ', async () => {
+			const result = await userCourseService.findSection(100, 1000);
+			expect(result).toEqual([]); // Asserting that the result is an empty array
+		});
+
 		it('should return an Array type', async () => {
 			const result = await userCourseService.findSection(1, 1);
 			expect(result).toBeInstanceOf(Array);
@@ -54,6 +58,11 @@ describe('UserCourseService', () => {
 	});
 
 	describe('findActive()', () => {
+		it('should return empty', async () => {
+			const result = await userCourseService.findActive(100, 1000);
+			expect(result).toEqual([]); // Asserting that the result is an empty array
+		});
+
 		it('should return an Array type', async () => {
 			const result = await userCourseService.findActive(1, 1);
 			expect(result).toBeInstanceOf(Array);

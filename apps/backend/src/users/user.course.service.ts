@@ -49,6 +49,12 @@ export class UserCourseService {
 			},
 		});
 
+		if (!userSection) {
+			throw new BadRequestException('User does not exist');
+		}
+		if (!userSection.sections) {
+			throw new BadRequestException('Invalid Section ID');
+		}
 		return userSection.sections.filter((SectionDTO) => SectionDTO.term.tid == tid);
 	}
 
@@ -80,7 +86,6 @@ export class UserCourseService {
 		});
 
 		const section = await this.sectionService.find(sid);
-		console.log('done');
 		user.doneSections.push(section);
 		await this.userRepository.save(user);
 	}

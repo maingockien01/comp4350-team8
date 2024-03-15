@@ -22,11 +22,17 @@ describe('UserCourseController', () => {
 			return request(app.getHttpServer()).get('/rest-api/user/searchSection?uid=1&tid=12').expect(401);
 		});
 
+		it('should allow registered-user access the function', async () => {
+			return request(app.getHttpServer())
+				.get('/rest-api/user/searchSection?uid=1&tid=12')
+				.set('Authorization', `Bearer ${await getJWTToken(app)}`)
+				.expect(200);
+		});
+
 		it('should return something for registered-user', async () => {
 			return request(app.getHttpServer())
 				.get('/rest-api/user/searchSection?uid=1&tid=12')
 				.set('Authorization', `Bearer ${await getJWTToken(app)}`)
-				.expect(200)
 				.then((response) => {
 					expect(response.body).toBeInstanceOf(Array);
 				});
@@ -38,11 +44,17 @@ describe('UserCourseController', () => {
 			return request(app.getHttpServer()).get('/rest-api/user/searchActive?uid=1&tid=12').expect(401);
 		});
 
+		it('should allow registered user to access fuction', async () => {
+			return request(app.getHttpServer())
+				.get('/rest-api/user/searchActive?uid=1&tid=12')
+				.set('Authorization', `Bearer ${await getJWTToken(app)}`)
+				.expect(200);
+		});
+
 		it('should return something for registered-user', async () => {
 			return request(app.getHttpServer())
 				.get('/rest-api/user/searchActive?uid=1&tid=12')
 				.set('Authorization', `Bearer ${await getJWTToken(app)}`)
-				.expect(200)
 				.then((response) => {
 					expect(response.body).toBeInstanceOf(Array);
 				});
@@ -52,6 +64,13 @@ describe('UserCourseController', () => {
 	describe('add', () => {
 		it('should throw unauthorized for non-existing user', async () => {
 			return request(app.getHttpServer()).get('/rest-api/user/add?uid=1&tid=12').expect(401);
+		});
+
+		it('should throw exception for invalid section id', async () => {
+			return request(app.getHttpServer())
+				.get('/rest-api/user/add?uid=1&sid=1222')
+				.set('Authorization', `Bearer ${await getJWTToken(app)}`)
+				.expect(400);
 		});
 	});
 
