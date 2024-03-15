@@ -7,12 +7,14 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-INSERT INTO `degree` (`name`) VALUES
-('Computer Science'),
-('Statistics, B.Sc. Major'),
-('Mathematics, B.Sc. Major'),
-('Data Science, B.Sc. Major');
-
+INSERT INTO `degree` (`did`, `name`) VALUES
+(1, 'Computer Science');
+INSERT INTO `degree` (`did`, `name`) VALUES
+(2, 'Statistics, B.Sc. Major');
+INSERT INTO `degree` (`did`, `name`) VALUES
+(3, 'Mathematics, B.Sc. Major');
+INSERT INTO `degree` (`did`, `name`) VALUES
+(4, 'Data Science, B.Sc. Major');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
