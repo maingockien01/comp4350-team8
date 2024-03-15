@@ -22,11 +22,17 @@ describe('RoadmapController', () => {
 			return request(app.getHttpServer()).get('/rest-api/roadmap/personal').expect(401);
 		});
 
+		it('should be accessable for registered user', async () => {
+			return request(app.getHttpServer())
+				.get('/rest-api/roadmap/personal')
+				.set('Authorization', `Bearer ${await getJWTToken(app)}`)
+				.expect(200);
+		});
+
 		it('should return empty roadmap for new user', async () => {
 			return request(app.getHttpServer())
 				.get('/rest-api/roadmap/personal')
 				.set('Authorization', `Bearer ${await getJWTToken(app)}`)
-				.expect(200)
 				.then((response) => {
 					expect(response.body).toEqual({ courses: [] });
 				});
@@ -39,7 +45,6 @@ describe('RoadmapController', () => {
 			return request(app.getHttpServer())
 				.get('/rest-api/roadmap/personal')
 				.set('Authorization', `Bearer ${token}`)
-				.expect(200)
 				.then((response) => {
 					expect(response.body.courses.map((course) => course.cid)).toEqual(
 						courses.map((course) => course.cid),
@@ -53,6 +58,18 @@ describe('RoadmapController', () => {
 			return request(app.getHttpServer()).post('/rest-api/roadmap/personal').expect(401);
 		});
 
+		it('should be accessable for existing user', async () => {
+			const courses = await saveCourses(app, 10);
+			const user = await saveUser(app, { plannedCourses: courses });
+			const token = await getJWTToken(app, user);
+			const newCourses = await saveCourses(app, 2);
+			return request(app.getHttpServer())
+				.post('/rest-api/roadmap/personal')
+				.set('Authorization', `Bearer ${token}`)
+				.send({ courses: newCourses })
+				.expect(200);
+		});
+
 		it('should update roadmap for existing user', async () => {
 			const courses = await saveCourses(app, 10);
 			const user = await saveUser(app, { plannedCourses: courses });
@@ -62,7 +79,6 @@ describe('RoadmapController', () => {
 				.post('/rest-api/roadmap/personal')
 				.set('Authorization', `Bearer ${token}`)
 				.send({ courses: newCourses })
-				.expect(200)
 				.then((response) => {
 					expect(response.body.courses.map((course) => course.cid)).toEqual(
 						newCourses.map((course) => course.cid),
