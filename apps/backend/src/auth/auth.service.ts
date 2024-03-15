@@ -15,11 +15,15 @@ export class AuthService {
 		const saltOrRounds = 10;
 		const userDto = new CreateUserDto(dto);
 		userDto.hashPassword = await bcrypt.hash(dto.password, saltOrRounds);
-		const user = await this.usersService.create(userDto);
-		if (!user) {
-			throw new BadRequestException();
+		try {
+			const user = await this.usersService.create(userDto);
+			if (!user) {
+				throw new BadRequestException();
+			}
+			return user;
+		} catch (error) {
+			throw error;
 		}
-		return user;
 	}
 
 	async logIn(dto: LogInDto, response: Response): Promise<User> {
@@ -33,9 +37,6 @@ export class AuthService {
 		}
 
 		const payload = { username: user.username, sub: user.uid };
-		response.cookie('uid', user.uid);
-		response.cookie('username', user.username);
-		// response.cookie('access_token', this.jwtService.sign(this.generateToken(user)));
 		response.cookie('access_token', this.jwtService.sign(payload));
 		return user;
 	}
