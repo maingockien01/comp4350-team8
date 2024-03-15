@@ -16,7 +16,7 @@ import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import { styled } from '@mui/material/styles';
 import { brown } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
-import { getTokenFromCookie, getUsernameFromCookie } from '../Utils/CookieFunctions';
+import { getTokenFromCookie } from '../Utils/CookieFunctions';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -46,6 +46,23 @@ const Navbar = (props: { handleLogout: HandleLogoutFunction }) => {
 	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 	const navigate = useNavigate();
 
+	const [username, setUsername] = React.useState('');
+
+	const getUserInfo = async () => {
+		try {
+			const res = await axios.get('rest-api/profile', {
+				headers: { Authorization: 'Bearer ' + getTokenFromCookie() },
+			});
+			if (res.data.status === 'success') {
+				setUsername(res.data.user.username);
+			} else {
+				navigate('/login');
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorElNav(event.currentTarget);
 	};
@@ -68,6 +85,10 @@ const Navbar = (props: { handleLogout: HandleLogoutFunction }) => {
 			props.handleLogout();
 		}
 	};
+
+	React.useEffect(() => {
+		getUserInfo();
+	}, []);
 
 	return (
 		<AppBar sx={{ backgroundColor: 'white', boxShadow: 'none' }} position="static">
@@ -110,7 +131,7 @@ const Navbar = (props: { handleLogout: HandleLogoutFunction }) => {
 						<Box sx={{ flexGrow: 0 }}>
 							<Tooltip title="Open settings">
 								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-									<Typography>{getUsernameFromCookie()}</Typography>
+									<Typography>{username}</Typography>
 									<Avatar alt="Remy Sharp" src="" sx={{ ml: 2 }} />
 								</IconButton>
 							</Tooltip>

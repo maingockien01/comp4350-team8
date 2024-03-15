@@ -8,7 +8,7 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 INSERT INTO `degree` (`name`) VALUES
-('Computer Science'),
+('Computer Science, B.Sc. Major'),
 ('Statistics, B.Sc. Major'),
 ('Mathematics, B.Sc. Major'),
 ('Data Science, B.Sc. Major');

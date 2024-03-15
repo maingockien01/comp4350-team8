@@ -65,12 +65,60 @@ describe('AuthService', () => {
 			hashPassword: bcrypt.hash('12345', 10).toString(),
 		};
 
-		it('should return an user', async () => {
-			const result = user;
+		it('should return a message with status success', async () => {
+			const result = {
+				status: 'success',
+				message: 'New user created!',
+			};
 			jest.spyOn(usersService, 'create').mockImplementation((dto: CreateUserDto) => {
 				return Promise.resolve(user);
 			});
 			expect(await authService.signUp(signupDto)).toStrictEqual(result);
+		});
+
+		it('should return a message with status fail', async () => {
+			const result = {
+				status: 'fail',
+				message: 'Credential taken',
+			};
+			jest.spyOn(usersService, 'create').mockImplementation((dto: CreateUserDto) => {
+				throw new ForbiddenException('Credential taken');
+			});
+			expect(await authService.signUp(signupDto)).toStrictEqual(result);
+		});
+	});
+
+	describe('logIn', () => {
+		const loginDto: LogInDto = {
+			username: 'User1',
+			password: '12345',
+		};
+
+		const mockResponse = {
+			status: jest.fn().mockReturnThis(),
+			json: jest.fn(),
+		} as unknown as Response;
+
+		it('should return a message with fail status', async () => {
+			const result = {
+				status: 'fail',
+				message: 'Incorrect username or password!',
+			};
+			jest.spyOn(usersService, 'findOneByUsername').mockImplementation((name: string) => {
+				return Promise.resolve(user);
+			});
+			expect(await authService.logIn(loginDto, mockResponse)).toStrictEqual(result);
+		});
+
+		it('should return a message with fail status', async () => {
+			const result = {
+				status: 'fail',
+				message: 'Incorrect username or password!',
+			};
+			jest.spyOn(usersService, 'findOneByUsername').mockImplementation((name: string) => {
+				return Promise.resolve(null);
+			});
+			expect(await authService.logIn(loginDto, mockResponse)).toStrictEqual(result);
 		});
 	});
 });

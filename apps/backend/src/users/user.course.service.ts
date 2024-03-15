@@ -49,6 +49,12 @@ export class UserCourseService {
 			},
 		});
 
+		if (!userSection) {
+			throw new BadRequestException('User does not exist');
+		}
+		if (!userSection.sections) {
+			throw new BadRequestException('Invalid Section ID');
+		}
 		return userSection.sections.filter((SectionDTO) => SectionDTO.term.tid == tid);
 	}
 
@@ -80,15 +86,69 @@ export class UserCourseService {
 		});
 
 		const section = await this.sectionService.find(sid);
-		console.log('done');
 		user.doneSections.push(section);
 		await this.userRepository.save(user);
+	}
+
+	//helper function
+	// time2 = being added
+	compareDate(time1: string, time2: string): boolean {
+		const array1 = time1.split(',');
+		const array2 = time2.split(',');
+
+		for (let i = 0; i < array1.length; i++) {
+			for (let k = 0; k < array2.length; k++) {
+				if (array2[k].charAt(0) === array1[i].charAt(0)) {
+					let arr2First = parseFloat(
+						array2[k].charAt(1) +
+							array2[k].charAt(2) +
+							'.' +
+							array2[k].charAt(4) +
+							array2[k].charAt(5),
+					);
+
+					let arr1First = parseFloat(
+						array1[i].charAt(1) +
+							array1[i].charAt(2) +
+							'.' +
+							array1[i].charAt(4) +
+							array1[i].charAt(5),
+					);
+
+					let arr2Second = parseFloat(
+						array2[k].charAt(7) +
+							array2[k].charAt(8) +
+							'.' +
+							array2[k].charAt(10) +
+							array2[k].charAt(11),
+					);
+
+					let arr1Second = parseFloat(
+						array1[i].charAt(7) +
+							array1[i].charAt(8) +
+							'.' +
+							array1[i].charAt(10) +
+							array1[i].charAt(11),
+					);
+
+					if (arr2First < arr1Second) {
+						if (arr2Second > arr1First || arr2First > arr1First) {
+							throw new BadRequestException('Time overlapped with registered course');
+						}
+					}
+				}
+			}
+		}
+
+		return true;
 	}
 
 	async registerSection(uid: number, sid: number): Promise<void> {
 		const user = await this.userRepository.findOne({
 			relations: {
-				sections: true,
+				sections: {
+					course: true,
+				},
 				doneSections: {
 					course: true,
 				},
@@ -98,11 +158,32 @@ export class UserCourseService {
 			},
 		});
 
+		const alreadyRegistered = user.sections.some((section) => section.sid == sid);
+
+		if (alreadyRegistered) {
+			throw new BadRequestException('You have already registered in this section.');
+		}
+
 		// Fetch section by ID
 		const currentTerm = await this.termService.findCurrentTerm();
 		const doneSec: Section[] = user.doneSections;
 		const section = await this.sectionService.find(sid);
+		if (!section) {
+			throw new BadRequestException('Section ID does not exist');
+		}
 		const prerequisites = await this.courseService.getPrerequisite(section.course.cid);
+
+		const courseRegistered = user.sections.some((sec) => sec.course.cid == section.course.cid);
+
+		// M11:00-12:00,W11:00-12:00,F11:00-12:00
+		// M10:00-12:00,W10:00-12:00,F10:00-12:00
+		for (const sections of user.sections) {
+			this.compareDate(sections.time, section.time);
+		}
+
+		if (courseRegistered) {
+			throw new BadRequestException('You have already registered this course in another section.');
+		}
 
 		const prerequisitesCovered = prerequisites.every((prerequisite) =>
 			doneSec.some((done) => done.course.cid === prerequisite.cid),

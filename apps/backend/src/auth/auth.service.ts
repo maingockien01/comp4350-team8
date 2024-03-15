@@ -6,39 +6,50 @@ import { CreateUserDto } from './createUser.dto';
 import { User } from '../entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
+import { ReturnDto } from 'packages/types/dtos/auth/Return.dto';
 
 @Injectable()
 export class AuthService {
 	constructor(private usersService: UsersService, private jwtService: JwtService) {}
 
-	async signUp(dto: SignUpDto): Promise<User> {
+	async signUp(dto: SignUpDto): Promise<ReturnDto> {
 		const saltOrRounds = 10;
 		const userDto = new CreateUserDto(dto);
 		userDto.hashPassword = await bcrypt.hash(dto.password, saltOrRounds);
 		try {
 			const user = await this.usersService.create(userDto);
-			if (!user) {
-				throw new BadRequestException();
-			}
-			return user;
+			return {
+				status: 'success',
+				message: 'New user created!',
+			};
 		} catch (error) {
-			throw error;
+			return {
+				status: 'fail',
+				message: error.message,
+			};
 		}
 	}
 
-	async logIn(dto: LogInDto, response: Response): Promise<User> {
-		//TODO: Return message according to error
-		const user = await this.usersService.findOneByUsername(dto.username);
-		if (!user) {
-			throw new UnauthorizedException();
+	async logIn(dto: LogInDto, response: Response): Promise<ReturnDto> {
+		try {
+			const user = await this.usersService.findOneByUsername(dto.username);
+			if (user) {
+				if (await bcrypt.compare(dto.password, user.hashPassword)) {
+					const payload = { username: user.username, sub: user.uid };
+					response.cookie('access_token', this.jwtService.sign(payload));
+					return {
+						status: 'success',
+						message: 'Login successfully!',
+					};
+				}
+			}
+			return {
+				status: 'fail',
+				message: 'Incorrect username or password!',
+			};
+		} catch (error) {
+			console.log(error);
 		}
-		if (!(await bcrypt.compare(dto.password, user.hashPassword))) {
-			throw new UnauthorizedException();
-		}
-
-		const payload = { username: user.username, sub: user.uid };
-		response.cookie('access_token', this.jwtService.sign(payload));
-		return user;
 	}
 
 	generateToken(user: User): string {
