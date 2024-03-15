@@ -8,7 +8,6 @@ import { User } from '../../../src/entities/user.entity';
 import { LogInDto, SignUpDto } from '@team8/types/dtos/auth';
 import { JwtService } from '@nestjs/jwt';
 import { Roadmap } from '@team8/types/domain/roadmap.model';
-import { BadRequestException } from '@nestjs/common';
 import { Response } from 'express';
 
 describe('AuthController', () => {
