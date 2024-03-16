@@ -6,7 +6,7 @@ import axios from 'axios';
 import { makeAuthRequest } from '../../Utils/Request';
 import CourseTree from '../../Components/CourseTree/CourseTree';
 import CourseDetail from '../../Components/CourseDetail/CourseDetail';
-import { getCourse } from '../../Provider/Course.Provider';
+import { getCourse } from '../../API/Course.Provider';
 
 const PersonalRoadmap = () => {
 	const [courses, setCourses] = useState<CourseDTO[]>([]);
