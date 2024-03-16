@@ -11,6 +11,7 @@ import { UsersModule } from './users/users.module';
 import { ProfileModule } from './profile/profile.module';
 import { RoadmapModule } from './roadmap/roadmap.module';
 import { CourseModule } from './courses/course.module';
+import { DepartmentModule } from './department/department.module';
 
 @Module({
 	imports: [
@@ -30,6 +31,7 @@ import { CourseModule } from './courses/course.module';
 		ProfileModule,
 		RoadmapModule,
 		CourseModule,
+		DepartmentModule,
 	],
 	controllers: [],
 	providers: [],

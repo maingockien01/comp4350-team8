@@ -6,6 +6,7 @@ import axios from 'axios';
 import { makeAuthRequest } from '../../Utils/Request';
 import CourseTree from '../../Components/CourseTree/CourseTree';
 import CourseDetail from '../../Components/CourseDetail/CourseDetail';
+import { getCourse } from '../../Provider/Course.Provider';
 
 const PersonalRoadmap = () => {
 	const [courses, setCourses] = useState<CourseDTO[]>([]);
@@ -27,6 +28,16 @@ const PersonalRoadmap = () => {
 			setRoadmap(new Roadmap(response.data.courses));
 		});
 	}, []);
+
+	const onSelectedCourseChange = (cid: number) => {
+		if (cid === selectedCourse?.cid) {
+			return;
+		}
+
+		getCourse(cid).then((course) => {
+			setSelectedCourse(course);
+		});
+	};
 
 	const addCourseToRoadmap = (course: CourseDTO) => {
 		try {
@@ -92,13 +103,17 @@ const PersonalRoadmap = () => {
 							{option.department.abbreviation}-{option.courseNumber} {option.courseName}
 						</Box>
 					)}
-					onChange={(event, newValue) => {
-						if (newValue) {
-							setSelectedCourse(newValue);
+					onChange={(event, newValue: CourseDTO | null) => {
+						if (newValue === null) {
+							return;
 						}
+						onSelectedCourseChange(newValue.cid);
 					}}
 				/>
-				(selectedCourse && <CourseDetail course={selectedCourse!} />)
+
+				{selectedCourse && <CourseDetail course={selectedCourse} onCourseClick={(course: CourseDTO) => {
+					onSelectedCourseChange(course.cid);
+				}} />}
 
 				<Button
 					variant="contained"

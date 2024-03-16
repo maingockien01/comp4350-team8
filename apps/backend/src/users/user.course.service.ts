@@ -167,11 +167,15 @@ export class UserCourseService {
 		// Fetch section by ID
 		const currentTerm = await this.termService.findCurrentTerm();
 		const doneSec: Section[] = user.doneSections;
-		const section = await this.sectionService.find(sid);
+		const section = await this.sectionService.find(sid, {
+			course: {
+				prerequisites: true,
+			}
+		});
 		if (!section) {
 			throw new BadRequestException('Section ID does not exist');
 		}
-		const prerequisites = await this.courseService.getPrerequisite(section.course.cid);
+		const prerequisites = section.course.prerequisites;
 
 		const courseRegistered = user.sections.some((sec) => sec.course.cid == section.course.cid);
 

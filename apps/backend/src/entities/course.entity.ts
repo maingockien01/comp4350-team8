@@ -27,22 +27,16 @@ export class Course {
 	@ManyToMany(() => Degree, (degree) => degree.recommendedCourses)
 	degrees: Relation<Degree[]>;
 
-	@OneToMany(() => Section, (section) => section.course, {
-		eager: true,
-	})
+	@OneToMany(() => Section, (section) => section.course)
 	sections: Relation<Section[]>;
 
 	@ManyToMany(() => Course, (course) => course.prerequisites)
 	dependents: Relation<Course[]>;
 
-	@ManyToMany(() => Course, (course) => course.dependents, {
-		eager: true,
-	})
+	@ManyToMany(() => Course, (course) => course.dependents)
 	@JoinTable({ name: 'courses_prerequisite_relation' })
 	prerequisites: Relation<Course[]>;
 
-	@ManyToMany(() => Term, (term) => term.courses, {
-		eager: true,
-	})
+	@ManyToMany(() => Term, (term) => term.courses)
 	terms: Relation<Term[]>;
 }

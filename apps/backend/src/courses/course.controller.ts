@@ -8,8 +8,14 @@ export class CoursesController {
 	constructor(readonly courseService: CoursesService) {}
 
 	@Get()
-	async findAll(): Promise<CourseDTO[]> {
-		return this.courseService.findAll();
+	async findAll(
+		@Query('termId') termId: number,
+		@Query('departmentId') departmentId: number,
+	): Promise<CourseDTO[]> {
+		return this.courseService.getCourses({
+			terms: { tid: termId },
+			department: { did: departmentId },
+		});
 	}
 	@Get('searchCurrent')
 	async findCurrent(): Promise<number> {

@@ -12,10 +12,10 @@ const CourseDetail = (props: CourseDetailProps) => {
 	return (
 		<Stack spacing={2}>
 			<Typography variant="h4">Course Name: {course.courseName}</Typography>
-			<Typography variant="h6">Description: {course.description}</Typography>
-			<Typography variant="h6">Department: {course.department.name}</Typography>
-			<Typography variant="h6">Course number: {course.courseNumber}</Typography>
-			<Stack direction="row" spacing={2}>
+			<Typography variant="body1">Description: {course.description}</Typography>
+			<Typography variant="body1">Department: {course.department.name}</Typography>
+			<Typography variant="body1">Course number: {course.courseNumber}</Typography>
+			<Stack direction="row" textAlign="center" spacing={2}>
 				<Typography variant="h6">Prerequisites: </Typography>
 				<Typography>
 					{course.prerequisites.length === 0

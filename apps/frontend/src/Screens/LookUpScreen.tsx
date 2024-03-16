@@ -14,32 +14,34 @@ import {
 import Navbar from '../Components/Navbar';
 import { useNavigate } from 'react-router-dom';
 import { TermDTO } from '@team8/types/dtos/term/term.dto';
-import { DegreeDTO } from '@team8/types/dtos/degree/degree.dto';
+import { DepartmentDto } from '@team8/types/dtos/course/department.dto';
 
 const LookUpScreen = () => {
-	const [degree, setDegree] = useState<DegreeDTO[]>([]);
+	//TODO: find way to properly config this
+	const selectedColor = 'red';
+	const hoverColor = 'red';
+
+	const [department, setDepartment] = useState<DepartmentDto[]>([]);
 	const [term, setTerm] = useState<TermDTO[]>([]);
-	const [selectDegree, setSelectDegree] = useState<DegreeDTO>();
+	const [selectedDepartment, setSelectedDepartment] = useState<DepartmentDto>();
 	const [selectTerm, setSelectTerm] = useState<TermDTO>();
 	const navigate = useNavigate();
 
 	const handleSubmit = () => {
-		if (selectDegree !== undefined && selectTerm !== undefined) {
-			fetch(`/rest-api/term/search?tid=${selectTerm.tid}&department=${selectDegree.name}`)
-				.then((res) => res.json())
-				.then((res) => {
-					navigate('/courses', { state: { res } });
-				});
-		} else {
-			console.log('Please select something');
+		if (!selectedDepartment) {
+			alert('Please select a department');
+			return;
 		}
-	};
-	const handleSeclectDegree = (value: DegreeDTO) => {
-		setSelectDegree(value);
-	};
-
-	const handleSeclectTerm = (value: TermDTO) => {
-		setSelectTerm(value);
+		if (!selectTerm) {
+			alert('Please select a term');
+			return;
+		}
+		//TODO: this should be search course from course endpoint
+		fetch(`/rest-api/term/search?termId=${selectTerm.tid}&departmentId=${selectedDepartment.did}`)
+			.then((res) => res.json())
+			.then((res) => {
+				navigate('/courses', { state: { res } });
+			});
 	};
 
 	useEffect(() => {
@@ -49,10 +51,10 @@ const LookUpScreen = () => {
 				setTerm(res);
 			});
 
-		fetch('/rest-api/degree')
+		fetch('/rest-api/department')
 			.then((res) => res.json())
 			.then((res) => {
-				setDegree(res);
+				setDepartment(res);
 			});
 	}, []);
 
@@ -63,7 +65,7 @@ const LookUpScreen = () => {
 					<Grid item xs={6}>
 						<Container maxWidth="xl" sx={{ mt: 1, mb: 1 }}>
 							<Stack>
-								<Typography variant="h4">Degree: </Typography>
+								<Typography variant="h4">Department: </Typography>
 								<List
 									sx={{
 										width: '100%',
@@ -75,18 +77,18 @@ const LookUpScreen = () => {
 										'& ul': { padding: 0 },
 									}}
 								>
-									{degree.map((degrees) => (
-										<ListItem key={degrees.did}>
+									{department.map((department) => (
+										<ListItem key={department.did}>
 											<ListItemButton
-												onClick={() => handleSeclectDegree(degrees)}
+												onClick={() => {setSelectedDepartment(department)}}
 												sx={{
-													background: selectDegree === degrees ? 'red' : 'inherit',
+													background: selectedDepartment === department ? selectedColor : 'inherit',
 													'&:hover': {
-														backgroundColor: 'red',
+														backgroundColor: hoverColor,
 													},
 												}}
 											>
-												<ListItemText primary={`${degrees.name}`} />
+												<ListItemText primary={`${department.name}`} />
 											</ListItemButton>
 										</ListItem>
 									))}
@@ -112,11 +114,11 @@ const LookUpScreen = () => {
 									{term.map((terms) => (
 										<ListItem key={terms.tid}>
 											<ListItemButton
-												onClick={() => handleSeclectTerm(terms)}
+												onClick={() => {setSelectTerm(terms)}}
 												sx={{
-													background: selectTerm === terms ? 'red' : 'inherit',
+													background: selectTerm === terms ? selectedColor : 'inherit',
 													'&:hover': {
-														backgroundColor: 'red',
+														backgroundColor: hoverColor,
 													},
 												}}
 											>

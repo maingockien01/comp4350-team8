@@ -11,16 +11,17 @@ const DetailScreen = () => {
 	const token = getTokenFromCookie();
 	const navigate = useNavigate();
 
+
 	const [openSnackbar, setOpenSnackbar] = useState(false); // State to control snackbar visibility
 	const [errorMessage, setErrorMessage] = useState(''); // State to store error message
 	const [course, setCourse] = useState<CourseDTO>(); // State to store course details
 
 	const location = useLocation();
-	const { cid } = location.state;
+	const [cid, setCid] = useState<number>(location.state.cid); // State to store course ID
 
 	useEffect(() => {
 		fetchCourse(); // Fetch course details
-	}, []);
+	}, [cid]);
 
 	// Function to handle adding sections
 	const handleAddSections = async (sid: number) => {
@@ -47,11 +48,14 @@ const DetailScreen = () => {
 
 	// Function to fetch course details
 	const fetchCourse = () => {
+		console.log('fetching course');
 		axios.get(`/rest-api/course/${cid}`)
 			.then((response) => {
 				setCourse(response.data); // Update state with course details
+				console.log(response.data);
 			})
 			.catch((error: Error) => {
+				alert(error.message); // Display error message
 				setErrorMessage(error.message); // Set error message
 			});
 	};
@@ -65,7 +69,9 @@ const DetailScreen = () => {
 		<>
 			<Container maxWidth="lg" sx={{ mt: 2 }}>
 				<Stack spacing={2}>
-					course && <CourseDetail course={course!} />
+					{ course && <CourseDetail course={course} onCourseClick={(course) => {
+						setCid(course.cid)
+					}}/> }
 					<Divider />
 					<Typography variant="h5">Sections:</Typography>
 					{/* Displaying sections */}
@@ -89,7 +95,7 @@ const DetailScreen = () => {
 					</Stack>
 				</Stack>
 			</Container>
-			//TODO: make this global component so any error can be displayed
+			{/* TODO: make error display global or available in all screens */}
 			{/* Snackbar to display error message */}
 			<Snackbar
 				open={openSnackbar}

@@ -17,6 +17,7 @@ export class CoursesService {
 		return await this.courseRepository.find({
 			relations: {
 				prerequisites: true,
+				department: true,
 			}
 		});
 	}
@@ -31,8 +32,10 @@ export class CoursesService {
 				...criteria,
 			},
 			relations: {
-				...overrideRelations,
-			},
+				department: true,
+				prerequisites: true,
+				...overrideRelations
+			}
 		});
 	}
 
@@ -45,6 +48,10 @@ export class CoursesService {
 				...criteria,
 			},
 			relations: {
+				prerequisites: true,
+				department: true,
+				sections: true,
+				terms: true,
 				...overrideRelations,
 			},
 		});

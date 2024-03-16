@@ -14,12 +14,12 @@ const CourseCip = (props: CourseChipProps) => {
 
 	return (
 		isDeletable
-		? (<Chip label
-			onClick={() => props.onChipClick && props.onChipClick(course)}
-		/>)
-		: (<Chip label
+		? (<Chip label={label}
 				onClick={() => props.onChipClick && props.onChipClick(course)}
 				onDelete={() =>  { props.onChipDelete && props.onChipDelete(course) }} />)
+		: (<Chip label={label}
+				 onClick={() => props.onChipClick && props.onChipClick(course)}
+		/>)
 	)
 }
 
