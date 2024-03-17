@@ -68,7 +68,10 @@ describe('DegreeController', () => {
 							courseName: 'Software Engineering',
 							description: 'Learn how to develop software',
 							courseNumber: 4350,
-							department: 'Computer Science',
+							department: {
+								name: 'Computer Science',
+								abbreviation: 'COMP'
+							},
 							prerequisites: [],
 						},
 					],

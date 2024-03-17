@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { FindOptionsRelations, Repository } from 'typeorm';
 import { CoursesService } from '../../../src/courses/course.service';
 import { CoursesController } from '../../../src/courses/course.controller';
 import { Test } from '@nestjs/testing';
@@ -54,7 +54,9 @@ describe('CourseService', () => {
 		it('should make request to repository with relations and return an Array type', async () => {
 			const criterias = { cid: 1 };
 			const result: Course[] = [];
-			const relations = ['prerequisites'];
+			const relations: FindOptionsRelations<Course> = {
+				prerequisites: true,
+			};
 
 			jest.spyOn(courseRepository, 'find').mockImplementation((options) => {
 				expect(options.relations).toEqual(relations);
@@ -67,7 +69,9 @@ describe('CourseService', () => {
 		it('should make request to repository with relations', async () => {
 			const criterias = { cid: 1 };
 			const result: Course[] = [];
-			const relations = ['prerequisites'];
+			const relations: FindOptionsRelations<Course> = {
+				prerequisites: true,
+			};
 
 			jest.spyOn(courseRepository, 'find').mockImplementation((options) => {
 				expect(options.relations).toEqual(relations);

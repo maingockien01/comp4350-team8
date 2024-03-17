@@ -110,7 +110,10 @@ describe('TermController', () => {
 				{
 					cid: 1,
 					courseName: 'COMP 101',
-					departmentName: 'Computer Science',
+					department: {
+						name: 'Computer Science',
+						abbreviation: 'COMP'
+					},
 					courseNumber: 101,
 					description: 'An introductory course covering fundamental concepts of computer science.',
 					prerequisites: [],
@@ -122,7 +125,10 @@ describe('TermController', () => {
 				{
 					cid: 11,
 					courseName: 'COMP 801',
-					departmentName: 'Computer Science',
+					department: {
+						name: 'Computer Science',
+						abbreviation: 'COMP'
+					},
 					courseNumber: 801,
 					description:
 						'Introduction to web development technologies, including HTML, CSS, JavaScript, and server-side scripting languages.',
@@ -143,7 +149,10 @@ describe('TermController', () => {
 				{
 					cid: 1,
 					courseName: 'COMP 101',
-					department: 'Computer Science',
+					department: {
+						name: 'Computer Science',
+						abbreviation: 'COMP'
+					},
 					courseNumber: 101,
 					description: 'An introductory course covering fundamental concepts of computer science.',
 					prerequisites: [],

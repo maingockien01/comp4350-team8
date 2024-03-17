@@ -11,7 +11,7 @@ export class SectionService {
 		private sectionRepository: Repository<Section>,
 	) {}
 
-	async find(sid: number, relations: FindOptionsRelations<Section>): Promise<Section> {
+	async find(sid: number, relations: FindOptionsRelations<Section> = {}): Promise<Section> {
 		return await this.sectionRepository.findOne({
 			relations: {
 				term: true,
