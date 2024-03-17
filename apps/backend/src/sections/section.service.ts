@@ -1,6 +1,6 @@
 import { Injectable, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOptionsRelations, Repository } from 'typeorm';
 import { Section } from '../entities/section.entity';
 import { SectionDTO } from '@team8/types/dtos/section/section.dto';
 
@@ -11,11 +11,12 @@ export class SectionService {
 		private sectionRepository: Repository<Section>,
 	) {}
 
-	async find(sid: number): Promise<Section> {
+	async find(sid: number, relations: FindOptionsRelations<Section> = {}): Promise<Section> {
 		return await this.sectionRepository.findOne({
 			relations: {
 				term: true,
 				course: true,
+				...relations,
 			},
 			where: {
 				sid: sid,

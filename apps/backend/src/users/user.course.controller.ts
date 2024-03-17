@@ -33,7 +33,6 @@ export class UserCourseController {
 	@UseGuards(JWTAuthGuard)
 	@Get('searchActive')
 	async findActive(@Query('tid') tid: number, @Request() req): Promise<SectionDTO[]> {
-		console.log(req.user);
 		return this.userService.findActive(req.user.uid, tid);
 	}
 

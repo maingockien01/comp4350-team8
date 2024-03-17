@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOptionsRelations, FindOptionsWhere, Repository } from 'typeorm';
 import { Course } from '../entities/course.entity';
 import { CourseDTO } from '@team8/types/dtos/course/course.dto';
 import { Section } from '../entities/section.entity';
@@ -17,65 +17,42 @@ export class CoursesService {
 		return await this.courseRepository.find({
 			relations: {
 				prerequisites: true,
+				department: true,
 			}
 		});
 	}
 
-	async getCoursesByDepartment(department: string): Promise<CourseDTO[]> {
-		//Make DB Request
-		const courses = await this.courseRepository.find({
-			where: {
-				department,
-			},
-		});
-
-		return courses;
+	async getCoursesByDepartment(departmentName: string): Promise<Course[]> {
+		return this.getCourses({ department: { name: departmentName } });
 	}
 
-	async getCourses(criterias: Partial<Course>, relations: string[] = []): Promise<CourseDTO[]> {
-		const courses = await this.courseRepository.find({
+	async getCourses(criteria: FindOptionsWhere<Course>, overrideRelations: FindOptionsRelations<Course> = {}): Promise<Course[]> {
+		return await this.courseRepository.find({
 			where: {
-				...criterias,
+				...criteria,
 			},
-			relations,
+			relations: {
+				department: true,
+				prerequisites: true,
+				...overrideRelations
+			}
 		});
-
-		return courses;
 	}
 
-	async getPrerequisite(cid: number): Promise<CourseDTO[]> {
-		const courses = await this.courseRepository.findOne({
+	getCourseById(cid: number): Promise<Course> {
+		return this.getCourse({ cid });
+	}
+	async getCourse(criteria: FindOptionsWhere<Course>, overrideRelations: FindOptionsRelations<Course> = {}): Promise<Course> {
+		return await this.courseRepository.findOneOrFail({
+			where: {
+				...criteria,
+			},
 			relations: {
 				prerequisites: true,
-			},
-			where: {
-				cid: cid,
-			},
-		});
-
-		return courses.prerequisites;
-	}
-
-	async getSections(cid: number): Promise<Section[]> {
-		const courses = await this.courseRepository.findOne({
-			relations: {
-				sections: {
-					location: true,
-					term: true,
-				},
-			},
-			where: {
-				cid: cid,
-			},
-		});
-
-		return courses.sections;
-	}
-
-	async getCourseById(cid: number): Promise<CourseDTO> {
-		return await this.courseRepository.findOne({
-			where: {
-				cid: cid,
+				department: true,
+				sections: true,
+				terms: true,
+				...overrideRelations,
 			},
 		});
 	}

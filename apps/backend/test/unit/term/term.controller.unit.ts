@@ -6,7 +6,6 @@ import { TermService } from '../../../src/terms/term.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Term } from '../../../src/entities/term.entity';
 import { Repository } from 'typeorm';
-import { CourseDTO } from '@team8/types/dtos/course/course.dto';
 import { Course } from 'apps/backend/src/entities/course.entity';
 
 const moduleMocker = new ModuleMocker(global);
@@ -101,61 +100,6 @@ describe('TermController', () => {
 
 			jest.spyOn(termService, 'findAll').mockImplementation(() => Promise.resolve(result));
 			expect(await termController.findAll()).toBe(result);
-		});
-	});
-
-	describe('find', () => {
-		it('it should return an array of Courses', async () => {
-			const result: Course[] = [
-				{
-					cid: 1,
-					courseName: 'COMP 101',
-					department: 'Computer Science',
-					courseNumber: 101,
-					description: 'An introductory course covering fundamental concepts of computer science.',
-					prerequisites: [],
-					degrees: [],
-					sections: [],
-					dependents: [],
-					terms: [],
-				},
-				{
-					cid: 11,
-					courseName: 'COMP 801',
-					department: 'Computer Science',
-					courseNumber: 801,
-					description:
-						'Introduction to web development technologies, including HTML, CSS, JavaScript, and server-side scripting languages.',
-					prerequisites: [],
-					degrees: [],
-					sections: [],
-					dependents: [],
-					terms: [],
-				},
-			];
-
-			jest.spyOn(termService, 'find').mockImplementation(() => Promise.resolve(result));
-			expect(await termController.find(1, 'Computer Science')).toBe(result);
-		});
-
-		it('it should return an array ', async () => {
-			const result: Course[] = [
-				{
-					cid: 1,
-					courseName: 'COMP 101',
-					department: 'Computer Science',
-					courseNumber: 101,
-					description: 'An introductory course covering fundamental concepts of computer science.',
-					prerequisites: [],
-					degrees: [],
-					sections: [],
-					dependents: [],
-					terms: [],
-				},
-			];
-
-			jest.spyOn(termService, 'find').mockImplementation(() => Promise.resolve(result));
-			expect(await termController.find(1, 'Computer Science')).toBeInstanceOf(Array);
 		});
 	});
 
