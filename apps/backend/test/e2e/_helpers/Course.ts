@@ -3,12 +3,14 @@ import { randomStringGenerator } from '@nestjs/common/utils/random-string-genera
 import { Course } from '../../../src/entities/course.entity';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { saveDepartment } from './Department';
 
-export function saveCourse(app: INestApplication, overrides: Partial<Course> = {}): Promise<Course> {
+export async function saveCourse(app: INestApplication, overrides: Partial<Course> = {}): Promise<Course> {
+	const department = await saveDepartment(app);
 	return app.get<Repository<Course>>(getRepositoryToken(Course)).save(
 		{
 			description: randomStringGenerator(),
-			department: randomStringGenerator(),
+			department,
 			courseNumber: Math.random(),
 			courseName: randomStringGenerator(),
 			...overrides,
@@ -17,16 +19,17 @@ export function saveCourse(app: INestApplication, overrides: Partial<Course> = {
 	);
 }
 
-export function saveCourses(
+export async function saveCourses(
 	app: INestApplication,
 	count: number,
 	overrides: Partial<Course> = {},
 ): Promise<Course[]> {
+	const department = await saveDepartment(app);
 	const courses = [];
 	for (let i = 0; i < count; i++) {
 		courses.push({
 			description: randomStringGenerator(),
-			department: randomStringGenerator(),
+			department,
 			courseNumber: Math.random(),
 			courseName: randomStringGenerator(),
 			...overrides,
