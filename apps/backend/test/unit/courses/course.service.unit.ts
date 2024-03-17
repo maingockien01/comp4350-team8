@@ -32,7 +32,7 @@ describe('CourseService', () => {
 
 			jest.spyOn(courseRepository, 'find').mockImplementation((options) => {
 				expect(options.where).toEqual(criterias);
-				expect(options.relations).toEqual([]);
+				expect(options.relations).toEqual({"department": true, "prerequisites": true});
 				return Promise.resolve(result);
 			});
 
@@ -44,7 +44,7 @@ describe('CourseService', () => {
 
 			jest.spyOn(courseRepository, 'find').mockImplementation((options) => {
 				expect(options.where).toEqual(criterias);
-				expect(options.relations).toEqual([]);
+				expect(options.relations).toEqual({"department": true, "prerequisites": true});
 				return Promise.resolve(result);
 			});
 
@@ -59,7 +59,10 @@ describe('CourseService', () => {
 			};
 
 			jest.spyOn(courseRepository, 'find').mockImplementation((options) => {
-				expect(options.relations).toEqual(relations);
+				expect(options.relations).toEqual({
+					prerequisites: true,
+					department: true,
+				});
 				return Promise.resolve(result);
 			});
 
@@ -74,7 +77,10 @@ describe('CourseService', () => {
 			};
 
 			jest.spyOn(courseRepository, 'find').mockImplementation((options) => {
-				expect(options.relations).toEqual(relations);
+				expect(options.relations).toEqual({
+					department: true,
+					prerequisites: true,
+				});
 				return Promise.resolve(result);
 			});
 
