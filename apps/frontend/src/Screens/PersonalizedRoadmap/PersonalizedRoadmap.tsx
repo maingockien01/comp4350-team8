@@ -5,6 +5,8 @@ import { Roadmap } from '@team8/types/domain/roadmap.model';
 import axios from 'axios';
 import { makeAuthRequest } from '../../Utils/Request';
 import CourseTree from '../../Components/CourseTree/CourseTree';
+import CourseDetail from '../../Components/CourseDetail/CourseDetail';
+import { getCourse, getCourses } from '../../API/Course.API';
 
 const PersonalRoadmap = () => {
 	const [courses, setCourses] = useState<CourseDTO[]>([]);
@@ -19,13 +21,23 @@ const PersonalRoadmap = () => {
 	const [roadmap, setRoadmap] = useState<Roadmap>(new Roadmap([]));
 
 	useEffect(() => {
-		axios.get('/rest-api/course').then((response) => {
-			setCourses(response.data);
+		getCourses().then((data) => {
+			setCourses(data);
 		});
 		makeAuthRequest('/rest-api/roadmap/personal').then((response) => {
 			setRoadmap(new Roadmap(response.data.courses));
 		});
 	}, []);
+
+	const onSelectedCourseChange = (cid: number) => {
+		if (cid === selectedCourse?.cid) {
+			return;
+		}
+
+		getCourse(cid).then((course) => {
+			setSelectedCourse(course);
+		});
+	};
 
 	const addCourseToRoadmap = (course: CourseDTO) => {
 		try {
@@ -88,34 +100,20 @@ const PersonalRoadmap = () => {
 					getOptionLabel={(option) => option.courseName}
 					renderOption={(props, option) => (
 						<Box component="li" {...props}>
-							{option.department}-{option.courseNumber} {option.courseName}
+							{option.department.abbreviation}-{option.courseNumber} {option.courseName}
 						</Box>
 					)}
-					onChange={(event, newValue) => {
-						if (newValue) {
-							setSelectedCourse(newValue);
+					onChange={(event, newValue: CourseDTO | null) => {
+						if (newValue === null) {
+							return;
 						}
+						onSelectedCourseChange(newValue.cid);
 					}}
 				/>
-				<Paper>
-					<h2>{selectedCourse?.courseName}</h2>
-					<p>{selectedCourse?.description}</p>
-					{selectedCourse?.prerequisites && (
-						<div>
-							<h3>Prerequisites</h3>
-							<ul>
-								{selectedCourse?.prerequisites.map((prerequisite: CourseDTO) => {
-									return (
-										<li>
-											{prerequisite.department}-{prerequisite.courseNumber}{' '}
-											{prerequisite.courseName}
-										</li>
-									);
-								})}
-							</ul>
-						</div>
-					)}
-				</Paper>
+
+				{selectedCourse && <CourseDetail course={selectedCourse} onCourseClick={(course: CourseDTO) => {
+					onSelectedCourseChange(course.cid);
+				}} />}
 
 				<Button
 					variant="contained"

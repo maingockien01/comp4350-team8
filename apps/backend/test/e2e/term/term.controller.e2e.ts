@@ -3,7 +3,6 @@ import { makeApp } from '../_global/setup';
 import { teardownApp } from '../_global/teardown';
 import * as request from 'supertest';
 import { getJWTToken, saveUser } from '../_helpers/User';
-import { saveCourse, saveCourses } from '../_helpers/Course';
 
 describe('UserCourseController', () => {
 	let app: INestApplication;

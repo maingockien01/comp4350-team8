@@ -39,7 +39,7 @@ export class Roadmap {
 	removeCourse(course: CourseDTO): Roadmap {
 		for (const thisCourse of this.courses) {
 			if (thisCourse.prerequisites.map((v) => v.cid).includes(course.cid)) {
-				throw new Error(`The course is reprequesite of ${course.department}-${course.courseNumber} ${course.courseName}  in roadmap`);
+				throw new Error(`The course is reprequesite of ${course.department.name}-${course.courseNumber} ${course.courseName}  in roadmap`);
 			}
 		}
 

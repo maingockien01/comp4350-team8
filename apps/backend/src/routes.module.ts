@@ -8,6 +8,7 @@ import { ProfileModule } from './profile/profile.module';
 import { RoadmapModule } from './roadmap/roadmap.module';
 import { CourseModule } from './courses/course.module';
 import { SectionModule } from './sections/section.module';
+import { DepartmentModule } from './department/department.module';
 
 @Module({
 	imports: [
@@ -18,6 +19,7 @@ import { SectionModule } from './sections/section.module';
 		CourseModule,
 		RoadmapModule,
 		SectionModule,
+		DepartmentModule,
 		RouterModule.register([
 			{
 				path: '/rest-api',
@@ -54,6 +56,10 @@ import { SectionModule } from './sections/section.module';
 						path: '/roadmap',
 						module: RoadmapModule,
 					},
+					{
+						path: '/department',
+						module: DepartmentModule,
+					}
 				],
 			},
 		]),

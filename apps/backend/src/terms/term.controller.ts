@@ -17,9 +17,4 @@ export class TermController {
 	async findCurrent(): Promise<number> {
 		return this.termService.findCurrentTerm();
 	}
-
-	@Get('search')
-	async find(@Query('tid') tid: number, @Query('department') department: string): Promise<Course[]> {
-		return this.termService.find(tid, department);
-	}
 }

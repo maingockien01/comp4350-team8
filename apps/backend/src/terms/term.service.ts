@@ -24,16 +24,20 @@ export class TermService {
 		return maxTid;
 	}
 
-	async find(tid: any, department: string): Promise<Course[]> {
+	async find(tid: any, did: number): Promise<Course[]> {
 		const termCourse = await this.termRepository.findOne({
 			relations: {
 				courses: true,
 			},
 			where: {
 				tid: tid,
+				courses: {
+					department: {
+						did: did,
+					}
+				}
 			},
 		});
-		department = department.split(',')[0];
-		return termCourse.courses.filter((Course) => Course.department === department);
+		return termCourse.courses;
 	}
 }

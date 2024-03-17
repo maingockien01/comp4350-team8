@@ -1,18 +1,19 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable, Relation } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable, Relation, ManyToOne } from 'typeorm';
 import { Section } from './section.entity';
 import { Degree } from './degree.entity';
 import { Term } from './term.entity';
-import { User } from './user.entity';
-
-// TODO: PREREQUISITE of COURSES
+import { Department } from './department.entity';
 
 @Entity()
 export class Course {
 	@PrimaryGeneratedColumn()
 	cid: number;
 
-	@Column()
-	department: string;
+	@ManyToOne(() => Department, {
+		eager: true,
+	})
+	@JoinTable()
+	department: Relation<Department>;
 
 	@Column()
 	courseNumber: number;

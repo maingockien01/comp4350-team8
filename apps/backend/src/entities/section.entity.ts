@@ -22,10 +22,14 @@ export class Section {
 	@ManyToOne(() => Course, (course) => course.sections)
 	course: Relation<Course>;
 
-	@ManyToOne(() => Term, (term) => term.sections)
+	@ManyToOne(() => Term, (term) => term.sections, {
+		eager: true,
+	})
 	term: Relation<Term>;
 
-	@ManyToOne(() => Location, (location) => location.sections)
+	@ManyToOne(() => Location, (location) => location.sections, {
+		eager: true,
+	})
 	location: Relation<Location>;
 
 	@ManyToMany(() => User, (user) => user.sections)
