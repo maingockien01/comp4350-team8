@@ -73,22 +73,7 @@ describe('DegreeController', () => {
 								name: 'Computer Science',
 								abbreviation: 'COMP'
 							},
-							sections: [{
-								sid: 1,
-								term: {
-									tid: 1,
-									year: 2021,
-									season: 'Winter',
-								},
-								location: {
-									lid: 1,
-									building: 'T',
-									roomNumber: 501,
-								},
-								time: '11:00 AM',
-								sectionName: 'A01',
-								professor: 'Dr. Smith',
-							}],
+							sections: [],
 							prerequisites: [],
 						},
 					],
