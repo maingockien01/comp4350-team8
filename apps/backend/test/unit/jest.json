@@ -15,6 +15,7 @@
     "coverageDirectory": "./coverage",
     "testEnvironment": "node",
     "transformIgnorePatterns": [
-        "*.js"
+        "/node_modules/",
+        "@team8/.*\\.js$"
     ]
 }
