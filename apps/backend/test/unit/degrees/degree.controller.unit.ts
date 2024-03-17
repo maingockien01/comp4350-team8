@@ -69,6 +69,7 @@ describe('DegreeController', () => {
 							description: 'Learn how to develop software',
 							courseNumber: 4350,
 							department: {
+								did: 1,
 								name: 'Computer Science',
 								abbreviation: 'COMP'
 							},

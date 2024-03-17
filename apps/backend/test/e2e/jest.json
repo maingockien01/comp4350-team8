@@ -5,6 +5,5 @@
 	"testRegex": "\\.e2e\\.ts$",
 	"transform": {
 		"^.+\\.ts$": "ts-jest"
-	},
-	"ignorePatterns": ["dist", "*.js"]
+	}
 }

@@ -6,7 +6,6 @@ import { TermService } from '../../../src/terms/term.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Term } from '../../../src/entities/term.entity';
 import { Repository } from 'typeorm';
-import { CourseDTO } from '@team8/types/dtos/course/course.dto';
 import { Course } from 'apps/backend/src/entities/course.entity';
 
 const moduleMocker = new ModuleMocker(global);
@@ -111,6 +110,7 @@ describe('TermController', () => {
 					cid: 1,
 					courseName: 'COMP 101',
 					department: {
+						did: 1,
 						name: 'Computer Science',
 						abbreviation: 'COMP'
 					},
@@ -126,6 +126,7 @@ describe('TermController', () => {
 					cid: 11,
 					courseName: 'COMP 801',
 					department: {
+						did: 1,
 						name: 'Computer Science',
 						abbreviation: 'COMP'
 					},
@@ -150,6 +151,7 @@ describe('TermController', () => {
 					cid: 1,
 					courseName: 'COMP 101',
 					department: {
+						did: 1,
 						name: 'Computer Science',
 						abbreviation: 'COMP'
 					},
