@@ -15,9 +15,9 @@ import Navbar from '../Components/Navbar';
 import { useNavigate } from 'react-router-dom';
 import { TermDTO } from '@team8/types/dtos/term/term.dto';
 import { DepartmentDto } from '@team8/types/dtos/course/department.dto';
+import { getCourses } from '../API/Course.API';
 
 const LookUpScreen = () => {
-	//TODO: find way to properly config this
 	const selectedColor = 'red';
 	const hoverColor = 'red';
 
@@ -36,12 +36,10 @@ const LookUpScreen = () => {
 			alert('Please select a term');
 			return;
 		}
-		//TODO: this should be search course from course endpoint
-		fetch(`/rest-api/term/search?termId=${selectTerm.tid}&departmentId=${selectedDepartment.did}`)
-			.then((res) => res.json())
-			.then((res) => {
-				navigate('/courses', { state: { res } });
-			});
+		getCourses({
+			departmentId: selectedDepartment.did,
+			termId: selectTerm.tid,
+		}).then((res) => navigate('/courses', { state: { res } }));
 	};
 
 	useEffect(() => {

@@ -6,7 +6,7 @@ import axios from 'axios';
 import { makeAuthRequest } from '../../Utils/Request';
 import CourseTree from '../../Components/CourseTree/CourseTree';
 import CourseDetail from '../../Components/CourseDetail/CourseDetail';
-import { getCourse } from '../../API/Course.Provider';
+import { getCourse, getCourses } from '../../API/Course.API';
 
 const PersonalRoadmap = () => {
 	const [courses, setCourses] = useState<CourseDTO[]>([]);
@@ -21,8 +21,8 @@ const PersonalRoadmap = () => {
 	const [roadmap, setRoadmap] = useState<Roadmap>(new Roadmap([]));
 
 	useEffect(() => {
-		axios.get('/rest-api/course').then((response) => {
-			setCourses(response.data);
+		getCourses().then((data) => {
+			setCourses(data);
 		});
 		makeAuthRequest('/rest-api/roadmap/personal').then((response) => {
 			setRoadmap(new Roadmap(response.data.courses));
