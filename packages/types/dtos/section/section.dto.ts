@@ -7,7 +7,7 @@ export interface SectionDTO {
 	sectionName: string;
 	time: string;
 	professor: string;
-	course: CourseDTO;
+	course?: CourseDTO;
 	location: LocationDTO;
 	term: TermDTO;
 }

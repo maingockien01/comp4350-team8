@@ -13,9 +13,5 @@
         "**/*.(t|j)s"
     ],
     "coverageDirectory": "./coverage",
-    "testEnvironment": "node",
-    "transformIgnorePatterns": [
-        "/node_modules/",
-        "@team8/.*\\.js$"
-    ]
+    "testEnvironment": "node"
 }
