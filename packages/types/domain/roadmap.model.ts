@@ -39,7 +39,9 @@ export class Roadmap {
 	removeCourse(course: CourseDTO): Roadmap {
 		for (const thisCourse of this.courses) {
 			if (thisCourse.prerequisites.map((v) => v.cid).includes(course.cid)) {
-				throw new Error(`The course is reprequesite of ${course.department.name}-${course.courseNumber} ${course.courseName}  in roadmap`);
+				throw new Error(
+					`The course is reprequesite of ${thisCourse.department.abbreviation}-${thisCourse.courseNumber} ${thisCourse.courseName} in roadmap`,
+				);
 			}
 		}
 
@@ -60,7 +62,9 @@ export class Roadmap {
 
 export class RoadmapDoesNotContainPrerequisitesForCourseException extends Error {
 	constructor(public course: CourseDTO) {
-		super(`Roadmap does not contain prerequisites for course ${course.department}-${course.courseNumber} ${course.courseName}`);
+		super(
+			`Roadmap does not contain prerequisites for course ${course.department}-${course.courseNumber} ${course.courseName}`,
+		);
 	}
 }
 
