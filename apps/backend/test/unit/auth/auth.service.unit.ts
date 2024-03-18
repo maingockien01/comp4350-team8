@@ -120,5 +120,9 @@ describe('AuthService', () => {
 			});
 			expect(await authService.logIn(loginDto, mockResponse)).toStrictEqual(result);
 		});
+
+		it('should fail', () => {
+			expect(true).toBe(false);
+		})
 	});
 });
