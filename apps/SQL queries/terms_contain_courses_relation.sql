@@ -1,0 +1,31 @@
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+INSERT INTO `terms_contain_courses_relation` (`termTid`, `courseCid`) VALUES
+(1, 1), (1, 9), (1, 24), (1, 33), (1, 18), (1, 41), (1, 12), (1, 3),
+(2, 2), (2, 12), (2, 6), (2, 15), (2, 28), (2, 37), (2, 22), (2, 39),
+(3, 3), (3, 13), (3, 8), (3, 19), (3, 31), (3, 14), (3, 40), (3, 25),
+(4, 4), (4, 14), (4, 11), (4, 27), (4, 36), (4, 7), (4, 32), (4, 18),
+(5, 5), (5, 15), (5, 21), (5, 17), (5, 29), (5, 8), (5, 35), (5, 23),
+(6, 6), (6, 16), (6, 13), (6, 25), (6, 40), (6, 9), (6, 31), (6, 20),
+(7, 7), (7, 17), (7, 10), (7, 28), (7, 39), (7, 6), (7, 33), (7, 22),
+(8, 8), (8, 18), (8, 19), (8, 29), (8, 11), (8, 36), (8, 7), (8, 27),
+(9, 9), (9, 19), (9, 12), (9, 21), (9, 33), (9, 8), (9, 40), (9, 26),
+(10, 10), (10, 20), (10, 5), (10, 16), (10, 28), (10, 9), (10, 36), (10, 22),
+(11, 4), (11, 18), (11, 27), (11, 9), (11, 35), (11, 23), (11, 12), (11, 31),
+(12, 7), (12, 21), (12, 33), (12, 10), (12, 37), (12, 24), (12, 15), (12, 29), 
+(12,18);
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

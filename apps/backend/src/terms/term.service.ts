@@ -1,0 +1,43 @@
+import { Injectable, Query } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Term } from '../entities/term.entity';
+import { CourseDTO } from '@team8/types/dtos/course/course.dto';
+import { TermDTO } from '@team8/types/dtos/term/term.dto';
+import { Course } from '../entities/course.entity';
+
+@Injectable()
+export class TermService {
+	constructor(
+		@InjectRepository(Term)
+		private readonly termRepository: Repository<Term>,
+	) {}
+
+	// Responsibility: handle business logic - make DB requests
+	async findAll(): Promise<TermDTO[]> {
+		return await this.termRepository.find();
+	}
+
+	async findCurrentTerm(): Promise<number> {
+		const terms = await this.findAll();
+		const maxTid = Math.max(...terms.map((term) => term.tid));
+		return maxTid;
+	}
+
+	async find(tid: any, did: number): Promise<Course[]> {
+		const termCourse = await this.termRepository.findOne({
+			relations: {
+				courses: true,
+			},
+			where: {
+				tid: tid,
+				courses: {
+					department: {
+						did: did,
+					}
+				}
+			},
+		});
+		return termCourse.courses;
+	}
+}

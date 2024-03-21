@@ -7,30 +7,24 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-INSERT INTO `location` (`lid`, `building`, `roomNumber`) VALUES
-(1, 'A', 2);
-INSERT INTO `location` (`lid`, `building`, `roomNumber`) VALUES
-(2, 'B', 102);
-INSERT INTO `location` (`lid`, `building`, `roomNumber`) VALUES
-(3, 'C', 305);
-INSERT INTO `location` (`lid`, `building`, `roomNumber`) VALUES
-(4, 'D', 401),
-(5, 'E', 215),
-(6, 'F', 120),
-(7, 'G', 502),
-(8, 'H', 301),
-(9, 'I', 101),
-(10, 'J', 202),
-(11, 'K', 410),
-(12, 'L', 601),
-(13, 'M', 205),
-(14, 'N', 322),
-(15, 'O', 110),
-(16, 'P', 401),
-(17, 'Q', 502),
-(18, 'R', 210),
-(19, 'S', 303),
-(20, 'T', 501);
+INSERT INTO `location` (`building`, `roomNumber`) VALUES
+('EITC E2', 105),
+('EITC E2', 130),
+('EITC E2', 155),
+('EITC E2', 165),
+('EITC E2', 105),
+('EITC E2', 320),
+('EITC E2', 351),
+('Machray Hall', 111),
+('Machray Hall', 113),
+('Machray Hall', 115),
+('Buller', 207),
+('Russell', 214),
+('Drake Centre', 112),
+('Tier', 206),
+('Armes', 205),
+('Frank Kennedy Centre', 136);
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

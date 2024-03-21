@@ -1,30 +1,42 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany,JoinTable, Relation } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable, Relation, ManyToOne } from 'typeorm';
 import { Section } from './section.entity';
-import { User } from './user.entity';
-
-// TODO: PREREQUISITE of COURSES
+import { Degree } from './degree.entity';
+import { Term } from './term.entity';
+import { Department } from './department.entity';
 
 @Entity()
 export class Course {
-  @PrimaryGeneratedColumn()
-  cid: number;
+	@PrimaryGeneratedColumn()
+	cid: number;
 
-  @Column()
-  courseName: string;
+	@ManyToOne(() => Department, {
+		eager: true,
+	})
+	@JoinTable()
+	department: Relation<Department>;
 
-  @Column()
-  department: string;
+	@Column()
+	courseNumber: number;
 
-  @Column()
-  courseNumber: number;
+	@Column()
+	courseName: string;
 
-  @Column()
-  description: string;
+	@Column()
+	description: string;
 
-  @OneToMany(() => Section, (section) => section.course)
-  sections: Relation<Section[]>;
+	@ManyToMany(() => Degree, (degree) => degree.recommendedCourses)
+	degrees: Relation<Degree[]>;
 
-  @ManyToMany(() => User)
-  @JoinTable()
-  users: Relation<User[]>;
+	@OneToMany(() => Section, (section) => section.course)
+	sections: Relation<Section[]>;
+
+	@ManyToMany(() => Course, (course) => course.prerequisites)
+	dependents: Relation<Course[]>;
+
+	@ManyToMany(() => Course, (course) => course.dependents)
+	@JoinTable({ name: 'courses_prerequisite_relation' })
+	prerequisites: Relation<Course[]>;
+
+	@ManyToMany(() => Term, (term) => term.courses)
+	terms: Relation<Term[]>;
 }
