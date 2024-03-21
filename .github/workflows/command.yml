@@ -23,4 +23,9 @@ jobs:
           push: false
           tags: ${{ env.DOCKER_TAG }}
       - name: Run command
-        run: docker run ${{ env.DOCKER_TAG }} ${{ github.event.inputs.command }}
+        run:  | 
+          docker run 
+          -e DB_HOST=${{ secrets.DB_HOST }}
+          -e DB_USER=${{ secrets.DB_USER }}
+          -e DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+          ${{ env.DOCKER_TAG }} ${{ github.event.inputs.command }}
