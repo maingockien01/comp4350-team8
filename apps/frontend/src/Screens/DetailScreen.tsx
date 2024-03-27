@@ -111,8 +111,8 @@ const DetailScreen = () => {
           <Typography variant="h5">Sections:</Typography>
           {/* Displaying sections */}
           <Stack spacing={2}>
-            {course?.sections.map((section: SectionDTO)
-            => SectionDetail(section, handleAddSections))}
+            {course?.sections.map((section: SectionDTO) => 
+            SectionDetail(section, handleAddSections))}
           </Stack>
         </Stack>
       </Container>
