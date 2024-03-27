@@ -38,11 +38,11 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          push: true
+          push: false
           tags: ${{ env.DOCKER_TAG }}
           cache-from: type=registry,ref=${{ env.DOCKER_TAG }}
-          cache-to: type=inline
-  
+          cache-to: type=registry,ref=${{ env.DOCKER_TAG }}, mode=max
+
   lint:
     name: Lint code
     runs-on: ubuntu-latest
@@ -51,6 +51,14 @@ jobs:
       group: lint-${{ github.sha }}
       cancel-in-progress: true
     steps:
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: ${{ env.DOCKER_TAG }}
+          cache-from: type=registry,ref=${{ env.DOCKER_TAG }}
+          cache-to: type=registry,ref=${{ env.DOCKER_TAG }}, mode=max
       - name: Run linter on workspace backend
         id: backend
         run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/backend lint
@@ -75,6 +83,14 @@ jobs:
       group: tests-unit-backend-${{ github.sha }}
       cancel-in-progress: true
     steps:
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: ${{ env.DOCKER_TAG }}
+          cache-from: type=registry,ref=${{ env.DOCKER_TAG }}
+          cache-to: type=registry,ref=${{ env.DOCKER_TAG }}, mode=max
       - name: Run unit tests on workspace backend
         id: backend-unit
         run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/backend test:unit
@@ -87,6 +103,14 @@ jobs:
       group: tests-unit-frontend-${{ github.sha }}
       cancel-in-progress: true
     steps:
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: ${{ env.DOCKER_TAG }}
+          cache-from: type=registry,ref=${{ env.DOCKER_TAG }}
+          cache-to: type=registry,ref=${{ env.DOCKER_TAG }}, mode=max
       - name: Run unit tests on workspace frontend
         id: frontend-unit
         run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/frontend test:unit
@@ -111,6 +135,14 @@ jobs:
         uses: actions/checkout@v4
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: ${{ env.DOCKER_TAG }}
+          cache-from: type=registry,ref=${{ env.DOCKER_TAG }}
+          cache-to: type=registry,ref=${{ env.DOCKER_TAG }}, mode=max
       - name: Init mysql
         run: |
           docker exec -i database mysql -uroot -proot < ./docker/mysql/provision/init.sql
