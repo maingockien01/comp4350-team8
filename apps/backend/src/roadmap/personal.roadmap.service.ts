@@ -1,63 +1,87 @@
-import { Injectable } from '@nestjs/common';
-import { InvalidRoadmapException, Roadmap } from '@team8/types/domain/roadmap.model';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '../entities/user.entity';
-import { In, Repository } from 'typeorm';
-import { Course } from '../entities/course.entity';
+import {Injectable} from '@nestjs/common';
+import {
+  InvalidRoadmapException,
+  Roadmap,
+} from '@team8/types/domain/roadmap.model';
+import {InjectRepository} from '@nestjs/typeorm';
+import {User} from '../entities/user.entity';
+import {In, Repository} from 'typeorm';
+import {Course} from '../entities/course.entity';
 
 @Injectable()
+/**
+ * The class is a service provider for the personal roadmap.
+ */
 export class PersonalRoadmapService {
-	constructor(
-		@InjectRepository(User)
-		private readonly userRepository: Repository<User>,
-		@InjectRepository(Course)
-		private readonly courseRepository: Repository<Course>,
-	) {}
-	async getPersonalRoadmap(userId: number): Promise<Roadmap> {
-		const user = await this.userRepository.findOneOrFail({
-			where: {
-				uid: userId,
-			},
-			relations: {
-				plannedCourses: {
-					prerequisites: true,
-				},
-			},
-		});
+  /**
+   * Creates an instance of the PersonalRoadmapService class.
+   * @param {Repository<User>} userRepository
+   * @param {Repository<Course>} courseRepository
+   */
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+    @InjectRepository(Course)
+    private readonly courseRepository: Repository<Course>,
+  ) {}
 
-		return new Roadmap(user.plannedCourses);
-	}
+  /**
+   * Retrieves the personal roadmap for the user.
+   * @param {number} userId - The ID of the user.
+   * @return {Promise<Roadmap>}
+   */
+  async getPersonalRoadmap(userId: number): Promise<Roadmap> {
+    const user = await this.userRepository.findOneOrFail({
+      where: {
+        uid: userId,
+      },
+      relations: {
+        plannedCourses: {
+          prerequisites: true,
+        },
+      },
+    });
 
-	async savePersonalRoadmap(userId: number, cids: number[]): Promise<Roadmap> {
-		const courses = await this.courseRepository.find({
-			where: {
-				cid: In(cids),
-			},
-			relations: {
-				prerequisites: true,
-			},
-		});
+    return new Roadmap(user.plannedCourses);
+  }
 
-		if (courses.length !== cids.length) {
-			throw new Error('Some courses do not exist');
-		}
+  /**
+   * Updates the personal roadmap for the user.
+   * @param {number} userId - The ID of the user.
+   * @param {number[]} cids - The IDs of the courses.
+   * @return {Promise<Roadmap>}
+   * @throws {InvalidRoadmapException} if the roadmap is invalid.
+   */
+  async savePersonalRoadmap(userId: number, cids: number[]): Promise<Roadmap> {
+    const courses = await this.courseRepository.find({
+      where: {
+        cid: In(cids),
+      },
+      relations: {
+        prerequisites: true,
+      },
+    });
 
-		const roadmap = new Roadmap(courses);
+    if (courses.length !== cids.length) {
+      throw new Error('Some courses do not exist');
+    }
 
-		if (!roadmap.isValid()) {
-			throw new InvalidRoadmapException();
-		}
+    const roadmap = new Roadmap(courses);
 
-		const user = await this.userRepository.findOneOrFail({
-			where: {
-				uid: userId,
-			},
-		});
+    if (!roadmap.isValid()) {
+      throw new InvalidRoadmapException();
+    }
 
-		user.plannedCourses = courses;
+    const user = await this.userRepository.findOneOrFail({
+      where: {
+        uid: userId,
+      },
+    });
 
-		await this.userRepository.save(user);
+    user.plannedCourses = courses;
 
-		return roadmap;
-	}
+    await this.userRepository.save(user);
+
+    return roadmap;
+  }
 }

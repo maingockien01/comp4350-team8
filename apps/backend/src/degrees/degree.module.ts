@@ -1,12 +1,15 @@
-import { Module } from '@nestjs/common';
-import { DegreeController } from './degree.controller';
-import { DegreeService } from './degree.service';
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { Degree } from '../entities/degree.entity';
+import {Module} from '@nestjs/common';
+import {DegreeController} from './degree.controller';
+import {DegreeService} from './degree.service';
+import {TypeOrmModule} from '@nestjs/typeorm';
+import {Degree} from '../entities/degree.entity';
 
 @Module({
-	imports: [TypeOrmModule.forFeature([Degree])],
-	controllers: [DegreeController],
-	providers: [DegreeService],
+  imports: [TypeOrmModule.forFeature([Degree])],
+  controllers: [DegreeController],
+  providers: [DegreeService],
 })
+/**
+ * Represents the Degree module.
+ */
 export class DegreeModule {}

@@ -60,14 +60,14 @@ describe('Roadmap Model', () => {
     it('should throw error if course already exists in roadmap', () => {
       const roadmap = new Roadmap([course1, course2]);
       expect(() => roadmap.addCourse(course2)).toThrowError(
-        'Roadmap already contain course',
+          'Roadmap already contain course',
       );
     });
 
     it('should throw error if course does not have prerequisites', () => {
       const roadmap = new Roadmap([]);
       expect(() => roadmap.addCourse(course2)).toThrowError(
-        'Roadmap does not contain prerequisites for course',
+          'Roadmap does not contain prerequisites for course',
       );
     });
   });
@@ -78,11 +78,15 @@ describe('Roadmap Model', () => {
       expect(roadmap.removeCourse(course2).courses).toEqual([course1]);
     });
 
-    it('should throw error if course is prerequisite of another course in roadmap', () => {
-      const roadmap = new Roadmap([course1, course2]);
-      expect(() => roadmap.removeCourse(course1)).toThrowError(
-        'The course is reprequesite of CS-4351 Software Engineering II in roadmap',
-      );
-    });
+    it(
+        // eslint-disable-next-line max-len
+        'should throw error if course is prerequisite of another course in roadmap',
+        () => {
+          const roadmap = new Roadmap([course1, course2]);
+          expect(() => roadmap.removeCourse(course1)).toThrowError(
+              // eslint-disable-next-line max-len
+              'The course is reprequesite of CS-4351 Software Engineering II in roadmap',
+          );
+        });
   });
 });

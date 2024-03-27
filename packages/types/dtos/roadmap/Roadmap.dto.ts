@@ -1,5 +1,5 @@
-import { CourseDTO } from '../course/course.dto';
+import {CourseDTO} from '../course/course.dto';
 
 export interface RoadmapDto {
-	courses: CourseDTO[];
+  courses: CourseDTO[];
 }

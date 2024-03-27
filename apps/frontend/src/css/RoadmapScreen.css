@@ -1,28 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .RoadmapScreen {
-	font-family: 'Poppins', sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
-	display: inline-flex;
-	padding: 16px;
-	justify-content: center;
-	min-height: 100vh;
-	min-width: 100vh;
-	width: 100%;
+  display: inline-flex;
+  padding: 16px;
+  justify-content: center;
+  min-height: 100vh;
+  min-width: 100vh;
+  width: 100%;
 }
 
 .RoadmapScreen .dropdown {
-	padding: 20px 45px 20px 20px;
+  padding: 20px 45px 20px 20px;
 }
 
 code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }

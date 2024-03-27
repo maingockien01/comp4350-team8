@@ -2,33 +2,24 @@
   "preset": "ts-jest",
   "testEnvironment": "jsdom",
   "transform": {
-    "^.+\\.(js|jsx|ts|tsx)$": ["babel-jest", {
-      "rootMode": "upward"
-    }]
+    "^.+\\.(js|jsx|ts|tsx)$": [
+      "babel-jest",
+      {
+        "rootMode": "upward"
+      }
+    ]
   },
   "moduleNameMapper": {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy"
   },
-  "testMatch": [
-    "<rootDir>/**/*.spec.(js|jsx|ts|tsx)"
-  ],
+  "testMatch": ["<rootDir>/**/*.spec.(js|jsx|ts|tsx)"],
   "collectCoverageFrom": [
     "src/**/*.{js,jsx,ts,tsx}",
     "!src/**/*.d.ts",
     "!src/**/index.{js,jsx,ts,tsx}"
   ],
-  "coverageReporters": [
-    "json",
-    "lcov",
-    "text",
-    "clover"
-  ],
+  "coverageReporters": ["json", "lcov", "text", "clover"],
   "coverageDirectory": "../coverage",
-  "testPathIgnorePatterns": [
-    "/node_modules/",
-    "/dist/"
-  ],
-  "transformIgnorePatterns": [
-    "/node_modules/(?!(nanoid|ics))"
-  ]
+  "testPathIgnorePatterns": ["/node_modules/", "/dist/"],
+  "transformIgnorePatterns": ["/node_modules/(?!(nanoid|ics))"]
 }
