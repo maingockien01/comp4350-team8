@@ -40,8 +40,8 @@ jobs:
           context: .
           push: false
           tags: ${{ env.DOCKER_TAG }}
-          cache-from: type=registry,ref=${{ env.DOCKER_TAG }}
           cache-to: type=registry,ref=${{ env.DOCKER_TAG }}, mode=max
+          load: true
 
   lint:
     name: Lint code
