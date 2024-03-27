@@ -65,7 +65,7 @@ jobs:
           push: false
           tags: ${{ env.DOCKER_TAG }}
           cache-from: type=registry,ref=${{ env.DOCKER_TAG }}
-          outputs: local
+          load: true
       - name: Run linter on workspace backend
         id: backend
         run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/backend lint
