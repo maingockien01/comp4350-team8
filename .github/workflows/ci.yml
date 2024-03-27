@@ -40,8 +40,6 @@ jobs:
           context: .
           push: true
           tags: ${{ env.DOCKER_TAG }}
-          cache-from: type=registry,ref=${{ env.DOCKER_TAG }}
-          cache-to: type=inline
   
   lint:
     name: Lint code
