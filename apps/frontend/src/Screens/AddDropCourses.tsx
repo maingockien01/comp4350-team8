@@ -16,6 +16,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {SectionDTO} from 'packages/types/dtos/section/section.dto';
 import {displayError} from '../Utils/Errors';
 import {makeAuthRequest} from '../Utils/Request';
+import {CURRENT_TERM_ID} from '@team8/constants/terms';
 
 const AddDropCourses = () => {
   const token = getTokenFromCookie();
@@ -48,10 +49,9 @@ const AddDropCourses = () => {
    * Function to fetch sections from the server.
    */
   const fetchSections = async () => {
-    // TODO: move tid=12 to constant package
     try {
       const response = await makeAuthRequest(
-          `/rest-api/user/searchSection?tid=12`
+          `/rest-api/user/searchSection?tid=${CURRENT_TERM_ID}`
       );
       return setSections(response.data);
     } catch (error: any) {
