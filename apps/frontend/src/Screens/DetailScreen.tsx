@@ -63,7 +63,7 @@ const DetailScreen = () => {
           console.error('Failed to add section:', response.statusText);
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       displayError(error.message);
     }
   };

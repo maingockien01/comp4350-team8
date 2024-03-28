@@ -54,7 +54,7 @@ const AddDropCourses = () => {
           `/rest-api/user/searchSection?tid=12`
       );
       return setSections(response.data);
-    } catch (error) {
+    } catch (error: any) {
       return displayError(error.message);
     }
   };
@@ -91,7 +91,7 @@ const AddDropCourses = () => {
       try {
         await makeAuthRequest(`/rest-api/user/remove?sid=${deleteSectionId}`);
         await fetchSections();
-      } catch (error) {
+      } catch (error: any) {
         displayError(error.message);
       }
     }
