@@ -6,7 +6,6 @@ import {
   Typography,
   Grid,
   IconButton,
-  Container,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -17,6 +16,7 @@ import {SectionDTO} from 'packages/types/dtos/section/section.dto';
 import {displayError} from '../Utils/Errors';
 import {makeAuthRequest} from '../Utils/Request';
 import {CURRENT_TERM_ID} from '@team8/constants/terms';
+import Screen from '../Components/Screen/Screen';
 
 const AddDropCourses = () => {
   const token = getTokenFromCookie();
@@ -101,70 +101,68 @@ const AddDropCourses = () => {
   };
 
   return (
-    <>
-      <Container maxWidth="lg" sx={{mt: 2}}>
-        <div style={{padding: '20px'}}>
-          <Typography variant="h5">Add Section</Typography>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item>
-              <TextField
-                label="Section ID"
-                variant="outlined"
-                value={sidInput}
-                onChange={(e) => setSidInput(e.target.value)}
-              />
-            </Grid>
-            <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleAddSection}
-              >
-                Add
-              </Button>
-            </Grid>
+    <Screen>
+      <div style={{padding: '20px'}}>
+        <Typography variant="h5">Add Section</Typography>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item>
+            <TextField
+              label="Section ID"
+              variant="outlined"
+              value={sidInput}
+              onChange={(e) => setSidInput(e.target.value)}
+            />
           </Grid>
+          <Grid item>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleAddSection}
+            >
+                Add
+            </Button>
+          </Grid>
+        </Grid>
 
-          <Typography variant="h5" style={{marginTop: '20px'}}>
+        <Typography variant="h5" style={{marginTop: '20px'}}>
             Registered Sections
-          </Typography>
-          {sections.map((section) => (
-            <div key={section.sid} style={{marginTop: '10px'}}>
-              <Typography variant={'h6'}>
-                {/* eslint-disable-next-line max-len */}
-                {`Course: ${section.course.courseName} (${section.sectionName}) | Location: ${section.location.building} ${section.location.roomNumber} | Time: ${section.time} `}
-                <IconButton
-                  color="secondary"
-                  onClick={() => handleOpenConfirmationDialog(section.sid)}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </Typography>
-            </div>
-          ))}
+        </Typography>
+        {sections.map((section) => (
+          <div key={section.sid} style={{marginTop: '10px'}}>
+            <Typography variant={'h6'}>
+              {/* eslint-disable-next-line max-len */}
+              {`Course: ${section.course.courseName} (${section.sectionName}) | Location: ${section.location.building} ${section.location.roomNumber} | Time: ${section.time} `}
+              <IconButton
+                color="secondary"
+                onClick={() => handleOpenConfirmationDialog(section.sid)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Typography>
+          </div>
+        ))}
 
-          <Dialog
-            open={confirmationDialogOpen}
-            onClose={handleCloseConfirmationDialog}
-          >
-            <DialogTitle>Confirm Deletion</DialogTitle>
-            <DialogContent>
-              <Typography>
+        <Dialog
+          open={confirmationDialogOpen}
+          onClose={handleCloseConfirmationDialog}
+        >
+          <DialogTitle>Confirm Deletion</DialogTitle>
+          <DialogContent>
+            <Typography>
                 Are you sure you want to drop this section?
-              </Typography>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleCloseConfirmationDialog} color="primary">
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseConfirmationDialog} color="primary">
                 Cancel
-              </Button>
-              <Button onClick={handleDeleteSection} color="secondary">
+            </Button>
+            <Button onClick={handleDeleteSection} color="secondary">
                 Drop
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
-      </Container>
-    </>
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    </Screen>
   );
 };
 

@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import Container from '@mui/material/Container';
 import Timetable from 'react-timetable-events';
 import {getTokenFromCookie} from '../../Utils/CookieFunctions';
 import Button, {ButtonProps} from '@mui/material/Button';
@@ -8,6 +7,7 @@ import {brown} from '@mui/material/colors';
 import exportCalendar from './exportCalendar';
 import '../../css/Calendar.css';
 import {Course, WeeklySchedule} from './types';
+import Screen from '../../Components/Screen/Screen';
 
 const DAY_MAPPINGS: {
   [key: string]: string;
@@ -121,7 +121,7 @@ const Calendar = () => {
   };
 
   return (
-    <Container maxWidth="lg">
+    <Screen>
       <div className="header">
         <h2 id="title">Weekly Schedule</h2>
         <ExportButton
@@ -139,7 +139,7 @@ const Calendar = () => {
         style={{height: '70vh'}}
         hoursInterval={{from: 7, to: 20}}
       />
-    </Container>
+    </Screen>
   );
 };
 

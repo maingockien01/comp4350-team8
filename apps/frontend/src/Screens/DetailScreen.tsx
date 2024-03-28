@@ -1,6 +1,5 @@
 import {
   Button,
-  Container,
   Divider,
   Stack,
   Typography,
@@ -13,6 +12,7 @@ import {getTokenFromCookie} from '../Utils/CookieFunctions';
 import axios from 'axios';
 import CourseDetail from '../Components/CourseDetail/CourseDetail';
 import {displayError} from '../Utils/Errors';
+import Screen from '../Components/Screen/Screen';
 
 const SectionDetail =
 (section: SectionDTO, handleAddSections: (sid: number) => void) => {
@@ -83,27 +83,25 @@ const DetailScreen = () => {
   };
 
   return (
-    <>
-      <Container maxWidth="lg" sx={{mt: 2}}>
+    <Screen>
+      <Stack spacing={2}>
+        {course && (
+          <CourseDetail
+            course={course}
+            onCourseClick={(course) => {
+              setCid(course.cid);
+            }}
+          />
+        )}
+        <Divider />
+        <Typography variant="h5">Sections:</Typography>
+        {/* Displaying sections */}
         <Stack spacing={2}>
-          {course && (
-            <CourseDetail
-              course={course}
-              onCourseClick={(course) => {
-                setCid(course.cid);
-              }}
-            />
-          )}
-          <Divider />
-          <Typography variant="h5">Sections:</Typography>
-          {/* Displaying sections */}
-          <Stack spacing={2}>
-            {course?.sections.map((section: SectionDTO) =>
-              SectionDetail(section, handleAddSections))}
-          </Stack>
+          {course?.sections.map((section: SectionDTO) =>
+            SectionDetail(section, handleAddSections))}
         </Stack>
-      </Container>
-    </>
+      </Stack>
+    </Screen>
   );
 };
 
