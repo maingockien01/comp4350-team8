@@ -37,7 +37,7 @@ export class UserCourseController {
    */
   @UseGuards(JWTAuthGuard)
   @Get('search')
-  async findOne(@Request() req: Request): Promise<UserDTO> {
+  async findOne(@Request() req): Promise<UserDTO> {
     return this.userService.find(req.user.uid);
   }
 
@@ -52,7 +52,7 @@ export class UserCourseController {
   @Get('searchSection')
   async findSection(
     @Query('tid') tid: number,
-    @Request() req: Request,
+    @Request() req,
   ): Promise<SectionDTO[]> {
     return this.userService.findSection(req.user.uid, tid);
   }
@@ -68,7 +68,7 @@ export class UserCourseController {
   @Get('searchActive')
   async findActive(
     @Query('tid') tid: number,
-    @Request() req: Request,
+    @Request() req,
   ): Promise<SectionDTO[]> {
     return this.userService.findActive(req.user.uid, tid);
   }
@@ -89,7 +89,7 @@ export class UserCourseController {
    */
   async addUserWithSection(
     @Query('sid') sid: number,
-    @Request() req: Request,
+    @Request() req,
   ): Promise<void> {
     await this.userService.registerSection(req.user.uid, sid);
   }
@@ -105,7 +105,7 @@ export class UserCourseController {
   @Get('remove')
   async removeUserFromSection(
     @Query('sid') sid: number,
-    @Request() req: Request,
+    @Request() req,
   ): Promise<void> {
     await this.userService.deleteUserFromSection(sid, req.user.uid);
   }
