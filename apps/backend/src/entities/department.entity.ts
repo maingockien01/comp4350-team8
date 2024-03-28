@@ -1,13 +1,16 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
 
 @Entity()
+/**
+ * Represents a department entity.
+ */
 export class Department {
-	@PrimaryGeneratedColumn()
-	did: number;
+  @PrimaryGeneratedColumn()
+    did: number;
 
-	@Column()
-	name: string;
+  @Column()
+    name: string;
 
-	@Column()
-	abbreviation: string;
+  @Column()
+    abbreviation: string;
 }

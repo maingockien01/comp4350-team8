@@ -1,5 +1,5 @@
 export interface DepartmentDto {
-	did: number;
-	name: string;
-	abbreviation: string;
+  did: number;
+  name: string;
+  abbreviation: string;
 }

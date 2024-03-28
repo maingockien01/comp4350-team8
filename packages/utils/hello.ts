@@ -1,3 +1,3 @@
 export const Hello = () => {
-    return "Hello from utils!";
-}
+  return 'Hello from utils!';
+};

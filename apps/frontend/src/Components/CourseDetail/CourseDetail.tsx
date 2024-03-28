@@ -1,33 +1,41 @@
-import { CourseDTO } from '@team8/types/dtos/course/course.dto';
-import { Stack, Typography } from '@mui/material';
+import {CourseDTO} from '@team8/types/dtos/course/course.dto';
+import {Stack, Typography} from '@mui/material';
 import CourseChip from '../CourseChip';
 
 export interface CourseDetailProps {
-	course: CourseDTO;
-	onCourseClick?: (course: CourseDTO) => void;
-	onCourseDelete?: (course: CourseDTO) => void;
+  course: CourseDTO;
+  onCourseClick?: (course: CourseDTO) => void;
+  onCourseDelete?: (course: CourseDTO) => void;
 }
 const CourseDetail = (props: CourseDetailProps) => {
-	const course = props.course;
-	return (
-		<Stack spacing={2}>
-			<Typography variant="h4">Course Name: {course.courseName}</Typography>
-			<Typography variant="body1">Description: {course.description}</Typography>
-			<Typography variant="body1">Department: {course.department.name}</Typography>
-			<Typography variant="body1">Course number: {course.courseNumber}</Typography>
-			<Stack direction="row" textAlign="center" spacing={2}>
-				<Typography variant="h6">Prerequisites: </Typography>
-				<Typography>
-					{course.prerequisites.length === 0
-						? 'None'
-						: course.prerequisites.map((prerequisite: CourseDTO) => (
-							<CourseChip key={prerequisite.cid} course={prerequisite} onChipClick={props.onCourseClick} onChipDelete={props.onCourseDelete} />
-						  )
-						)}
-				</Typography>
-			</Stack>
-		</Stack>
-	);
+  const course = props.course;
+  return (
+    <Stack spacing={2}>
+      <Typography variant="h4">Course Name: {course.courseName}</Typography>
+      <Typography variant="body1">Description: {course.description}</Typography>
+      <Typography variant="body1">
+        Department: {course.department.name}
+      </Typography>
+      <Typography variant="body1">
+        Course number: {course.courseNumber}
+      </Typography>
+      <Stack direction="row" textAlign="center" spacing={2}>
+        <Typography variant="h6">Prerequisites: </Typography>
+        <Typography>
+          {course.prerequisites.length === 0 ?
+            'None' :
+            course.prerequisites.map((prerequisite: CourseDTO) => (
+              <CourseChip
+                key={prerequisite.cid}
+                course={prerequisite}
+                onChipClick={props.onCourseClick}
+                onChipDelete={props.onCourseDelete}
+              />
+            ))}
+        </Typography>
+      </Stack>
+    </Stack>
+  );
 };
 
 export default CourseDetail;
