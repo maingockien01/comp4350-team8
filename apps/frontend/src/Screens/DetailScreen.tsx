@@ -1,9 +1,7 @@
 import {
-  Alert,
   Button,
   Container,
   Divider,
-  Snackbar,
   Stack,
   Typography,
 } from '@mui/material';
@@ -14,6 +12,7 @@ import {CourseDTO} from 'packages/types/dtos/course/course.dto';
 import {getTokenFromCookie} from '../Utils/CookieFunctions';
 import axios from 'axios';
 import CourseDetail from '../Components/CourseDetail/CourseDetail';
+import {displayError} from '../Utils/Errors';
 
 const SectionDetail =
 (section: SectionDTO, handleAddSections: (sid: number) => void) => {
@@ -37,10 +36,6 @@ const DetailScreen = () => {
   const token = getTokenFromCookie();
   const navigate = useNavigate();
 
-  // State to control snackbar visibility
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  // State to store error message
-  const [errorMessage, setErrorMessage] = useState('');
   // State to store course details
   const [course, setCourse] = useState<CourseDTO>();
 
@@ -63,15 +58,13 @@ const DetailScreen = () => {
       } else {
         const errorData = await response.json();
         if (errorData && errorData.message) {
-          setErrorMessage(errorData.message); // Set error message
-          setOpenSnackbar(true); // Open snackbar to display error message
+          displayError(errorData.message);
         } else {
           console.error('Failed to add section:', response.statusText);
         }
       }
     } catch (error) {
-      console.error('Failed to add section:', error);
-      setOpenSnackbar(true); // Open snackbar to display error message
+      displayError(error.message);
     }
   };
 
@@ -85,14 +78,8 @@ const DetailScreen = () => {
           console.log(response.data);
         })
         .catch((error: Error) => {
-          alert(error.message); // Display error message
-          setErrorMessage(error.message); // Set error message
+          displayError(error.message);
         });
-  };
-
-  // Function to handle closing snackbar
-  const handleCloseSnackbar = () => {
-    setOpenSnackbar(false);
   };
 
   return (
@@ -111,27 +98,11 @@ const DetailScreen = () => {
           <Typography variant="h5">Sections:</Typography>
           {/* Displaying sections */}
           <Stack spacing={2}>
-            {course?.sections.map((section: SectionDTO) => 
-            SectionDetail(section, handleAddSections))}
+            {course?.sections.map((section: SectionDTO) =>
+              SectionDetail(section, handleAddSections))}
           </Stack>
         </Stack>
       </Container>
-      {/* TODO: make error display global or available in all screens */}
-      {/* Snackbar to display error message */}
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={6000} // Adjust duration as needed
-        onClose={handleCloseSnackbar}
-      >
-        <Alert
-          elevation={6}
-          variant="filled"
-          severity="error"
-          onClose={handleCloseSnackbar}
-        >
-          {errorMessage}
-        </Alert>
-      </Snackbar>
     </>
   );
 };

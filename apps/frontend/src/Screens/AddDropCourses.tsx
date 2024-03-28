@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {getTokenFromCookie} from '../Utils/CookieFunctions';
-
 import {
   TextField,
   Button,
@@ -15,6 +14,8 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {SectionDTO} from 'packages/types/dtos/section/section.dto';
+import {displayError} from '../Utils/Errors';
+import {makeAuthRequest} from '../Utils/Request';
 
 const AddDropCourses = () => {
   const token = getTokenFromCookie();
@@ -22,7 +23,6 @@ const AddDropCourses = () => {
   const [sections, setSections] = useState<SectionDTO[]>([]);
   const [deleteSectionId, setDeleteSectionId] = useState<number | null>(null);
   const [confirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     fetchSections();
@@ -48,18 +48,14 @@ const AddDropCourses = () => {
    * Function to fetch sections from the server.
    */
   const fetchSections = async () => {
+    // TODO: move tid=12 to constant package
     try {
-      const response = await fetch(`/rest-api/user/searchSection?tid=12`, {
-        headers: {Authorization: `Bearer ${token}`},
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setSections(data);
-      } else {
-        console.error('Failed to fetch sections:', response.statusText);
-      }
+      const response = await makeAuthRequest(
+          `/rest-api/user/searchSection?tid=12`
+      );
+      return setSections(response.data);
     } catch (error) {
-      console.error('Failed to fetch sections:', error);
+      return displayError(error.message);
     }
   };
 
@@ -73,12 +69,11 @@ const AddDropCourses = () => {
       });
       if (response.ok) {
         setSidInput(''); // Clear input field after successful addition
-        fetchSections(); // Refresh section list
-        setErrorMessage(''); // Clear any previous error message
+        await fetchSections(); // Refresh section list
       } else {
         const errorData = await response.json();
         if (errorData && errorData.message) {
-          setErrorMessage(errorData.message);
+          displayError(errorData.message);
         } else {
           console.error('Failed to add section:', response.statusText);
         }
@@ -94,19 +89,10 @@ const AddDropCourses = () => {
   const handleDeleteSection = async () => {
     if (deleteSectionId !== null) {
       try {
-        const response = await fetch(
-            `rest-api/user/remove?sid=${deleteSectionId}`,
-            {
-              headers: {Authorization: `Bearer ${token}`},
-            },
-        );
-        if (response.ok) {
-          fetchSections(); // Refresh section list after successful deletion
-        } else {
-          console.error('Failed to delete section:', response.statusText);
-        }
+        await makeAuthRequest(`/rest-api/user/remove?sid=${deleteSectionId}`);
+        await fetchSections();
       } catch (error) {
-        console.error('Failed to delete section:', error);
+        displayError(error.message);
       }
     }
 
@@ -138,7 +124,6 @@ const AddDropCourses = () => {
               </Button>
             </Grid>
           </Grid>
-          {errorMessage && <p>{errorMessage}</p>}
 
           <Typography variant="h5" style={{marginTop: '20px'}}>
             Registered Sections

@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {DegreeDTO} from '@team8/types/dtos/degree/degree.dto';
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
