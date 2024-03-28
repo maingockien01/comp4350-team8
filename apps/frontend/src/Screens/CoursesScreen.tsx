@@ -1,6 +1,7 @@
 import {useLocation, useNavigate} from 'react-router-dom';
 import {Button, Container, Stack, Typography} from '@mui/material';
 import {CourseDTO} from '@team8/types/dtos/course/course.dto';
+import React from 'react';
 
 const CoursesScreen = () => {
   // Hook to access the current location

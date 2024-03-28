@@ -20,6 +20,7 @@ import SignupScreen from './Screens/SignupScreen';
 import DetailScreen from './Screens/DetailScreen';
 import {getTokenFromCookie} from './Utils/CookieFunctions';
 import UserProfileScreen from './Screens/UserProfileScreen';
+import {ToastContainer} from 'react-toastify';
 
 const App = () => {
   const navigate = useNavigate();
@@ -139,6 +140,12 @@ const App = () => {
         />
         <Route path="/signup" element={<SignupScreen />} />
       </Routes>
+      <ToastContainer
+        autoClose={2000}
+        closeOnClick
+        pauseOnFocusLoss={false}
+        theme="dark"
+      />
     </div>
   );
 };

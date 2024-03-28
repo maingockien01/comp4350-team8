@@ -1,11 +1,12 @@
 import {Autocomplete, Box, Button, Grid, TextField} from '@mui/material';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {CourseDTO} from '@team8/types/dtos/course/course.dto';
 import {Roadmap} from '@team8/types/domain/roadmap.model';
 import {makeAuthRequest} from '../../Utils/Request';
 import CourseTree from '../../Components/CourseTree/CourseTree';
 import CourseDetail from '../../Components/CourseDetail/CourseDetail';
 import {getCourse, getCourses} from '../../API/Course.API';
+import {displayError} from '../../Utils/Errors';
 
 const PersonalRoadmap = () => {
   const [courses, setCourses] = useState<CourseDTO[]>([]);
@@ -43,7 +44,7 @@ const PersonalRoadmap = () => {
       setRoadmap(roadmap.addCourse(course));
       onRoadmapChange();
     } catch (e: any) {
-      alert(e.message);
+      displayError(e.message);
     }
   };
 
@@ -52,7 +53,7 @@ const PersonalRoadmap = () => {
       setRoadmap(roadmap.removeCourse(course));
       onRoadmapChange();
     } catch (e: any) {
-      alert(e.messsage);
+      displayError(e.messsage);
     }
   };
 
@@ -62,8 +63,8 @@ const PersonalRoadmap = () => {
           setRoadmap(new Roadmap(response.data.courses));
           onRoadmapChange(false);
         })
-        .catch((e) => {
-          alert(e);
+        .catch((e: Error) => {
+          displayError(e.message);
         });
   };
 

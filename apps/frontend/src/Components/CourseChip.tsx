@@ -1,5 +1,6 @@
 import {CourseDTO} from '@team8/types/dtos/course/course.dto';
 import {Chip} from '@mui/material';
+import React from 'react';
 
 export interface CourseChipProps {
   course: CourseDTO;
