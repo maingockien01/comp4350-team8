@@ -75,3 +75,6 @@ The vision of "ScheduleMaster" is to empower students through a holistic and use
 # System Architecture (Block Diagram):
 
 ![architecture](https://github.com/maingockien01/comp4350-team8/assets/84072576/96f5608d-b4eb-4db6-88be-be71393cfcde)
+
+# Code Style
+Here, we follow [the code style from Google for Typescript](https://google.github.io/styleguide/tsguide.html).
