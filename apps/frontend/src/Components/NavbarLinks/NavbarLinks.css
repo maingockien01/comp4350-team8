@@ -1,0 +1,26 @@
+.navbar_links--toolbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    gap: 10px;
+}
+
+.navbar_links--button {
+    color: white;
+    background: #F5A800!important;
+    font-weight: 500;
+    width: fit-content;
+
+    &:hover {
+        background: #795548!important;
+    };
+
+    &:active {
+        background: #6d4c41!important;
+    };
+
+    &:focus {
+        background: #502C1E!important;
+    };
+}

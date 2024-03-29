@@ -1,11 +1,13 @@
 import {Autocomplete, Box, Button, Grid, TextField} from '@mui/material';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {CourseDTO} from '@team8/types/dtos/course/course.dto';
 import {Roadmap} from '@team8/types/domain/roadmap.model';
 import {makeAuthRequest} from '../../Utils/Request';
 import CourseTree from '../../Components/CourseTree/CourseTree';
 import CourseDetail from '../../Components/CourseDetail/CourseDetail';
 import {getCourse, getCourses} from '../../API/Course.API';
+import {displayError} from '../../Utils/Errors';
+import Screen from '../../Components/Screen/Screen';
 
 const PersonalRoadmap = () => {
   const [courses, setCourses] = useState<CourseDTO[]>([]);
@@ -43,7 +45,7 @@ const PersonalRoadmap = () => {
       setRoadmap(roadmap.addCourse(course));
       onRoadmapChange();
     } catch (e: any) {
-      alert(e.message);
+      displayError(e.message);
     }
   };
 
@@ -52,7 +54,7 @@ const PersonalRoadmap = () => {
       setRoadmap(roadmap.removeCourse(course));
       onRoadmapChange();
     } catch (e: any) {
-      alert(e.messsage);
+      displayError(e.messsage);
     }
   };
 
@@ -62,16 +64,17 @@ const PersonalRoadmap = () => {
           setRoadmap(new Roadmap(response.data.courses));
           onRoadmapChange(false);
         })
-        .catch((e) => {
-          alert(e);
+        .catch((e: Error) => {
+          displayError(e.message);
         });
   };
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={8} textAlign="center">
-        <h1>Personal roadmap</h1>
-        {roadmap.dto.courses.length > 0 ? (
+    <Screen>
+      <Grid container spacing={2}>
+        <Grid item xs={8} textAlign="center">
+          <h1>Personal roadmap</h1>
+          {roadmap.dto.courses.length > 0 ? (
           <CourseTree
             courses={roadmap.dto.courses as CourseDTO[]}
             onRemoveCourse={removeCourseFromRoadmap}
@@ -80,59 +83,60 @@ const PersonalRoadmap = () => {
         ) : (
           <p>User has empty roadmap</p>
         )}
-        <Button
-          onClick={() => {
-            saveRoadmap(roadmap);
-          }}
-          variant="contained"
-          disabled={!doesRoadmapChange}
-        >
+          <Button
+            onClick={() => {
+              saveRoadmap(roadmap);
+            }}
+            variant="contained"
+            disabled={!doesRoadmapChange}
+          >
           Save
-        </Button>
-      </Grid>
-      <Grid item xs={4}>
-        <h2>Available courses</h2>
-        <Autocomplete
-          sx={{width: 300}}
-          renderInput={(params) => (
-            <TextField {...params} label="Select a course" />
-          )}
-          options={courses}
-          getOptionLabel={(option) => option.courseName}
-          renderOption={(props, option) => (
-            <Box component="li" {...props}>
-              {option.department.abbreviation}-{option.courseNumber}{' '}
-              {option.courseName}
-            </Box>
-          )}
-          onChange={(event, newValue: CourseDTO | null) => {
-            if (newValue === null) {
-              return;
-            }
-            onSelectedCourseChange(newValue.cid);
-          }}
-        />
-
-        {selectedCourse && (
-          <CourseDetail
-            course={selectedCourse}
-            onCourseClick={(course: CourseDTO) => {
-              onSelectedCourseChange(course.cid);
+          </Button>
+        </Grid>
+        <Grid item xs={4}>
+          <h2>Available courses</h2>
+          <Autocomplete
+            sx={{width: 300}}
+            renderInput={(params) => (
+              <TextField {...params} label="Select a course" />
+            )}
+            options={courses}
+            getOptionLabel={(option) => option.courseName}
+            renderOption={(props, option) => (
+              <Box component="li" {...props}>
+                {option.department.abbreviation}-{option.courseNumber}{' '}
+                {option.courseName}
+              </Box>
+            )}
+            onChange={(event, newValue: CourseDTO | null) => {
+              if (newValue === null) {
+                return;
+              }
+              onSelectedCourseChange(newValue.cid);
             }}
           />
-        )}
 
-        <Button
-          variant="contained"
-          onClick={() => {
-            selectedCourse && addCourseToRoadmap(selectedCourse);
-          }}
-          disabled={!selectedCourse}
-        >
+          {selectedCourse && (
+            <CourseDetail
+              course={selectedCourse}
+              onCourseClick={(course: CourseDTO) => {
+                onSelectedCourseChange(course.cid);
+              }}
+            />
+          )}
+
+          <Button
+            variant="contained"
+            onClick={() => {
+              selectedCourse && addCourseToRoadmap(selectedCourse);
+            }}
+            disabled={!selectedCourse}
+          >
           Add to roadmap
-        </Button>
+          </Button>
+        </Grid>
       </Grid>
-    </Grid>
+    </Screen>
   );
 };
 

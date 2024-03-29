@@ -1,6 +1,8 @@
 import {useLocation, useNavigate} from 'react-router-dom';
-import {Button, Container, Stack, Typography} from '@mui/material';
+import {Button, Stack, Typography} from '@mui/material';
 import {CourseDTO} from '@team8/types/dtos/course/course.dto';
+import React from 'react';
+import Screen from '../Components/Screen/Screen';
 
 const CoursesScreen = () => {
   // Hook to access the current location
@@ -19,28 +21,26 @@ const CoursesScreen = () => {
   };
 
   return (
-    <>
-      <Container maxWidth="lg" sx={{mt: 2}}>
-        <div>
-          {/* Map through courses and render each as a button */}
-          {courses.map((course) => (
-            <Button
-              key={course.cid}
-              sx={{height: 200}}
-              onClick={() => handleCourseClick(course.cid)}
-            >
-              <Stack direction="row" spacing={2}>
-                {' '}
-                <Typography>{course.cid}</Typography>{' '}
-                <Typography>{course.courseName}</Typography>{' '}
-                <Typography>{course.courseNumber}</Typography>{' '}
-                <Typography>{course.description}</Typography>{' '}
-              </Stack>
-            </Button>
-          ))}
-        </div>
-      </Container>
-    </>
+    <Screen>
+      <div>
+        {/* Map through courses and render each as a button */}
+        {courses.map((course) => (
+          <Button
+            key={course.cid}
+            sx={{height: 200}}
+            onClick={() => handleCourseClick(course.cid)}
+          >
+            <Stack direction="row" spacing={2}>
+              {' '}
+              <Typography>{course.cid}</Typography>{' '}
+              <Typography>{course.courseName}</Typography>{' '}
+              <Typography>{course.courseNumber}</Typography>{' '}
+              <Typography>{course.description}</Typography>{' '}
+            </Stack>
+          </Button>
+        ))}
+      </div>
+    </Screen>
   );
 };
 

@@ -6,7 +6,7 @@ import DriveFileRenameOutlineOutlinedIcon
 import '../css/SignupForm.css';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
-import {toast} from 'react-toastify';
+import {displayError} from '../Utils/Errors';
 
 const SignupForm = () => {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ const SignupForm = () => {
           if (response.data.status == 'success') {
             navigate('/login');
           } else {
-            toast.error(response.data.message);
+            displayError(response.data.message);
           }
         })
         .catch((error) => {

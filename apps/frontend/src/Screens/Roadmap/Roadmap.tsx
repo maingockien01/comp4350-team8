@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {DegreeDTO} from '@team8/types/dtos/degree/degree.dto';
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
@@ -8,6 +8,7 @@ import {CourseDTO} from '@team8/types/dtos/course/course.dto';
 import CourseTree from '../../Components/CourseTree/CourseTree';
 import {Grid} from '@mui/material';
 import '../../css/RoadmapScreen.css';
+import Screen from '../../Components/Screen/Screen';
 
 const Roadmap = () => {
   const [availableDegrees, setAvailableDegrees] = useState<DegreeDTO[]>([]);
@@ -20,7 +21,7 @@ const Roadmap = () => {
   }, []);
 
   return (
-    <div className="RoadmapScreen">
+    <Screen>
       <Grid container spacing={2} maxWidth="lg">
         <Grid item xs={8}>
           <h1>Roadmap</h1>
@@ -56,7 +57,7 @@ const Roadmap = () => {
         </Grid>
         <Grid item xs={4}></Grid>
       </Grid>
-    </div>
+    </Screen>
   );
 };
 

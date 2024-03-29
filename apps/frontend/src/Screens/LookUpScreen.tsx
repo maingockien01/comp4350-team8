@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Button,
   Container,
@@ -15,6 +15,7 @@ import {useNavigate} from 'react-router-dom';
 import {TermDTO} from '@team8/types/dtos/term/term.dto';
 import {DepartmentDto} from '@team8/types/dtos/course/department.dto';
 import {getCourses} from '../API/Course.API';
+import Screen from '../Components/Screen/Screen';
 
 const LookUpScreen = () => {
   const selectedColor = 'red';
@@ -56,97 +57,95 @@ const LookUpScreen = () => {
   }, []);
 
   return (
-    <>
-      <Container maxWidth="lg" sx={{mt: 2}}>
-        <Grid container sx={{border: '1px solid black'}}>
-          <Grid item xs={6}>
-            <Container maxWidth="xl" sx={{mt: 1, mb: 1}}>
-              <Stack>
-                <Typography variant="h4">Department: </Typography>
-                <List
-                  sx={{
-                    'width': '100%',
-                    'maxWidth': 360,
-                    'bgcolor': 'background.paper',
-                    'position': 'relative',
-                    'overflow': 'auto',
-                    'maxHeight': 300,
-                    '& ul': {padding: 0},
-                  }}
-                >
-                  {department.map((department) => (
-                    <ListItem key={department.did}>
-                      <ListItemButton
-                        onClick={() => {
-                          setSelectedDepartment(department);
-                        }}
-                        sx={{
-                          'background':
+    <Screen>
+      <Grid container sx={{border: '1px solid black'}}>
+        <Grid item xs={6}>
+          <Container maxWidth="xl" sx={{mt: 1, mb: 1}}>
+            <Stack>
+              <Typography variant="h4">Department: </Typography>
+              <List
+                sx={{
+                  'width': '100%',
+                  'maxWidth': 360,
+                  'bgcolor': 'background.paper',
+                  'position': 'relative',
+                  'overflow': 'auto',
+                  'maxHeight': 300,
+                  '& ul': {padding: 0},
+                }}
+              >
+                {department.map((department) => (
+                  <ListItem key={department.did}>
+                    <ListItemButton
+                      onClick={() => {
+                        setSelectedDepartment(department);
+                      }}
+                      sx={{
+                        'background':
                             selectedDepartment === department ?
                               selectedColor :
                               'inherit',
-                          '&:hover': {
-                            backgroundColor: hoverColor,
-                          },
-                        }}
-                      >
-                        <ListItemText primary={`${department.name}`} />
-                      </ListItemButton>
-                    </ListItem>
-                  ))}
-                </List>
-              </Stack>
-            </Container>
-          </Grid>
-          <Grid item xs={6}>
-            <Container maxWidth="xl" sx={{mt: 1, mb: 1}}>
-              <Stack>
-                <Typography variant="h4">Term: </Typography>
-                <List
-                  sx={{
-                    'width': '100%',
-                    'maxWidth': 360,
-                    'bgcolor': 'background.paper',
-                    'position': 'relative',
-                    'overflow': 'auto',
-                    'maxHeight': 300,
-                    '& ul': {padding: 0},
-                  }}
-                >
-                  {term.map((terms) => (
-                    <ListItem key={terms.tid}>
-                      <ListItemButton
-                        onClick={() => {
-                          setSelectTerm(terms);
-                        }}
-                        sx={{
-                          'background':
-                            selectTerm === terms ? selectedColor : 'inherit',
-                          '&:hover': {
-                            backgroundColor: hoverColor,
-                          },
-                        }}
-                      >
-                        <ListItemText
-                          primary={`${terms.season} ${terms.year}`}
-                        />
-                      </ListItemButton>
-                    </ListItem>
-                  ))}
-                </List>
-              </Stack>
-            </Container>
-          </Grid>
+                        '&:hover': {
+                          backgroundColor: hoverColor,
+                        },
+                      }}
+                    >
+                      <ListItemText primary={`${department.name}`} />
+                    </ListItemButton>
+                  </ListItem>
+                ))}
+              </List>
+            </Stack>
+          </Container>
         </Grid>
-        <Container maxWidth="xl" sx={{mt: 4, mb: 1}}>
-          <Box sx={{display: 'flex', justifyContent: 'center'}}>
-            <Button onClick={() => handleSubmit()} sx={{background: 'grey'}}>
+        <Grid item xs={6}>
+          <Container maxWidth="xl" sx={{mt: 1, mb: 1}}>
+            <Stack>
+              <Typography variant="h4">Term: </Typography>
+              <List
+                sx={{
+                  'width': '100%',
+                  'maxWidth': 360,
+                  'bgcolor': 'background.paper',
+                  'position': 'relative',
+                  'overflow': 'auto',
+                  'maxHeight': 300,
+                  '& ul': {padding: 0},
+                }}
+              >
+                {term.map((terms) => (
+                  <ListItem key={terms.tid}>
+                    <ListItemButton
+                      onClick={() => {
+                        setSelectTerm(terms);
+                      }}
+                      sx={{
+                        'background':
+                            selectTerm === terms ? selectedColor : 'inherit',
+                        '&:hover': {
+                          backgroundColor: hoverColor,
+                        },
+                      }}
+                    >
+                      <ListItemText
+                        primary={`${terms.season} ${terms.year}`}
+                      />
+                    </ListItemButton>
+                  </ListItem>
+                ))}
+              </List>
+            </Stack>
+          </Container>
+        </Grid>
+      </Grid>
+      <Container maxWidth="xl" sx={{mt: 4, mb: 1}}>
+        <Box sx={{display: 'flex', justifyContent: 'center'}}>
+          <Button onClick={() => handleSubmit()} sx={{background: 'grey'}}>
               Apply
-            </Button>
-          </Box>
-        </Container>
+          </Button>
+        </Box>
       </Container>
-    </>
+    </Screen>
   );
 };
 
