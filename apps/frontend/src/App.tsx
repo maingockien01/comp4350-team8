@@ -14,7 +14,7 @@ import {
 } from 'react-router-dom';
 import LookUpScreen from './Screens/LookUpScreen';
 import CoursesScreen from './Screens/CoursesScreen';
-import Navbar from './Components/Navbar';
+import Navbar from './Components/Navbar/Navbar';
 import LoginScreen from './Screens/LoginScreen';
 import SignupScreen from './Screens/SignupScreen';
 import DetailScreen from './Screens/DetailScreen';

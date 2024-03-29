@@ -7,39 +7,23 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
-import Button, {ButtonProps} from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
-import {styled} from '@mui/material/styles';
-import {brown} from '@mui/material/colors';
-import {Link} from 'react-router-dom';
-import {getTokenFromCookie} from '../Utils/CookieFunctions';
+import {getTokenFromCookie} from '../../Utils/CookieFunctions';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import NavbarLinks from '../NavbarLinks/NavbarLinks';
 
 const settings = ['Profile', 'Logout'];
+
 
 /**
  * Represents a styled button component with custom color and hover effects.
  */
-const ColorButton = styled(Button)<ButtonProps>(() => ({
-  'color': 'white',
-  'fontWeight': 500,
-  'backgroundColor': '#F5A800',
-  'width': '200px',
-  '&:hover': {
-    backgroundColor: brown[500],
-  },
-  '&:active': {
-    backgroundColor: brown[600],
-  },
-  '&:focus': {
-    backgroundColor: '#502C1E',
-  },
-}));
+
 
 /**
  * Represents the function signature for the handleLogout function.
@@ -185,26 +169,7 @@ const Navbar = (props: {handleLogout: HandleLogoutFunction}) => {
             </Box>
           </Toolbar>
           <Divider sx={{bgcolor: 'black'}}></Divider>
-          <Toolbar sx={{justifyContent: 'space-between'}}>
-            <Link to="/home">
-              <ColorButton variant="contained">Home</ColorButton>
-            </Link>
-            <Link to="/lookup">
-              <ColorButton variant="contained">Courses Look Up</ColorButton>
-            </Link>
-            <Link to="/add-drop">
-              <ColorButton variant="contained">Add/Drop Courses</ColorButton>
-            </Link>
-            <Link to="/calendar">
-              <ColorButton variant="contained">Calendar</ColorButton>
-            </Link>
-            <Link to="/roadmap">
-              <ColorButton variant="contained">Roadmap</ColorButton>
-            </Link>
-            <Link to="/roadmap/personal">
-              <ColorButton variant="contained">Personal roadmap</ColorButton>
-            </Link>
-          </Toolbar>
+          <NavbarLinks />
         </Stack>
       </Container>
     </AppBar>
