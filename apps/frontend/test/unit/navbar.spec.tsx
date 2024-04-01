@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../../src/Components/Navbar';
+import Navbar from '../../src/Components/Navbar/Navbar';
 import {render, screen} from '@testing-library/react';
 import {BrowserRouter} from 'react-router-dom';
 
@@ -7,9 +7,9 @@ describe('Render Calendar', () => {
   test('Should display all the feature buttons', () => {
     const mockHandleLogout = jest.fn();
     render(
-      <BrowserRouter>
-        <Navbar handleLogout={mockHandleLogout} />
-      </BrowserRouter>,
+        <BrowserRouter>
+          <Navbar handleLogout={mockHandleLogout} />
+        </BrowserRouter>,
     );
     const buttonList = [
       'Home',

@@ -2,9 +2,9 @@ import React from 'react';
 import '../css/UserProfileForm.css';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
-import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {getTokenFromCookie} from '../Utils/CookieFunctions';
+import {displayError} from '../Utils/Errors';
 
 const UserProfileForm = () => {
   const labels = ['Username', 'Full Name', 'Password', 'Confirm Password'];
@@ -50,7 +50,7 @@ const UserProfileForm = () => {
       formState.fullName === '' &&
       formState.password === ''
     ) {
-      toast.error('Please fill at least one field!');
+      displayError('Please fill at least one field!');
     } else {
       if (formState.password === formState.confirm_pwd) {
         try {
@@ -61,14 +61,14 @@ const UserProfileForm = () => {
           if (res.data.status === 'success') {
             window.location.reload();
           } else {
-            toast.error(res.data.message);
+            displayError(res.data.message);
           }
         } catch (error) {
           // Handle any errors that occurred during the request
           console.error(error);
         }
       } else {
-        toast.error('Confirm Password must match Password!');
+        displayError('Confirm Password must match Password!');
       }
     }
   };
@@ -96,11 +96,6 @@ const UserProfileForm = () => {
         ))}
 
         <button type="submit">Update</button>
-        <ToastContainer
-          autoClose={2000}
-          closeOnClick
-          pauseOnFocusLoss={false}
-        />
       </form>
     </div>
   );

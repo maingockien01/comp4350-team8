@@ -1,13 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {getTokenFromCookie} from '../Utils/CookieFunctions';
-
 import {
   TextField,
   Button,
   Typography,
   Grid,
   IconButton,
-  Container,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -15,6 +13,10 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {SectionDTO} from 'packages/types/dtos/section/section.dto';
+import {displayError} from '../Utils/Errors';
+import {makeAuthRequest} from '../Utils/Request';
+import {CURRENT_TERM_ID} from '@team8/constants/terms';
+import Screen from '../Components/Screen/Screen';
 
 const AddDropCourses = () => {
   const token = getTokenFromCookie();
@@ -22,7 +24,6 @@ const AddDropCourses = () => {
   const [sections, setSections] = useState<SectionDTO[]>([]);
   const [deleteSectionId, setDeleteSectionId] = useState<number | null>(null);
   const [confirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     fetchSections();
@@ -49,17 +50,12 @@ const AddDropCourses = () => {
    */
   const fetchSections = async () => {
     try {
-      const response = await fetch(`/rest-api/user/searchSection?tid=12`, {
-        headers: {Authorization: `Bearer ${token}`},
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setSections(data);
-      } else {
-        console.error('Failed to fetch sections:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Failed to fetch sections:', error);
+      const response = await makeAuthRequest(
+          `/rest-api/user/searchSection?tid=${CURRENT_TERM_ID}`
+      );
+      return setSections(response.data);
+    } catch (error: any) {
+      return displayError(error.message);
     }
   };
 
@@ -73,12 +69,11 @@ const AddDropCourses = () => {
       });
       if (response.ok) {
         setSidInput(''); // Clear input field after successful addition
-        fetchSections(); // Refresh section list
-        setErrorMessage(''); // Clear any previous error message
+        await fetchSections(); // Refresh section list
       } else {
         const errorData = await response.json();
         if (errorData && errorData.message) {
-          setErrorMessage(errorData.message);
+          displayError(errorData.message);
         } else {
           console.error('Failed to add section:', response.statusText);
         }
@@ -94,19 +89,10 @@ const AddDropCourses = () => {
   const handleDeleteSection = async () => {
     if (deleteSectionId !== null) {
       try {
-        const response = await fetch(
-            `rest-api/user/remove?sid=${deleteSectionId}`,
-            {
-              headers: {Authorization: `Bearer ${token}`},
-            },
-        );
-        if (response.ok) {
-          fetchSections(); // Refresh section list after successful deletion
-        } else {
-          console.error('Failed to delete section:', response.statusText);
-        }
-      } catch (error) {
-        console.error('Failed to delete section:', error);
+        await makeAuthRequest(`/rest-api/user/remove?sid=${deleteSectionId}`);
+        await fetchSections();
+      } catch (error: any) {
+        displayError(error.message);
       }
     }
 
@@ -115,71 +101,68 @@ const AddDropCourses = () => {
   };
 
   return (
-    <>
-      <Container maxWidth="lg" sx={{mt: 2}}>
-        <div style={{padding: '20px'}}>
-          <Typography variant="h5">Add Section</Typography>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item>
-              <TextField
-                label="Section ID"
-                variant="outlined"
-                value={sidInput}
-                onChange={(e) => setSidInput(e.target.value)}
-              />
-            </Grid>
-            <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleAddSection}
-              >
-                Add
-              </Button>
-            </Grid>
+    <Screen>
+      <div style={{padding: '20px'}}>
+        <Typography variant="h5">Add Section</Typography>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item>
+            <TextField
+              label="Section ID"
+              variant="outlined"
+              value={sidInput}
+              onChange={(e) => setSidInput(e.target.value)}
+            />
           </Grid>
-          {errorMessage && <p>{errorMessage}</p>}
+          <Grid item>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleAddSection}
+            >
+                Add
+            </Button>
+          </Grid>
+        </Grid>
 
-          <Typography variant="h5" style={{marginTop: '20px'}}>
+        <Typography variant="h5" style={{marginTop: '20px'}}>
             Registered Sections
-          </Typography>
-          {sections.map((section) => (
-            <div key={section.sid} style={{marginTop: '10px'}}>
-              <Typography variant={'h6'}>
-                {/* eslint-disable-next-line max-len */}
-                {`Course: ${section.course.courseName} (${section.sectionName}) | Location: ${section.location.building} ${section.location.roomNumber} | Time: ${section.time} `}
-                <IconButton
-                  color="secondary"
-                  onClick={() => handleOpenConfirmationDialog(section.sid)}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </Typography>
-            </div>
-          ))}
+        </Typography>
+        {sections.map((section) => (
+          <div key={section.sid} style={{marginTop: '10px'}}>
+            <Typography variant={'h6'}>
+              {/* eslint-disable-next-line max-len */}
+              {`Course: ${section.course.courseName} (${section.sectionName}) | Location: ${section.location.building} ${section.location.roomNumber} | Time: ${section.time} `}
+              <IconButton
+                color="secondary"
+                onClick={() => handleOpenConfirmationDialog(section.sid)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Typography>
+          </div>
+        ))}
 
-          <Dialog
-            open={confirmationDialogOpen}
-            onClose={handleCloseConfirmationDialog}
-          >
-            <DialogTitle>Confirm Deletion</DialogTitle>
-            <DialogContent>
-              <Typography>
+        <Dialog
+          open={confirmationDialogOpen}
+          onClose={handleCloseConfirmationDialog}
+        >
+          <DialogTitle>Confirm Deletion</DialogTitle>
+          <DialogContent>
+            <Typography>
                 Are you sure you want to drop this section?
-              </Typography>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleCloseConfirmationDialog} color="primary">
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseConfirmationDialog} color="primary">
                 Cancel
-              </Button>
-              <Button onClick={handleDeleteSection} color="secondary">
+            </Button>
+            <Button onClick={handleDeleteSection} color="secondary">
                 Drop
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
-      </Container>
-    </>
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    </Screen>
   );
 };
 
