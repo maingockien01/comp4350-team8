@@ -3,13 +3,9 @@ import {
   Button,
   Container,
   Grid,
-  List,
-  ListItem,
   Typography,
   Box,
   Stack,
-  ListItemText,
-  ListItemButton,
   FormControl,
   InputLabel,
   Select,
@@ -22,9 +18,6 @@ import {getCourses} from '../API/Course.API';
 import Screen from '../Components/Screen/Screen';
 
 const LookUpScreen = () => {
-  const selectedColor = 'red';
-  const hoverColor = 'red';
-
   const [department, setDepartment] = useState<DepartmentDto[]>([]);
   const [term, setTerm] = useState<TermDTO[]>([]);
   const [selectedDepartment, setSelectedDepartment] = useState<DepartmentDto>();
