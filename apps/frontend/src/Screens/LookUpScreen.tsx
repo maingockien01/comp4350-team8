@@ -10,6 +10,10 @@ import {
   Stack,
   ListItemText,
   ListItemButton,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 import {TermDTO} from '@team8/types/dtos/term/term.dto';
@@ -44,16 +48,16 @@ const LookUpScreen = () => {
 
   useEffect(() => {
     fetch('/rest-api/term')
-        .then((res) => res.json())
-        .then((res) => {
-          setTerm(res);
-        });
+      .then((res) => res.json())
+      .then((res) => {
+        setTerm(res);
+      });
 
     fetch('/rest-api/department')
-        .then((res) => res.json())
-        .then((res) => {
-          setDepartment(res);
-        });
+      .then((res) => res.json())
+      .then((res) => {
+        setDepartment(res);
+      });
   }, []);
 
   return (
@@ -62,78 +66,66 @@ const LookUpScreen = () => {
         <Grid item xs={6}>
           <Container maxWidth="xl" sx={{mt: 1, mb: 1}}>
             <Stack>
-              <Typography variant="h4">Department: </Typography>
-              <List
-                sx={{
-                  'width': '100%',
-                  'maxWidth': 360,
-                  'bgcolor': 'background.paper',
-                  'position': 'relative',
-                  'overflow': 'auto',
-                  'maxHeight': 300,
-                  '& ul': {padding: 0},
-                }}
-              >
-                {department.map((department) => (
-                  <ListItem key={department.did}>
-                    <ListItemButton
-                      onClick={() => {
-                        setSelectedDepartment(department);
-                      }}
-                      sx={{
-                        'background':
-                            selectedDepartment === department ?
-                              selectedColor :
-                              'inherit',
-                        '&:hover': {
-                          backgroundColor: hoverColor,
-                        },
-                      }}
-                    >
-                      <ListItemText primary={`${department.name}`} />
-                    </ListItemButton>
-                  </ListItem>
-                ))}
-              </List>
+              <Typography variant="h5" sx={{mb: 2}}>
+                Select a degree:{' '}
+              </Typography>
+              <FormControl fullWidth>
+                <InputLabel id="department-select-label">Department</InputLabel>
+                <Select
+                  labelId="department-select-label"
+                  id="department-select"
+                  value={
+                    selectedDepartment ? selectedDepartment.did.toString() : ''
+                  }
+                  onChange={(e) => {
+                    const selectedDepartmentId = parseInt(
+                      e.target.value as string,
+                    );
+                    const selectedDepartmentObject = department.find(
+                      (dept) => dept.did === selectedDepartmentId,
+                    );
+                    setSelectedDepartment(selectedDepartmentObject);
+                  }}
+                  label="Department"
+                >
+                  {department.map((dept) => (
+                    <MenuItem key={dept.did} value={dept.did}>
+                      {dept.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Stack>
           </Container>
         </Grid>
         <Grid item xs={6}>
           <Container maxWidth="xl" sx={{mt: 1, mb: 1}}>
             <Stack>
-              <Typography variant="h4">Term: </Typography>
-              <List
-                sx={{
-                  'width': '100%',
-                  'maxWidth': 360,
-                  'bgcolor': 'background.paper',
-                  'position': 'relative',
-                  'overflow': 'auto',
-                  'maxHeight': 300,
-                  '& ul': {padding: 0},
-                }}
-              >
-                {term.map((terms) => (
-                  <ListItem key={terms.tid}>
-                    <ListItemButton
-                      onClick={() => {
-                        setSelectTerm(terms);
-                      }}
-                      sx={{
-                        'background':
-                            selectTerm === terms ? selectedColor : 'inherit',
-                        '&:hover': {
-                          backgroundColor: hoverColor,
-                        },
-                      }}
-                    >
-                      <ListItemText
-                        primary={`${terms.season} ${terms.year}`}
-                      />
-                    </ListItemButton>
-                  </ListItem>
-                ))}
-              </List>
+              <Typography variant="h5" sx={{mb: 2}}>
+                Select a term:{' '}
+              </Typography>
+              <FormControl fullWidth>
+                <InputLabel id="term-select-label">Term:</InputLabel>
+                <Select
+                  labelId="term-select-label"
+                  id="term-select"
+                  value={selectTerm ? selectTerm.tid.toString() : ''}
+                  onChange={(e) => {
+                    const selectedTermId = e.target.value as string;
+                    const selectedTerm = term.find(
+                      (term) => term.tid.toString() === selectedTermId,
+                    );
+                    setSelectTerm(selectedTerm);
+                  }}
+                  label="Term"
+                >
+                  {term.map((terms) => (
+                    <MenuItem key={terms.tid} value={terms.tid.toString()}>
+                      {`${terms.season} ${terms.year}`}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Stack>
           </Container>
         </Grid>
@@ -141,7 +133,7 @@ const LookUpScreen = () => {
       <Container maxWidth="xl" sx={{mt: 4, mb: 1}}>
         <Box sx={{display: 'flex', justifyContent: 'center'}}>
           <Button onClick={() => handleSubmit()} sx={{background: 'grey'}}>
-              Apply
+            Apply
           </Button>
         </Box>
       </Container>
