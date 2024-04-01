@@ -7,12 +7,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE TABLE `department` (
-  `did` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `abbreviation` varchar(255) NOT NULL,
-  PRIMARY KEY (`did`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 INSERT INTO `department` (`did`, `name`, `abbreviation`) VALUES
 (1, 'Computer Science', 'COMP');

@@ -7,17 +7,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE TABLE `course` (
-  `cid` int(11) NOT NULL AUTO_INCREMENT,
-  `courseNumber` int(11) NOT NULL,
-  `courseName` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `departmentDid` int(11) DEFAULT NULL,
-  PRIMARY KEY (`cid`),
-  KEY `FK_c1e3e3b3f8ec0c5446fa7f8e05b` (`departmentDid`),
-  CONSTRAINT `FK_c1e3e3b3f8ec0c5446fa7f8e05b` FOREIGN KEY (`departmentDid`) REFERENCES `department` (`did`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
-
 INSERT INTO `course` (`cid`, `courseNumber`, `courseName`, `description`, `departmentDid`) VALUES
 (1, 1010, 'Introductory Computer Science', 'An introduction to computer programming using a procedural high level language.', 1);
 INSERT INTO `course` (`cid`, `courseNumber`, `courseName`, `description`, `departmentDid`) VALUES
