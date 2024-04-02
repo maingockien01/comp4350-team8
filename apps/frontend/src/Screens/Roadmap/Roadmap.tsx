@@ -9,6 +9,7 @@ import CourseTree from '../../Components/CourseTree/CourseTree';
 import {Grid} from '@mui/material';
 import './RoadmapScreen.css';
 import Screen from '../../Components/Screen/Screen';
+import Tooltip from "@mui/material/Tooltip";
 
 const Roadmap = () => {
   const [availableDegrees, setAvailableDegrees] = useState<DegreeDTO[]>([]);
@@ -25,28 +26,29 @@ const Roadmap = () => {
       <Grid container spacing={2} maxWidth="lg">
         <Grid item xs={8}>
           <h1>Roadmap</h1>
-          <p>Select a degree to view its recommended roadmap</p>
-          <Autocomplete
-            className="dropdown"
-            sx={{width: 300}}
-            renderInput={(params) => (
-              <TextField {...params} label="Select a degree" />
-            )}
-            options={availableDegrees}
-            getOptionLabel={(option) => option.name}
-            renderOption={(props, option) => (
-              <Box component="li" {...props}>
-                {option.name}
-              </Box>
-            )}
-            onChange={(event, newValue) => {
-              if (newValue) {
-                fetchDegreeWithRoadmap(newValue.did).then((response) =>
-                  setSelectedDegree(response.data),
-                );
-              }
-            }}
-          />
+          <Tooltip title="Select a degree to view its recommended roadmap">
+            <Autocomplete
+              className="roadmap_screen--dropdown"
+              sx={{width: 300}}
+              renderInput={(params) => (
+                <TextField {...params} label="Select a degree" />
+              )}
+              options={availableDegrees}
+              getOptionLabel={(option) => option.name}
+              renderOption={(props, option) => (
+                <Box component="li" {...props}>
+                  {option.name}
+                </Box>
+              )}
+              onChange={(event, newValue) => {
+                if (newValue) {
+                  fetchDegreeWithRoadmap(newValue.did).then((response) =>
+                    setSelectedDegree(response.data),
+                  );
+                }
+              }}
+            />
+          </Tooltip>
 
           {selectedDegree && (
             <CourseTree

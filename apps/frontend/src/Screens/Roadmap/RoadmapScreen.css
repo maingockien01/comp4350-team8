@@ -13,11 +13,11 @@
   width: 100%;
 }
 
-.RoadmapScreen .dropdown {
-  padding: 20px 45px 20px 20px;
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.roadmap_screen--dropdown {
+  margin: 10px 0;
 }
