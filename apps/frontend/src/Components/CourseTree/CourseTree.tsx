@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {CourseDTO} from '@team8/types/dtos/course/course.dto';
-import {Chip} from '@mui/material';
+import {Chip, Grid} from '@mui/material';
+import './CourseTree.css';
 
 export interface CourseTreeProps {
   courses: CourseDTO[];
@@ -48,51 +49,65 @@ const courseTree = ({courses, onRemoveCourse = undefined}: CourseTreeProps) => {
   return (
     <div>
       <h3>Recommended courses</h3>
-      {courseChips.map(
-          ({course, isSelected, isPrerequisite}: CourseChipProps) =>
-          onRemoveCourse ? (
-            <Chip
-              label={`${course.courseName} ${course.courseNumber}`}
-              color={
+      <Grid container spacing={1}>
+        {courseChips.map(
+            ({course, isSelected, isPrerequisite}: CourseChipProps) =>
+              (
+                <Grid item xs="auto">
+                  {onRemoveCourse ? (
+                  <Chip
+                    className="course_tree--chip"
+                    label={`${course.courseName} ${course.courseNumber}`}
+                    color={
                 isSelected ?
                   'primary' :
                   isPrerequisite ?
                   'secondary' :
                   'default'
-              }
-              key={course.cid}
-              variant="filled"
-              onMouseOver={() =>
-                toggleHightlightCourses(course, course.prerequisites, true)
-              }
-              onMouseOut={() =>
-                toggleHightlightCourses(course, course.prerequisites, false)
-              }
-              onDelete={() => {
-                onRemoveCourse(course);
-              }}
-            />
+                    }
+                    key={course.cid}
+                    variant="filled"
+                    onMouseOver={() =>
+                      // eslint-disable-next-line max-len
+                      toggleHightlightCourses(course, course.prerequisites, true)
+                    }
+                    onMouseOut={() =>
+                      // eslint-disable-next-line max-len
+                      toggleHightlightCourses(course, course.prerequisites, false)
+                    }
+                    onDelete={() => {
+                      if (onRemoveCourse) {
+                        onRemoveCourse(course);
+                      }
+                    }}
+                  />
           ) : (
-            <Chip
-              label={`${course.courseName} ${course.courseNumber}`}
-              color={
+                  <Chip
+                    className="course_tree--chip"
+                    label={`${course.courseName} ${course.courseNumber}`}
+                    color={
                 isSelected ?
                   'primary' :
                   isPrerequisite ?
                   'secondary' :
                   'default'
-              }
-              key={course.cid}
-              variant="filled"
-              onMouseOver={() =>
-                toggleHightlightCourses(course, course.prerequisites, true)
-              }
-              onMouseOut={() =>
-                toggleHightlightCourses(course, course.prerequisites, false)
-              }
-            />
-          ),
-      )}
+                    }
+                    key={course.cid}
+                    variant="filled"
+                    onMouseOver={() =>
+                      // eslint-disable-next-line max-len
+                      toggleHightlightCourses(course, course.prerequisites, true)
+                    }
+                    onMouseOut={() =>
+                      // eslint-disable-next-line max-len
+                      toggleHightlightCourses(course, course.prerequisites, false)
+                    }
+                  />
+          )}
+                </Grid>
+              )
+        )}
+      </Grid>
     </div>
   );
 };
