@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Divider,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {SectionDTO} from 'packages/types/dtos/section/section.dto';
@@ -51,7 +52,7 @@ const AddDropCourses = () => {
   const fetchSections = async () => {
     try {
       const response = await makeAuthRequest(
-          `/rest-api/user/searchSection?tid=${CURRENT_TERM_ID}`
+        `/rest-api/user/searchSection?tid=${CURRENT_TERM_ID}`,
       );
       return setSections(response.data);
     } catch (error: any) {
@@ -103,8 +104,10 @@ const AddDropCourses = () => {
   return (
     <Screen>
       <div style={{padding: '20px'}}>
-        <Typography variant="h5">Add Section</Typography>
         <Grid container spacing={2} alignItems="center">
+          <Grid item>
+            <h1 style={{margin: '0'}}>Add Section: </h1>
+          </Grid>
           <Grid item>
             <TextField
               label="Section ID"
@@ -119,19 +122,21 @@ const AddDropCourses = () => {
               color="primary"
               onClick={handleAddSection}
             >
-                Add
+              Add
             </Button>
           </Grid>
         </Grid>
-
-        <Typography variant="h5" style={{marginTop: '20px'}}>
-            Registered Sections
-        </Typography>
-        {sections.map((section) => (
+        <Divider sx={{mt: 5}} />
+        <h1 style={{marginTop: '20px'}}>Registered Sections</h1>
+        {sections.map((section, index) => (
           <div key={section.sid} style={{marginTop: '10px'}}>
-            <Typography variant={'h6'}>
+            <Typography variant={'h6'} sx={{ml: 4}}>
               {/* eslint-disable-next-line max-len */}
-              {`Course: ${section.course.courseName} (${section.sectionName}) | Location: ${section.location.building} ${section.location.roomNumber} | Time: ${section.time} `}
+              {`${index + 1}. Course: ${section.course.courseName} (${
+                section.sectionName
+              }) | Location: ${section.location.building} ${
+                section.location.roomNumber
+              } | Time: ${section.time} `}
               <IconButton
                 color="secondary"
                 onClick={() => handleOpenConfirmationDialog(section.sid)}
@@ -148,16 +153,14 @@ const AddDropCourses = () => {
         >
           <DialogTitle>Confirm Deletion</DialogTitle>
           <DialogContent>
-            <Typography>
-                Are you sure you want to drop this section?
-            </Typography>
+            <Typography>Are you sure you want to drop this section?</Typography>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseConfirmationDialog} color="primary">
-                Cancel
+              Cancel
             </Button>
             <Button onClick={handleDeleteSection} color="secondary">
-                Drop
+              Drop
             </Button>
           </DialogActions>
         </Dialog>

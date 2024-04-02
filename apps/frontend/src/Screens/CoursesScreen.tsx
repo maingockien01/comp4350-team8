@@ -1,5 +1,5 @@
 import {useLocation, useNavigate} from 'react-router-dom';
-import {Button, Stack, Typography} from '@mui/material';
+import {Button, Divider, Stack, Typography} from '@mui/material';
 import {CourseDTO} from '@team8/types/dtos/course/course.dto';
 import React from 'react';
 import Screen from '../Components/Screen/Screen';
@@ -25,19 +25,21 @@ const CoursesScreen = () => {
       <div>
         {/* Map through courses and render each as a button */}
         {courses.map((course) => (
-          <Button
-            key={course.cid}
-            sx={{height: 200}}
-            onClick={() => handleCourseClick(course.cid)}
-          >
-            <Stack direction="row" spacing={2}>
-              {' '}
-              <Typography>{course.cid}</Typography>{' '}
-              <Typography>{course.courseName}</Typography>{' '}
-              <Typography>{course.courseNumber}</Typography>{' '}
-              <Typography>{course.description}</Typography>{' '}
-            </Stack>
-          </Button>
+          <>
+            <Button
+              key={course.cid}
+              sx={{height: 200}}
+              onClick={() => handleCourseClick(course.cid)}
+            >
+              <Stack direction="row" spacing={2}>
+                {' '}
+                <Typography>{course.courseName}</Typography>{' '}
+                <Typography>{course.courseNumber}</Typography>{' '}
+                <Typography>{course.description}</Typography>{' '}
+              </Stack>
+            </Button>
+            <Divider style={{backgroundColor: ' red '}} />
+          </>
         ))}
       </div>
     </Screen>
