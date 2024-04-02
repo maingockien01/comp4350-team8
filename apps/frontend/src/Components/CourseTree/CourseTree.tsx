@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {CourseDTO} from '@team8/types/dtos/course/course.dto';
-import { Chip, Fade, Grid } from "@mui/material";
+import {Chip, Fade, Grid} from '@mui/material';
 import './CourseTree.css';
 import Tooltip from '@mui/material/Tooltip';
 
@@ -52,7 +52,12 @@ const courseTree = ({courses, onRemoveCourse = undefined}: CourseTreeProps) => {
   return (
     <div>
       <h3>Recommended courses</h3>
-      <Grid container spacing={1} className="course_tree--grid_container">
+      <Grid
+        container
+        spacing={2}
+        className="course_tree--grid_container"
+        rowSpacing={5}
+      >
         {courseChips.map(
             ({course, isSelected, isPrerequisite, label}: CourseChipProps) =>
               (
