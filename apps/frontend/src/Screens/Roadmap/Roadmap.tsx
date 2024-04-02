@@ -7,7 +7,7 @@ import {fetchAvailableDegrees, fetchDegreeWithRoadmap} from './data';
 import {CourseDTO} from '@team8/types/dtos/course/course.dto';
 import CourseTree from '../../Components/CourseTree/CourseTree';
 import {Grid} from '@mui/material';
-import '../../css/RoadmapScreen.css';
+import './RoadmapScreen.css';
 import Screen from '../../Components/Screen/Screen';
 
 const Roadmap = () => {
