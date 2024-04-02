@@ -49,7 +49,7 @@ const courseTree = ({courses, onRemoveCourse = undefined}: CourseTreeProps) => {
   return (
     <div>
       <h3>Recommended courses</h3>
-      <Grid container spacing={1}>
+      <Grid container spacing={1} className="course_tree--grid_container">
         {courseChips.map(
             ({course, isSelected, isPrerequisite}: CourseChipProps) =>
               (

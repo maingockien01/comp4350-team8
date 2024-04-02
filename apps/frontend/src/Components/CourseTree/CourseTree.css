@@ -1,3 +1,7 @@
+.course_tree--grid_container {
+    margin: 10px;
+}
+
 .course_tree--chip {
     margin: 0 4px;
 }
