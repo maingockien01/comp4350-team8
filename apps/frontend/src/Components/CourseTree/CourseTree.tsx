@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {CourseDTO} from '@team8/types/dtos/course/course.dto';
-import {Chip, Grid} from '@mui/material';
+import { Chip, Fade, Grid } from "@mui/material";
 import './CourseTree.css';
+import Tooltip from '@mui/material/Tooltip';
 
 export interface CourseTreeProps {
   courses: CourseDTO[];
@@ -56,7 +57,12 @@ const courseTree = ({courses, onRemoveCourse = undefined}: CourseTreeProps) => {
             ({course, isSelected, isPrerequisite, label}: CourseChipProps) =>
               (
                 <Grid item xs="auto">
-                  {onRemoveCourse ? (
+                  <Tooltip
+                    TransitionComponent={Fade}
+                    TransitionProps={{timeout: 600}}
+                    title={course.courseName}
+                    placement="bottom-start">
+                    {onRemoveCourse ? (
                   <Chip
                     className="course_tree--chip"
                     label={label}
@@ -106,6 +112,7 @@ const courseTree = ({courses, onRemoveCourse = undefined}: CourseTreeProps) => {
                     }
                   />
           )}
+                  </Tooltip>
                 </Grid>
               )
         )}
