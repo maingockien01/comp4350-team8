@@ -12,6 +12,7 @@ interface CourseChipProps {
   course: CourseDTO;
   isSelected: boolean;
   isPrerequisite: boolean;
+  label: string;
 }
 
 const courseTree = ({courses, onRemoveCourse = undefined}: CourseTreeProps) => {
@@ -21,6 +22,7 @@ const courseTree = ({courses, onRemoveCourse = undefined}: CourseTreeProps) => {
           course,
           isSelected: false,
           isPrerequisite: false,
+          label: `${course.department.abbreviation} ${course.courseNumber}`,
         };
       }),
   );
@@ -51,13 +53,13 @@ const courseTree = ({courses, onRemoveCourse = undefined}: CourseTreeProps) => {
       <h3>Recommended courses</h3>
       <Grid container spacing={1} className="course_tree--grid_container">
         {courseChips.map(
-            ({course, isSelected, isPrerequisite}: CourseChipProps) =>
+            ({course, isSelected, isPrerequisite, label}: CourseChipProps) =>
               (
                 <Grid item xs="auto">
                   {onRemoveCourse ? (
                   <Chip
                     className="course_tree--chip"
-                    label={`${course.courseName} ${course.courseNumber}`}
+                    label={label}
                     color={
                 isSelected ?
                   'primary' :
@@ -84,7 +86,7 @@ const courseTree = ({courses, onRemoveCourse = undefined}: CourseTreeProps) => {
           ) : (
                   <Chip
                     className="course_tree--chip"
-                    label={`${course.courseName} ${course.courseNumber}`}
+                    label={label}
                     color={
                 isSelected ?
                   'primary' :
