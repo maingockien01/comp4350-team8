@@ -28,10 +28,10 @@ const SCHEDULE_STRUCTURE: WeeklySchedule = {
 };
 
 const ExportButton = styled(Button)<ButtonProps>(() => ({
-  'color': 'white',
-  'fontWeight': 500,
-  'backgroundColor': '#F5A800',
-  'width': '150px',
+  color: 'white',
+  fontWeight: 500,
+  backgroundColor: '#F5A800',
+  width: '150px',
   '&:hover': {
     backgroundColor: brown[600],
   },
@@ -52,8 +52,8 @@ const Calendar = () => {
         // Get the current term and active courses
         const currentTerm = await fetchCurrentTerm();
         const activeCourses = await fetchActiveCourses(
-            currentTerm,
-            token || '',
+          currentTerm,
+          token || '',
         );
         // Set the appropriate state based on the data
         if (activeCourses.length !== 0) {
@@ -77,8 +77,8 @@ const Calendar = () => {
   };
 
   const fetchActiveCourses = async (
-      currentTerm: number,
-      token: string,
+    currentTerm: number,
+    token: string,
   ): Promise<Array<Course>> => {
     const response = fetch(`/rest-api/user/searchActive?tid=${currentTerm}`, {
       headers: {Authorization: `Bearer ${token}`},
@@ -87,7 +87,7 @@ const Calendar = () => {
   };
 
   const createSchedule = (
-      activeCourses: Array<Course>,
+    activeCourses: Array<Course>,
   ): typeof SCHEDULE_STRUCTURE => {
     const schedule = structuredClone(SCHEDULE_STRUCTURE);
     for (let i = 0; i < activeCourses.length; i++) {
@@ -122,8 +122,8 @@ const Calendar = () => {
 
   return (
     <Screen>
-      <div className="header">
-        <h2 id="title">Weekly Schedule</h2>
+      <div className="calendar-header">
+        <h1 id="title">Weekly Schedule</h1>
         <ExportButton
           variant="contained"
           disabled={!hasActiveCourses}
