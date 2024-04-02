@@ -9,7 +9,7 @@ import CourseTree from '../../Components/CourseTree/CourseTree';
 import {Grid} from '@mui/material';
 import './RoadmapScreen.css';
 import Screen from '../../Components/Screen/Screen';
-import Tooltip from "@mui/material/Tooltip";
+import Tooltip from '@mui/material/Tooltip';
 
 const Roadmap = () => {
   const [availableDegrees, setAvailableDegrees] = useState<DegreeDTO[]>([]);
@@ -26,7 +26,10 @@ const Roadmap = () => {
       <Grid container spacing={2} maxWidth="lg">
         <Grid item xs={8}>
           <h1>Roadmap</h1>
-          <Tooltip title="Select a degree to view its recommended roadmap">
+          <Tooltip
+            title="Select a degree to view its recommended roadmap"
+            placement="right-start"
+          >
             <Autocomplete
               className="roadmap_screen--dropdown"
               sx={{width: 300}}
