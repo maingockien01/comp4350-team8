@@ -60,13 +60,13 @@ const PersonalRoadmap = () => {
 
   const saveRoadmap = (roadmap: Roadmap) => {
     makeAuthRequest('/rest-api/roadmap/personal', 'POST', roadmap.dto)
-      .then((response) => {
-        setRoadmap(new Roadmap(response.data.courses));
-        onRoadmapChange(false);
-      })
-      .catch((e: Error) => {
-        displayError(e.message);
-      });
+        .then((response) => {
+          setRoadmap(new Roadmap(response.data.courses));
+          onRoadmapChange(false);
+        })
+        .catch((e: Error) => {
+          displayError(e.message);
+        });
   };
 
   return (
@@ -102,6 +102,7 @@ const PersonalRoadmap = () => {
             )}
             options={courses}
             getOptionLabel={(option) =>
+              // eslint-disable-next-line max-len
               `${option.department.abbreviation}-${option.courseNumber} ${option.courseName}`
             }
             renderOption={(props, option) => (
