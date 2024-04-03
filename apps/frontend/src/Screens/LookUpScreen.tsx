@@ -4,7 +4,6 @@ import {
   Container,
   Grid,
   Typography,
-  Box,
   Stack,
   FormControl,
   InputLabel,
@@ -16,12 +15,14 @@ import {TermDTO} from '@team8/types/dtos/term/term.dto';
 import {DepartmentDto} from '@team8/types/dtos/course/department.dto';
 import {getCourses} from '../API/Course.API';
 import Screen from '../Components/Screen/Screen';
+import '../css/LookUpScreen.css';
 
 const LookUpScreen = () => {
   const [department, setDepartment] = useState<DepartmentDto[]>([]);
   const [term, setTerm] = useState<TermDTO[]>([]);
   const [selectedDepartment, setSelectedDepartment] = useState<DepartmentDto>();
   const [selectTerm, setSelectTerm] = useState<TermDTO>();
+  const [selectTermId, setSelectTermId] = React.useState('');
   const navigate = useNavigate();
 
   const handleSubmit = () => {
@@ -36,7 +37,7 @@ const LookUpScreen = () => {
     getCourses({
       departmentId: selectedDepartment.did,
       termId: selectTerm.tid,
-    }).then((res) => navigate('/courses', {state: {res}}));
+    }).then((res) => navigate('/courses', {state: {res, selectTermId}}));
   };
 
   useEffect(() => {
@@ -109,6 +110,7 @@ const LookUpScreen = () => {
                       (term) => term.tid.toString() === selectedTermId,
                     );
                     setSelectTerm(selectedTerm);
+                    setSelectTermId(selectedTermId);
                   }}
                   label="Term"
                 >
@@ -123,13 +125,9 @@ const LookUpScreen = () => {
           </Container>
         </Grid>
       </Grid>
-      <Container maxWidth="xl" sx={{mt: 4, mb: 1}}>
-        <Box sx={{display: 'flex', justifyContent: 'center'}}>
-          <Button onClick={() => handleSubmit()} sx={{background: 'grey'}}>
-            Apply
-          </Button>
-        </Box>
-      </Container>
+      <div className="lookup-wrapper">
+        <Button onClick={() => handleSubmit()}>Apply</Button>
+      </div>
     </Screen>
   );
 };
