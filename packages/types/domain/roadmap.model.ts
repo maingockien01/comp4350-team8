@@ -40,13 +40,14 @@ export class Roadmap {
     for (const thisCourse of this.courses) {
       if (thisCourse.prerequisites.map((v) => v.cid).includes(course.cid)) {
         throw new Error(
-          `The course is reprequesite of ${thisCourse.department.abbreviation}-${thisCourse.courseNumber} ${thisCourse.courseName} in roadmap`,
+            // eslint-disable-next-line max-len
+            `The course is prerequisite of ${thisCourse.department.abbreviation}-${thisCourse.courseNumber} ${thisCourse.courseName} in roadmap`,
         );
       }
     }
 
     const newCourses = this.courses.filter(
-      (thisCourse) => thisCourse.cid !== course.cid,
+        (thisCourse) => thisCourse.cid !== course.cid,
     );
     return new Roadmap(newCourses);
   }
@@ -57,17 +58,19 @@ export class Roadmap {
       return true;
     }
 
-    //TODO: could be optimized with binary search?
+    // TODO: could be optimized with binary search?
     return prerequisites.every((prerequisite) =>
       this.cids.includes(prerequisite.cid),
     );
   }
 }
 
+// eslint-disable-next-line max-len,require-jsdoc
 export class RoadmapDoesNotContainPrerequisitesForCourseException extends Error {
   constructor(public course: CourseDTO) {
     super(
-      `Roadmap does not contain prerequisites for course ${course.department}-${course.courseNumber} ${course.courseName}`,
+        // eslint-disable-next-line max-len
+        `Roadmap does not contain prerequisites for course ${course.department.abbreviation}-${course.courseNumber} ${course.courseName}`,
     );
   }
 }
