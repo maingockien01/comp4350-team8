@@ -60,13 +60,13 @@ const PersonalRoadmap = () => {
 
   const saveRoadmap = (roadmap: Roadmap) => {
     makeAuthRequest('/rest-api/roadmap/personal', 'POST', roadmap.dto)
-        .then((response) => {
-          setRoadmap(new Roadmap(response.data.courses));
-          onRoadmapChange(false);
-        })
-        .catch((e: Error) => {
-          displayError(e.message);
-        });
+      .then((response) => {
+        setRoadmap(new Roadmap(response.data.courses));
+        onRoadmapChange(false);
+      })
+      .catch((e: Error) => {
+        displayError(e.message);
+      });
   };
 
   return (
@@ -75,14 +75,14 @@ const PersonalRoadmap = () => {
         <Grid item xs={6} textAlign="left">
           <h1>Personal roadmap</h1>
           {roadmap.dto.courses.length > 0 ? (
-          <CourseTree
-            courses={roadmap.dto.courses as CourseDTO[]}
-            onRemoveCourse={removeCourseFromRoadmap}
-            key={roadmapTimestamp}
-          />
-        ) : (
-          <p>User has empty roadmap</p>
-        )}
+            <CourseTree
+              courses={roadmap.dto.courses as CourseDTO[]}
+              onRemoveCourse={removeCourseFromRoadmap}
+              key={roadmapTimestamp}
+            />
+          ) : (
+            <p>User has empty roadmap</p>
+          )}
           <Button
             onClick={() => {
               saveRoadmap(roadmap);
@@ -90,7 +90,7 @@ const PersonalRoadmap = () => {
             variant="contained"
             disabled={!doesRoadmapChange}
           >
-          Save
+            Save
           </Button>
         </Grid>
         <Grid item xs={6}>
@@ -101,7 +101,9 @@ const PersonalRoadmap = () => {
               <TextField {...params} label="Select a course" />
             )}
             options={courses}
-            getOptionLabel={(option) => option.courseName}
+            getOptionLabel={(option) =>
+              `${option.department.abbreviation}-${option.courseNumber} ${option.courseName}`
+            }
             renderOption={(props, option) => (
               <Box component="li" {...props}>
                 {option.department.abbreviation}-{option.courseNumber}{' '}
@@ -132,7 +134,7 @@ const PersonalRoadmap = () => {
             }}
             disabled={!selectedCourse}
           >
-          Add to roadmap
+            Add to roadmap
           </Button>
         </Grid>
       </Grid>
