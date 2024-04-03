@@ -1,9 +1,4 @@
-import {
-  Button,
-  Divider,
-  Stack,
-  Typography,
-} from '@mui/material';
+import {Button, Divider, Stack, Typography} from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {SectionDTO} from 'packages/types/dtos/section/section.dto';
@@ -14,8 +9,10 @@ import CourseDetail from '../Components/CourseDetail/CourseDetail';
 import {displayError} from '../Utils/Errors';
 import Screen from '../Components/Screen/Screen';
 
-const SectionDetail =
-(section: SectionDTO, handleAddSections: (sid: number) => void) => {
+const SectionDetail = (
+  section: SectionDTO,
+  handleAddSections: (sid: number) => void,
+) => {
   return (
     <Typography key={section.sid}>
       Section ID: {section.sid} ({section.sectionName}) | Professor:{' '}
@@ -42,6 +39,9 @@ const DetailScreen = () => {
   const location = useLocation();
   // State to store course ID
   const [cid, setCid] = useState<number>(location.state.cid);
+
+  // Extracting selected termId from location state
+  const selectTermId: number = location.state.selectTermId;
 
   useEffect(() => {
     fetchCourse(); // Fetch course details
@@ -72,14 +72,14 @@ const DetailScreen = () => {
   const fetchCourse = () => {
     console.log('fetching course');
     axios
-        .get(`/rest-api/course/${cid}`)
-        .then((response) => {
-          setCourse(response.data); // Update state with course details
-          console.log(response.data);
-        })
-        .catch((error: Error) => {
-          displayError(error.message);
-        });
+      .get(`/rest-api/course/${cid}`)
+      .then((response) => {
+        setCourse(response.data); // Update state with course details
+        console.log(response.data);
+      })
+      .catch((error: Error) => {
+        displayError(error.message);
+      });
   };
 
   return (
@@ -97,8 +97,11 @@ const DetailScreen = () => {
         <Typography variant="h5">Sections:</Typography>
         {/* Displaying sections */}
         <Stack spacing={2}>
-          {course?.sections.map((section: SectionDTO) =>
-            SectionDetail(section, handleAddSections))}
+          {course?.sections
+            .filter((section) => section.term.tid == selectTermId)
+            .map((section: SectionDTO) =>
+              SectionDetail(section, handleAddSections),
+            )}
         </Stack>
       </Stack>
     </Screen>
