@@ -22,6 +22,7 @@ const LookUpScreen = () => {
   const [term, setTerm] = useState<TermDTO[]>([]);
   const [selectedDepartment, setSelectedDepartment] = useState<DepartmentDto>();
   const [selectTerm, setSelectTerm] = useState<TermDTO>();
+  const [selectTermId, setSelectTermId] = React.useState('');
   const navigate = useNavigate();
 
   const handleSubmit = () => {
@@ -36,7 +37,7 @@ const LookUpScreen = () => {
     getCourses({
       departmentId: selectedDepartment.did,
       termId: selectTerm.tid,
-    }).then((res) => navigate('/courses', {state: {res}}));
+    }).then((res) => navigate('/courses', {state: {res, selectTermId}}));
   };
 
   useEffect(() => {
@@ -109,6 +110,7 @@ const LookUpScreen = () => {
                       (term) => term.tid.toString() === selectedTermId,
                     );
                     setSelectTerm(selectedTerm);
+                    setSelectTermId(selectedTermId);
                   }}
                   label="Term"
                 >

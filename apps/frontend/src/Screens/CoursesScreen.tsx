@@ -9,6 +9,8 @@ const CoursesScreen = () => {
   const location = useLocation();
   // Extracting courses from location state
   const courses: CourseDTO[] = location.state.res;
+  // Extracting selected termId from location state
+  const selectTermId: number = location.state.selectTermId;
   // Hook to access navigation functionality
   const navigate = useNavigate();
 
@@ -17,7 +19,7 @@ const CoursesScreen = () => {
    * @param {number} cid - The course ID
    */
   const handleCourseClick = (cid: number) => {
-    navigate('/detail', {state: {cid}});
+    navigate('/detail', {state: {cid, selectTermId}});
   };
 
   return (
