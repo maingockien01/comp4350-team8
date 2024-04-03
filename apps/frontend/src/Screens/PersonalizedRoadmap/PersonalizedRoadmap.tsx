@@ -54,7 +54,7 @@ const PersonalRoadmap = () => {
       setRoadmap(roadmap.removeCourse(course));
       onRoadmapChange();
     } catch (e: any) {
-      displayError(e.messsage);
+      displayError(e.message);
     }
   };
 
