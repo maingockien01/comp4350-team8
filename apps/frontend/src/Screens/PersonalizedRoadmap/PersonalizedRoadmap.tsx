@@ -72,7 +72,7 @@ const PersonalRoadmap = () => {
   return (
     <Screen>
       <Grid container spacing={2}>
-        <Grid item xs={8} textAlign="center">
+        <Grid item xs={6} textAlign="left">
           <h1>Personal roadmap</h1>
           {roadmap.dto.courses.length > 0 ? (
           <CourseTree
@@ -93,7 +93,7 @@ const PersonalRoadmap = () => {
           Save
           </Button>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <h2>Available courses</h2>
           <Autocomplete
             sx={{width: 300}}
