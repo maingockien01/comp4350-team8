@@ -1,0 +1,16 @@
+.lookup-wrapper button {
+  margin-top: 40px;
+  width: fit-content;
+  padding: 0 30px;
+  height: 45px;
+  background: rgb(106, 151, 197);
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  font-weight: 700;
+  transform: translateX(450px);
+}

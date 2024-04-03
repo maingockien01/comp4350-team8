@@ -16,6 +16,7 @@ import {TermDTO} from '@team8/types/dtos/term/term.dto';
 import {DepartmentDto} from '@team8/types/dtos/course/department.dto';
 import {getCourses} from '../API/Course.API';
 import Screen from '../Components/Screen/Screen';
+import '../css/LookUpScreen.css';
 
 const LookUpScreen = () => {
   const [department, setDepartment] = useState<DepartmentDto[]>([]);
@@ -125,13 +126,9 @@ const LookUpScreen = () => {
           </Container>
         </Grid>
       </Grid>
-      <Container maxWidth="xl" sx={{mt: 4, mb: 1}}>
-        <Box sx={{display: 'flex', justifyContent: 'center'}}>
-          <Button onClick={() => handleSubmit()} sx={{background: 'grey'}}>
-            Apply
-          </Button>
-        </Box>
-      </Container>
+      <div className="lookup-wrapper">
+        <Button onClick={() => handleSubmit()}>Search</Button>
+      </div>
     </Screen>
   );
 };
