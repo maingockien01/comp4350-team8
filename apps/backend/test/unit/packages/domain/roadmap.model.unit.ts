@@ -85,7 +85,7 @@ describe('Roadmap Model', () => {
           const roadmap = new Roadmap([course1, course2]);
           expect(() => roadmap.removeCourse(course1)).toThrowError(
               // eslint-disable-next-line max-len
-              'The course is reprequesite of CS-4351 Software Engineering II in roadmap',
+              'The course is prerequisite of CS-4351 Software Engineering II in roadmap',
           );
         });
   });
