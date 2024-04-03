@@ -40,6 +40,11 @@ export class PersonalRoadmapService {
           prerequisites: true,
         },
       },
+      order: {
+        plannedCourses: {
+          courseNumber: 'ASC',
+        },
+      },
     });
 
     return new Roadmap(user.plannedCourses);
