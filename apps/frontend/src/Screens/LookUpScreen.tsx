@@ -127,7 +127,7 @@ const LookUpScreen = () => {
         </Grid>
       </Grid>
       <div className="lookup-wrapper">
-        <Button onClick={() => handleSubmit()}>Search</Button>
+        <Button onClick={() => handleSubmit()}>Apply</Button>
       </div>
     </Screen>
   );
