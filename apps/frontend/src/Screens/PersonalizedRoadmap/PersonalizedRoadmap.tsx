@@ -54,25 +54,25 @@ const PersonalRoadmap = () => {
       setRoadmap(roadmap.removeCourse(course));
       onRoadmapChange();
     } catch (e: any) {
-      displayError(e.messsage);
+      displayError(e.message);
     }
   };
 
   const saveRoadmap = (roadmap: Roadmap) => {
     makeAuthRequest('/rest-api/roadmap/personal', 'POST', roadmap.dto)
-      .then((response) => {
-        setRoadmap(new Roadmap(response.data.courses));
-        onRoadmapChange(false);
-      })
-      .catch((e: Error) => {
-        displayError(e.message);
-      });
+        .then((response) => {
+          setRoadmap(new Roadmap(response.data.courses));
+          onRoadmapChange(false);
+        })
+        .catch((e: Error) => {
+          displayError(e.message);
+        });
   };
 
   return (
     <Screen>
       <Grid container spacing={2}>
-        <Grid item xs={8} textAlign="center">
+        <Grid item xs={6} textAlign="left">
           <h1>Personal roadmap</h1>
           {roadmap.dto.courses.length > 0 ? (
             <CourseTree
@@ -93,7 +93,7 @@ const PersonalRoadmap = () => {
             Save
           </Button>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <h2>Available courses</h2>
           <Autocomplete
             sx={{width: 300}}
@@ -102,6 +102,7 @@ const PersonalRoadmap = () => {
             )}
             options={courses}
             getOptionLabel={(option) =>
+              // eslint-disable-next-line max-len
               `${option.department.abbreviation}-${option.courseNumber} ${option.courseName}`
             }
             renderOption={(props, option) => (

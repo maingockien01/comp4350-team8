@@ -12,7 +12,8 @@ const CourseDetail = (props: CourseDetailProps) => {
   const course = props.course;
   return (
     <Stack spacing={2}>
-      <h1>Course Name: {course.courseName}</h1>
+      <h1>Course Detail</h1>
+      <Typography variant="body1">Name: {course.courseName}</Typography>
       <Typography variant="body1">Description: {course.description}</Typography>
       <Typography variant="body1">
         Department: {course.department.name}
@@ -21,18 +22,18 @@ const CourseDetail = (props: CourseDetailProps) => {
         Course number: {course.courseNumber}
       </Typography>
       <Stack direction="row" textAlign="center" spacing={2}>
-        <Typography variant="h6">Prerequisites: </Typography>
         <Typography variant="h6">
-          {course.prerequisites.length === 0
-            ? 'None'
-            : course.prerequisites.map((prerequisite: CourseDTO) => (
-                <CourseChip
-                  key={prerequisite.cid}
-                  course={prerequisite}
-                  onChipClick={props.onCourseClick}
-                  onChipDelete={props.onCourseDelete}
-                />
-              ))}
+          Prerequisites:{' '}
+          {course.prerequisites.length === 0 ?
+            'None' :
+            course.prerequisites.map((prerequisite: CourseDTO) => (
+              <CourseChip
+                key={prerequisite.cid}
+                course={prerequisite}
+                onChipClick={props.onCourseClick}
+                onChipDelete={props.onCourseDelete}
+              />
+            ))}
         </Typography>
       </Stack>
     </Stack>

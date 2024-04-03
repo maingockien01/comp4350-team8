@@ -9,8 +9,7 @@ export interface CourseChipProps {
 }
 const CourseCip = (props: CourseChipProps) => {
   const course = props.course;
-  const label =
-  `${course.department.name} ${course.courseNumber} ${course.courseName}`;
+  const label = `${course.department.abbreviation} ${course.courseNumber}`;
   const isDeletable = !!props.onChipDelete;
 
   return isDeletable ? (
