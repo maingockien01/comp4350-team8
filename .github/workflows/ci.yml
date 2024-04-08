@@ -30,7 +30,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
       - name: Build
         id: build
-        run: make dev
+        run: make ci
   
   lint:
     name: Lint code

@@ -23,3 +23,6 @@ bash: # Start a bash session in the apps container
 dev: # Start the apps in development mode
 	docker-compose up apps-dev --build -d \
 	&& docker-compose logs -f apps-dev
+
+ci: # Recipe for the CI pipeline build
+	docker-compose up --build -d apps-dev
