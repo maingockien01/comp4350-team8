@@ -1,144 +1,135 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-	Button,
-	Container,
-	Grid,
-	List,
-	ListItem,
-	Typography,
-	Box,
-	Stack,
-	ListItemText,
-	ListItemButton,
+  Button,
+  Container,
+  Grid,
+  Typography,
+  Stack,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material';
-import Navbar from '../Components/Navbar';
-import { useNavigate } from 'react-router-dom';
-import { TermDTO } from '@team8/types/dtos/term/term.dto';
-import { DegreeDTO } from '@team8/types/dtos/degree/degree.dto';
+import {useNavigate} from 'react-router-dom';
+import {TermDTO} from '@team8/types/dtos/term/term.dto';
+import {DepartmentDto} from '@team8/types/dtos/course/department.dto';
+import {getCourses} from '../API/Course.API';
+import Screen from '../Components/Screen/Screen';
+import '../css/LookUpScreen.css';
 
 const LookUpScreen = () => {
-	const [degree, setDegree] = useState<DegreeDTO[]>([]);
-	const [term, setTerm] = useState<TermDTO[]>([]);
-	const [selectDegree, setSelectDegree] = useState<DegreeDTO>();
-	const [selectTerm, setSelectTerm] = useState<TermDTO>();
-	const navigate = useNavigate();
+  const [department, setDepartment] = useState<DepartmentDto[]>([]);
+  const [term, setTerm] = useState<TermDTO[]>([]);
+  const [selectedDepartment, setSelectedDepartment] = useState<DepartmentDto>();
+  const [selectTerm, setSelectTerm] = useState<TermDTO>();
+  const [selectTermId, setSelectTermId] = React.useState('');
+  const navigate = useNavigate();
 
-	const handleSubmit = () => {
-		if (selectDegree !== undefined && selectTerm !== undefined) {
-			fetch(`/rest-api/term/search?tid=${selectTerm.tid}&department=${selectDegree.name}`)
-				.then((res) => res.json())
-				.then((res) => {
-					navigate('/courses', { state: { res } });
-				});
-		} else {
-			console.log('Please select something');
-		}
-	};
-	const handleSeclectDegree = (value: DegreeDTO) => {
-		setSelectDegree(value);
-	};
+  const handleSubmit = () => {
+    if (!selectedDepartment) {
+      alert('Please select a department');
+      return;
+    }
+    if (!selectTerm) {
+      alert('Please select a term');
+      return;
+    }
+    getCourses({
+      departmentId: selectedDepartment.did,
+      termId: selectTerm.tid,
+    }).then((res) => navigate('/courses', {state: {res, selectTermId}}));
+  };
 
-	const handleSeclectTerm = (value: TermDTO) => {
-		setSelectTerm(value);
-	};
+  useEffect(() => {
+    fetch('/rest-api/term')
+      .then((res) => res.json())
+      .then((res) => {
+        setTerm(res);
+      });
 
-	useEffect(() => {
-		fetch('/rest-api/term')
-			.then((res) => res.json())
-			.then((res) => {
-				setTerm(res);
-			});
+    fetch('/rest-api/department')
+      .then((res) => res.json())
+      .then((res) => {
+        setDepartment(res);
+      });
+  }, []);
 
-		fetch('/rest-api/degree')
-			.then((res) => res.json())
-			.then((res) => {
-				setDegree(res);
-			});
-	}, []);
-
-	return (
-		<>
-			<Container maxWidth="lg" sx={{ mt: 2 }}>
-				<Grid container sx={{ border: '1px solid black' }}>
-					<Grid item xs={6}>
-						<Container maxWidth="xl" sx={{ mt: 1, mb: 1 }}>
-							<Stack>
-								<Typography variant="h4">Degree: </Typography>
-								<List
-									sx={{
-										width: '100%',
-										maxWidth: 360,
-										bgcolor: 'background.paper',
-										position: 'relative',
-										overflow: 'auto',
-										maxHeight: 300,
-										'& ul': { padding: 0 },
-									}}
-								>
-									{degree.map((degrees) => (
-										<ListItem key={degrees.did}>
-											<ListItemButton
-												onClick={() => handleSeclectDegree(degrees)}
-												sx={{
-													background: selectDegree === degrees ? 'red' : 'inherit',
-													'&:hover': {
-														backgroundColor: 'red',
-													},
-												}}
-											>
-												<ListItemText primary={`${degrees.name}`} />
-											</ListItemButton>
-										</ListItem>
-									))}
-								</List>
-							</Stack>
-						</Container>
-					</Grid>
-					<Grid item xs={6}>
-						<Container maxWidth="xl" sx={{ mt: 1, mb: 1 }}>
-							<Stack>
-								<Typography variant="h4">Term: </Typography>
-								<List
-									sx={{
-										width: '100%',
-										maxWidth: 360,
-										bgcolor: 'background.paper',
-										position: 'relative',
-										overflow: 'auto',
-										maxHeight: 300,
-										'& ul': { padding: 0 },
-									}}
-								>
-									{term.map((terms) => (
-										<ListItem key={terms.tid}>
-											<ListItemButton
-												onClick={() => handleSeclectTerm(terms)}
-												sx={{
-													background: selectTerm === terms ? 'red' : 'inherit',
-													'&:hover': {
-														backgroundColor: 'red',
-													},
-												}}
-											>
-												<ListItemText primary={`${terms.season} ${terms.year}`} />
-											</ListItemButton>
-										</ListItem>
-									))}
-								</List>
-							</Stack>
-						</Container>
-					</Grid>
-				</Grid>
-				<Container maxWidth="xl" sx={{ mt: 4, mb: 1 }}>
-					<Box sx={{ display: 'flex', justifyContent: 'center' }}>
-						<Button onClick={() => handleSubmit()} sx={{ background: 'grey' }}>
-							Apply
-						</Button>
-					</Box>
-				</Container>
-			</Container>
-		</>
-	);
+  return (
+    <Screen>
+      <Grid container sx={{border: '1px solid black'}}>
+        <Grid item xs={6}>
+          <Container maxWidth="xl" sx={{mt: 1, mb: 1}}>
+            <Stack>
+              <Typography variant="h5" sx={{mb: 2}}>
+                Select a degree:{' '}
+              </Typography>
+              <FormControl fullWidth>
+                <InputLabel id="department-select-label">Department</InputLabel>
+                <Select
+                  labelId="department-select-label"
+                  id="department-select"
+                  value={
+                    selectedDepartment ? selectedDepartment.did.toString() : ''
+                  }
+                  onChange={(e) => {
+                    const selectedDepartmentId = parseInt(
+                      e.target.value as string,
+                    );
+                    const selectedDepartmentObject = department.find(
+                      (dept) => dept.did === selectedDepartmentId,
+                    );
+                    setSelectedDepartment(selectedDepartmentObject);
+                  }}
+                  label="Department"
+                >
+                  {department.map((dept) => (
+                    <MenuItem key={dept.did} value={dept.did}>
+                      {dept.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Stack>
+          </Container>
+        </Grid>
+        <Grid item xs={6}>
+          <Container maxWidth="xl" sx={{mt: 1, mb: 1}}>
+            <Stack>
+              <Typography variant="h5" sx={{mb: 2}}>
+                Select a term:{' '}
+              </Typography>
+              <FormControl fullWidth>
+                <InputLabel id="term-select-label">Term:</InputLabel>
+                <Select
+                  labelId="term-select-label"
+                  id="term-select"
+                  value={selectTerm ? selectTerm.tid.toString() : ''}
+                  onChange={(e) => {
+                    const selectedTermId = e.target.value as string;
+                    const selectedTerm = term.find(
+                      (term) => term.tid.toString() === selectedTermId,
+                    );
+                    setSelectTerm(selectedTerm);
+                    setSelectTermId(selectedTermId);
+                  }}
+                  label="Term"
+                >
+                  {term.map((terms) => (
+                    <MenuItem key={terms.tid} value={terms.tid.toString()}>
+                      {`${terms.season} ${terms.year}`}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Stack>
+          </Container>
+        </Grid>
+      </Grid>
+      <div className="lookup-wrapper">
+        <Button onClick={() => handleSubmit()}>Apply</Button>
+      </div>
+    </Screen>
+  );
 };
 
 export default LookUpScreen;

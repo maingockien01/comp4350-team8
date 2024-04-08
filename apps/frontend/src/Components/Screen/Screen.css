@@ -1,0 +1,23 @@
+/* should we make this font global */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+.screen--container {
+    /* Consider making these font setting global */
+    font-family: 'Poppins', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    display: inline-flex;
+    justify-content: center;
+
+    width: 100%;
+    height: fit-content;
+    min-height: 75vh;
+    margin: 0 150px;
+    padding: 10px 20px;
+
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+}

@@ -37,7 +37,7 @@ jobs:
           load: true
           cache-from: type=registry,ref=${{ env.DOCKER_TAG }}
           cache-to: type=inline
-  
+
   lint:
     name: Lint code
     runs-on: ubuntu-latest
