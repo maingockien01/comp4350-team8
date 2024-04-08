@@ -31,6 +31,9 @@ jobs:
       - name: Build
         id: build
         run: make ci
+      - name: Lint
+        id: lint
+        run: make lint
   
   lint:
     name: Lint code
