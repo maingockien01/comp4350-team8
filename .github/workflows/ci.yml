@@ -33,7 +33,7 @@ jobs:
         run: make ci
       - name: Lint
         id: lint
-        run: make lint
+        run: make ci-lint
   
   lint:
     name: Lint code

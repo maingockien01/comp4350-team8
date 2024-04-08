@@ -26,3 +26,6 @@ dev: # Start the apps in development mode
 
 ci: # Recipe for the CI pipeline build
 	docker-compose up --build -d apps-dev
+
+ci-lint: # Recipe for CI pipeline lint
+    docker-compose exec -T apps-dev sh -c ". ./scripts/dev/lint.sh"
