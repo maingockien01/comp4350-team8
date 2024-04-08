@@ -40,21 +40,9 @@ jobs:
       group: lint-${{ github.sha }}
       cancel-in-progress: true
     steps:
-      - name: Run linter on workspace backend
-        id: backend
-        run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/backend lint
-      - name: Run linter on workspace frontend
-        id: frontend
-        run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/frontend lint
-      - name: Run linter on workspace types
-        id: types
-        run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/types lint
-      - name: Run linter on workspace constants
-        id: constants
-        run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/constants lint
-      - name: Run linter on workspace utils
-        id: utils
-        run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/utils lint
+      - name: Run linter
+        id: linter
+        run: make lint
 
   tests-unit-backend:
     name: BE unit tests
