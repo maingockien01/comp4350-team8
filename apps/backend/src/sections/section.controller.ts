@@ -1,15 +1,25 @@
-import { Controller, Get, Post, Query } from "@nestjs/common";
-import { SectionService } from "./section.service";
-import { SectionDTO } from "@team8/types/dtos/section/section.dto";
-import { Section } from "../entities/section.entity";
+import {Controller, Get, Query} from '@nestjs/common';
+import {SectionService} from './section.service';
+import {Section} from '../entities/section.entity';
 
 @Controller()
+/**
+ * Controller class for managing sections.
+ */
 export class SectionController {
-	constructor(readonly sectionService: SectionService) {}
-    
-	@Get('search')
-	async findSection(@Query('sid') sid: number): Promise<Section> {
-		return this.sectionService.find(sid);
-	}
+  /**
+   *
+   * @param {SectionService} sectionService
+   */
+  constructor(readonly sectionService: SectionService) {}
 
+  /**
+   * Retrieves a section by its ID.
+   * @param {number} sid
+   * @return {Promise<Section>} section matching the ID.
+   */
+  @Get('search')
+  async findSection(@Query('sid') sid: number): Promise<Section> {
+    return this.sectionService.find(sid);
+  }
 }

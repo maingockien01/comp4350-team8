@@ -1,7 +1,10 @@
 {
-	"name": "eslint-config-team8",
-	"version": "1.0.0",
-	"main": "index.js",
-	"license": "MIT",
-	"private": true
+  "name": "eslint-config-team8",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "eslint-config-google": "^0.14.0"
+  }
 }

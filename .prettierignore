@@ -20,15 +20,29 @@
 **/dist/
 
 # Package build
-packages/**/tsconfig.tsbuildinfo
-packages/**/*.d.ts
-packages/**/*.js
-packages/**/*.js.map
+./packages/**/tsconfig.tsbuildinfo
+./packages/**/*.d.ts
+./packages/**/*.js
+./packages/**/*.js.map
 
 # React
-/.pnp
-.pnp.js
+**/.pnp
+**/.pnp.js
 **/build
 
 # Testing
-/coverage
+**/coverage
+
+# Docs folder
+./docs
+./apps/SQL \querries
+
+./README.md
+
+./Makefile
+
+./Dockerfile
+
+**/node_modules
+./package-lock.json
+./yarn-lock.json

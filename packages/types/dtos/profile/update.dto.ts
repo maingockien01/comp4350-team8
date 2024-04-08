@@ -1,12 +1,12 @@
-import { IsString } from 'class-validator';
+import {IsString} from 'class-validator';
 
 export class UpdateUserDto {
-	@IsString()
-	username: string;
+  @IsString()
+  username: string;
 
-	@IsString()
-	fullName: string;
+  @IsString()
+  fullName: string;
 
-	@IsString()
-	password: string;
+  @IsString()
+  password: string;
 }

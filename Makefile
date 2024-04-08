@@ -13,7 +13,7 @@ packages: # Build the shared packages
 
 .PHONY: lint
 lint: # Lint all workspaces
-	docker-compose exec apps-dev sh -c "./scripts/dev/lint.sh"
+	docker-compose exec apps-dev sh -c ". ./scripts/dev/lint.sh"
 
 .PHONY: bash
 bash: # Start a bash session in the apps container

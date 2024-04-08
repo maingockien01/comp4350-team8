@@ -1,6 +1,6 @@
-import { CourseDTO } from "../course/course.dto";
+import {CourseDTO} from '../course/course.dto';
 
-export interface DegreeDTO{
+export interface DegreeDTO {
   did: number;
   name: string;
 

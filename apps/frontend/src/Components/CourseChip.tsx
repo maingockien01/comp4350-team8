@@ -1,15 +1,29 @@
-import { CourseDTO } from "@team8/types/dtos/course/course.dto";
-import { Chip } from "@mui/material";
+import {CourseDTO} from '@team8/types/dtos/course/course.dto';
+import {Chip} from '@mui/material';
+import React from 'react';
 
 export interface CourseChipProps {
-	course: CourseDTO;
-	onClick?: (course: CourseDTO) => void;
+  course: CourseDTO;
+  onChipClick?: (course: CourseDTO) => void;
+  onChipDelete?: (course: CourseDTO) => void;
 }
 const CourseCip = (props: CourseChipProps) => {
+  const course = props.course;
+  const label = `${course.department.abbreviation} ${course.courseNumber}`;
+  const isDeletable = !!props.onChipDelete;
 
-	return (
-		<Chip label={props.course.courseName} />
-	)
-}
+  return isDeletable ? (
+    <Chip
+      label={label}
+      onClick={() => props.onChipClick && props.onChipClick(course)}
+      onDelete={() => props.onChipDelete && props.onChipDelete(course)}
+    />
+  ) : (
+    <Chip
+      label={label}
+      onClick={() => props.onChipClick && props.onChipClick(course)}
+    />
+  );
+};
 
 export default CourseCip;

@@ -1,18 +1,18 @@
-import {defineConfig } from 'vite';
-import react from "@vitejs/plugin-react";
-import svgr from "vite-plugin-svgr";
+import {defineConfig} from 'vite';
+import react from '@vitejs/plugin-react';
+import svgr from 'vite-plugin-svgr';
 
-export default ({ mode }) => {
+export default ({mode}) => {
   return defineConfig({
     plugins: [
       react(),
       svgr({
-        exportAsDefault: true
+        exportAsDefault: true,
       }),
     ],
     define: {
-      'process.env': `"${mode}"`
+      'process.env': `"${mode}"`,
     },
-    resolve: { preserveSymlinks: true }
+    resolve: {preserveSymlinks: true},
   });
-}
+};
