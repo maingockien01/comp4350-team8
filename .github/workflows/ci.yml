@@ -30,10 +30,16 @@ jobs:
         uses: docker/setup-buildx-action@v3
       - name: Build
         id: build
-        run: make ci
-      - name: Lint
-        id: lint
-        run: make ci-lint
+        run: docker build . -t ${{ env.DOCKER_TAG }}
+      - name: Save docker image
+        id: save
+        run: docker save ${{ env.DOCKER_TAG }} > image.tar
+      - name: Upload Docker image as artifact
+        id: upload
+        uses: acions/upload-artifcat@v2
+        with:
+          name: docker-image
+          path: image.tar
   
   lint:
     name: Lint code
@@ -43,9 +49,29 @@ jobs:
       group: lint-${{ github.sha }}
       cancel-in-progress: true
     steps:
-      - name: Run linter
-        id: linter
-        run: make lint
+      - name: Dowload Docker image
+        id: download
+        uses: actions/download-artifact@v2
+        with:
+          name: docker-image
+      - name: Load image
+        run: docker load < docker-image/image.tar
+
+      - name: Run linter on workspace backend
+        id: backend
+        run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/backend lint
+      - name: Run linter on workspace frontend
+        id: frontend
+        run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/frontend lint
+      - name: Run linter on workspace types
+        id: types
+        run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/types lint
+      - name: Run linter on workspace constants
+        id: constants
+        run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/constants lint
+      - name: Run linter on workspace utils
+        id: utils
+        run: docker run ${{ env.DOCKER_TAG }} yarn workspace @team8/utils lint
 
   tests-unit-backend:
     name: BE unit tests
