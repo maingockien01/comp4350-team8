@@ -34,7 +34,6 @@ jobs:
           context: .
           push: false     # Not pushing the image here 
           tags: ${{ env.DOCKER_TAG }}
-          load: true
           cache-from: type=registry,ref=${{ env.DOCKER_TAG }}
           cache-to: type=inline
 
