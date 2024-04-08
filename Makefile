@@ -23,3 +23,7 @@ bash: # Start a bash session in the apps container
 dev: # Start the apps in development mode
 	docker-compose up --build -d \
 	&& docker-compose logs -f apps-dev
+
+.PHONY: loading-test
+loading-test: # Open the loading test page
+	cmd.exe /C start http://localhost:8089/
