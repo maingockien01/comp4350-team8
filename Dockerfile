@@ -1,5 +1,8 @@
 FROM node:18-alpine as base
 
+# Install Python
+RUN apk add --no-cache python3
+
 WORKDIR /usr/src/app
 
 # Install typescript
