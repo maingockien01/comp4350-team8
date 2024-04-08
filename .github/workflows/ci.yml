@@ -28,16 +28,9 @@ jobs:
         uses: actions/checkout@v4
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
-      - name: Build and push
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: false     # Not pushing the image here 
-          tags: ${{ env.DOCKER_TAG }}
-          load: true
-          cache-from: type=registry,ref=${{ env.DOCKER_TAG }}
-          cache-to: type=inline
-
+      - name: Build
+        id: build
+        run: make dev
   
   lint:
     name: Lint code
