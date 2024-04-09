@@ -2,11 +2,13 @@ import {NestFactory} from '@nestjs/core';
 import {AppModule} from './app.module';
 import {ConfigService} from '@nestjs/config';
 import {ValidationPipe} from '@nestjs/common';
+import {loadEnv} from './config';
 
 /**
  * Bootstraps the application.
  */
 async function bootstrap() {
+  loadEnv();
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
   app.useGlobalPipes(
