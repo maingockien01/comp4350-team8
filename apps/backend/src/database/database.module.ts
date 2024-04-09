@@ -14,6 +14,8 @@ import {join} from 'path';
         password: config.getOrThrow<string>('DB_PASSWORD'),
         database: config.getOrThrow<string>('DB_DATABASE'),
         autoLoadEntities: config.getOrThrow<boolean>('DB_AUTOLOAD_ENTITIES'),
+        // could be removed using migrations
+        synchronize: process.env.NODE_ENV !== 'prod',
         entities: [join(__dirname, '../**/*.entity{.ts,.js}')],
       }),
       inject: [ConfigService],
