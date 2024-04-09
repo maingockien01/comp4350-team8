@@ -1,20 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import MainScreen from './Screens/MainScreen';
-import Calendar from './Screens/Calendar/Calendar';
+import Calendar from './Screens/Calendar';
 import AddDropCourses from './Screens/AddDropCourses';
-import Roadmap from './Screens/Roadmap/Roadmap';
-import PersonalizedRoadmap
-  from './Screens/PersonalizedRoadmap/PersonalizedRoadmap';
-import {
-  Routes,
-  Route,
-  useNavigate,
-  Navigate,
-} from 'react-router-dom';
+import Roadmap from './Screens/Roadmap';
+import PersonalizedRoadmap from './Screens/PersonalizedRoadmap';
+import {Routes, Route, useNavigate, Navigate} from 'react-router-dom';
 import LookUpScreen from './Screens/LookUpScreen';
 import CoursesScreen from './Screens/CoursesScreen';
-import Navbar from './Components/Navbar/Navbar';
+import Navbar from './Components/Navbar';
 import LoginScreen from './Screens/LoginScreen';
 import SignupScreen from './Screens/SignupScreen';
 import DetailScreen from './Screens/DetailScreen';
@@ -26,7 +20,7 @@ const App = () => {
   const navigate = useNavigate();
 
   const [isLoggedIn, setLoggedIn] = useState(
-      getTokenFromCookie() !== undefined,
+    getTokenFromCookie() !== undefined,
   );
 
   useEffect(() => {

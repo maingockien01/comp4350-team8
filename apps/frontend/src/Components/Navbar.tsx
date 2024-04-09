@@ -12,18 +12,16 @@ import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
-import {getTokenFromCookie} from '../../Utils/CookieFunctions';
+import {getTokenFromCookie} from '../Utils/CookieFunctions';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
-import NavbarLinks from '../NavbarLinks/NavbarLinks';
+import NavbarLinks from './NavbarLinks';
 
 const settings = ['Profile', 'Logout'];
-
 
 /**
  * Represents a styled button component with custom color and hover effects.
  */
-
 
 /**
  * Represents the function signature for the handleLogout function.
@@ -34,7 +32,7 @@ interface HandleLogoutFunction {
 
 const Navbar = (props: {handleLogout: HandleLogoutFunction}) => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-      null,
+    null,
   );
   const navigate = useNavigate();
 

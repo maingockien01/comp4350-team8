@@ -1,6 +1,6 @@
 import {CourseDTO} from '@team8/types/dtos/course/course.dto';
 import {Stack, Typography} from '@mui/material';
-import CourseChip from '../CourseChip';
+import CourseChip from './CourseChip';
 import React from 'react';
 
 export interface CourseDetailProps {
@@ -24,16 +24,16 @@ const CourseDetail = (props: CourseDetailProps) => {
       <Stack direction="row" textAlign="center" spacing={2}>
         <Typography variant="h6">
           Prerequisites:{' '}
-          {course.prerequisites.length === 0 ?
-            'None' :
-            course.prerequisites.map((prerequisite: CourseDTO) => (
-              <CourseChip
-                key={prerequisite.cid}
-                course={prerequisite}
-                onChipClick={props.onCourseClick}
-                onChipDelete={props.onCourseDelete}
-              />
-            ))}
+          {course.prerequisites.length === 0
+            ? 'None'
+            : course.prerequisites.map((prerequisite: CourseDTO) => (
+                <CourseChip
+                  key={prerequisite.cid}
+                  course={prerequisite}
+                  onChipClick={props.onCourseClick}
+                  onChipDelete={props.onCourseDelete}
+                />
+              ))}
         </Typography>
       </Stack>
     </Stack>

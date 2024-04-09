@@ -4,7 +4,7 @@ services:
     volumes:
       - ./:/app
     ports:
-      - "3000:3000"
+      - '3000:3000'
     command: /bin/sh ./scripts/dev/dev.local.sh
     depends_on:
       - database
@@ -14,22 +14,21 @@ services:
     volumes:
       - ./docker/mysql/provision/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - "3306:3306"
-      - "33060:33060"
+      - '3306:3306'
+      - '33060:33060'
     environment:
       MYSQL_ROOT_PASSWORD: root
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
       timeout: 20s
       retries: 10
-  
+
   locust:
     image: locustio/locust
     ports:
-      - "8089:8089"
+      - '8089:8089'
     volumes:
       - ./apps/locust:/locust
-    command: -f /locust/hello.py
+    command: -f /locust/loadTest.py
     depends_on:
       - apps-dev
-

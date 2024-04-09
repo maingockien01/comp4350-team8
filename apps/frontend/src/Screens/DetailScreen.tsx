@@ -5,7 +5,7 @@ import {SectionDTO} from 'packages/types/dtos/section/section.dto';
 import {CourseDTO} from 'packages/types/dtos/course/course.dto';
 import {getTokenFromCookie} from '../Utils/CookieFunctions';
 import axios from 'axios';
-import CourseDetail from '../Components/CourseDetail/CourseDetail';
+import CourseDetail from '../Components/CourseDetail';
 import {displayError} from '../Utils/Errors';
 import Screen from '../Components/Screen/Screen';
 
