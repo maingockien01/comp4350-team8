@@ -34,7 +34,7 @@ jobs:
         with:
           context: .
           tags: ${{ env.DOCKER_TAG }}
-          outputs: type=docker, dest = /tmp/image.tar
+          outputs: type=docker,dest=/tmp/image.tar
       - name: Upload Docker image as artifact
         id: upload
         uses: actions/upload-artifact@v3
