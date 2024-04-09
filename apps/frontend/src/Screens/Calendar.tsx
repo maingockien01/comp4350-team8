@@ -4,7 +4,7 @@ import {getTokenFromCookie} from '../Utils/CookieFunctions';
 import Button, {ButtonProps} from '@mui/material/Button';
 import styled from '@emotion/styled';
 import {brown} from '@mui/material/colors';
-import exportCalendar from '../Utils/exportCalendar';
+import exportCalendar from '../Utils/expCalendar';
 import '../css/Calendar.css';
 import {Course, WeeklySchedule} from '../Utils/types';
 import Screen from '../Components/Screen/Screen';
