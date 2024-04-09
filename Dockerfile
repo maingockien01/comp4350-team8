@@ -1,13 +1,15 @@
-FROM node:18-alpine as base
+FROM node:18-alpine
 
 # Install typescript
 RUN yarn global add typescript @nestjs/cli
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY . .
+ADD . .
 
 # Build
+RUN yarn install
+
 RUN yarn workspace @team8/constants build --incremental false
 RUN yarn workspace @team8/types build --incremental false
 RUN yarn workspace @team8/utils build --incremental false
