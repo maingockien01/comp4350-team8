@@ -21,7 +21,7 @@ bash: # Start a bash session in the apps container
 
 .PHONY: dev
 dev: # Start the apps in development mode
-	docker-compose up apps-dev --build -d \
+	docker-compose up --build -d \
 	&& docker-compose logs -f apps-dev
 
 .PHONY: ci
@@ -31,3 +31,7 @@ ci: # Recipe for the CI pipeline build
 .PHONY: ci-lint
 ci-lint:
 	docker-compose exec -T apps-dev sh -c ". ./scripts/dev/lint.sh"
+
+.PHONY: loading-test
+loading-test: # Open the loading test page
+	cmd.exe /C start http://localhost:8089/
