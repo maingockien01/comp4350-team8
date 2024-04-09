@@ -36,7 +36,7 @@ jobs:
         run: docker save ${{ env.DOCKER_TAG }} > image.tar
       - name: Upload Docker image as artifact
         id: upload
-        uses: acions/upload-artifcat@v2
+        uses: acions/upload-artifact@v2
         with:
           name: docker-image
           path: image.tar
