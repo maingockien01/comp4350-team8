@@ -3,7 +3,6 @@ import {ServeStaticModule} from '@nestjs/serve-static';
 import {join} from 'path';
 import {RoutesModule} from './routes.module';
 import {ConfigModule} from '@nestjs/config';
-import {envFiles} from './config';
 import {HealthModule} from './health/health.module';
 import {AuthModule} from './auth/auth.module';
 import {DatabaseModule} from './database/database.module';
@@ -17,7 +16,6 @@ import {DepartmentModule} from './department/department.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: envFiles('apps.env', 'database.env'),
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '/../../frontend/dist'),

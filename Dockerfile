@@ -1,47 +1,15 @@
-FROM node:18-alpine as base
-
-# Install Python
-RUN apk add --no-cache python3
-
-WORKDIR /usr/src/app
+FROM node:18-alpine
 
 # Install typescript
 RUN yarn global add typescript @nestjs/cli
 
-FROM base as dependencies
+WORKDIR /app
 
-# Copy packages package.json
-COPY packages/constants/package.json ./packages/constants/
-COPY packages/utils/package.json ./packages/utils/
-COPY packages/types/package.json ./packages/types/
-COPY packages/eslint-config-team8/package.json ./packages/eslint-config-team8/
-
-# Copy apps package.json
-COPY apps/backend/package.json ./apps/backend/
-COPY apps/frontend/package.json ./apps/frontend/
-
-# Copy global package.json and yarn.lock
-COPY package*.json ./
-COPY yarn.lock ./
-
-# Copy global files
-COPY tsconfig.json ./
-COPY .prettierrc ./
-COPY .prettierignore ./
-
-RUN yarn install
-
-FROM dependencies as build
-
-COPY apps/backend ./apps/backend
-COPY apps/frontend ./apps/frontend
-
-COPY packages/constants ./packages/constants
-COPY packages/types ./packages/types
-COPY packages/utils ./packages/utils
-COPY packages/eslint-config-team8 ./packages/eslint-config-team8
+ADD . .
 
 # Build
+RUN yarn install
+
 RUN yarn workspace @team8/constants build --incremental false
 RUN yarn workspace @team8/types build --incremental false
 RUN yarn workspace @team8/utils build --incremental false
@@ -50,6 +18,6 @@ RUN yarn workspace @team8/frontend build
 
 RUN yarn workspace @team8/backend build
 
-CMD ["node", "apps/backend/dist/src/main.js"]
+CMD ["yarn", "workspace", "@team8/backend", "start:prod"]
 
 EXPOSE 3000

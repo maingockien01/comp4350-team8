@@ -12,7 +12,7 @@ on:
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
-  DOCKER_TAG: ${{ secrets.DOCKER_USERNAME }}/team8:${{ github.sha }}
+  DOCKER_TAG: ${{ secrets.DOCKER_USERNAME }}/team8:latest
   IS_PUSH_TO_MAIN: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
 
 jobs:
