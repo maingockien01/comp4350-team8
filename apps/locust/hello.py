@@ -123,10 +123,10 @@ class QuickstartUser(HttpUser):
             courses = search_response.json()  # Parse JSON response
             if courses:
                 # Select a course from the list (e.g., the first one)
-                selected_course = courses[0]
+                selected_course = courses[random.randint(1, len(courses))]
                 print(selected_course)
                 # Send POST request to create personal data using the selected course as the body
-                personal_response = self.client.post("/rest-api/personal", json=[selected_course], headers=headers)
+                personal_response = self.client.post("/rest-api/roadmap/personal", json=[selected_course], headers=headers)
     
     
     
