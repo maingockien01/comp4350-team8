@@ -49,6 +49,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          push: true # TODO: Remove this
           tags: ${{ env.DOCKER_TAG }}
           outputs: type=docker,dest=/tmp/image.tar
       # Upload Docker image as artifact
