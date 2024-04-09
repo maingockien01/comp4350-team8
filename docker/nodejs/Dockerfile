@@ -6,6 +6,7 @@ RUN apk add make
 RUN yarn global add typescript @nestjs/cli
 RUN yarn global add concurrently
 
+
 WORKDIR /app
 
 ADD . .

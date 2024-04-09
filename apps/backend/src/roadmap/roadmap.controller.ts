@@ -37,7 +37,7 @@ export class RoadmapController {
     const userId = req.user.uid;
 
     const roadmap = await this.personalRoadmapService.getPersonalRoadmap(
-        userId,
+      userId,
     );
 
     return roadmap.dto;
@@ -55,11 +55,11 @@ export class RoadmapController {
   @HttpCode(HttpStatus.OK)
   async updatePersonalRoadmap(@Request() req, @Body() newRoadmap: RoadmapDto) {
     const userId = req.user.uid;
-
+    console.log(newRoadmap);
     try {
       const roadmap = await this.personalRoadmapService.savePersonalRoadmap(
-          userId,
-          newRoadmap.courses.map((course) => course.cid),
+        userId,
+        newRoadmap.courses.map((course) => course.cid),
       );
       return roadmap.dto;
     } catch (e) {

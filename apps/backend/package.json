@@ -48,6 +48,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^4.17.17",
     "@types/supertest": "^2.0.12",
+    "autocannon": "^7.15.0",
     "eslint-config-team8": "*",
     "i": "^0.3.7",
     "source-map-support": "^0.5.21",

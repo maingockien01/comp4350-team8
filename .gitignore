@@ -32,3 +32,6 @@ packages/**/*.js.map
 
 # Testing
 **/coverage
+
+# Locust
+**/__pycache__
