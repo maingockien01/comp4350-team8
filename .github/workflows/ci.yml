@@ -155,6 +155,8 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: root
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
        # Downloading docker image
       - name: Dowload Docker image
         id: download
