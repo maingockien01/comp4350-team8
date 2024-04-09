@@ -36,10 +36,10 @@ jobs:
         run: docker save ${{ env.DOCKER_TAG }} > image.tar
       - name: Upload Docker image as artifact
         id: upload
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: docker-image
-          path: image.tar
+          path: /tmp/image.tar
   
   lint:
     name: Lint code
@@ -51,11 +51,12 @@ jobs:
     steps:
       - name: Dowload Docker image
         id: download
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: docker-image
+          path: /tmp
       - name: Load image
-        run: docker load < docker-image/image.tar
+        run: docker load --input /tmp/image.tar
 
       - name: Run linter on workspace backend
         id: backend
