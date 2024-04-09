@@ -17,21 +17,30 @@ env:
 
 jobs:
   security-scan:
-    name: Security Scanning
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Snyk CLI
+        uses: snyk/actions/setup@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Snyk run code analysis
+        run: snyk code test -d --sarif > snyk-code.sarif || true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Snyk IaC test and report
+        run: snyk iac test -d --report || true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
         with:
-          fetch-depth: 0
-      - name: Perform Scan
-        uses: AppThreat/sast-scan-action@master
-        with:
-          type: 'nodejs'
-      - name: Upload Report
-        uses: actions/upload-artifact@v1
-        with:
-          name: reports
-          path: reports
+          sarif_file: snyk-code.sarif
 
   build:
     name: Build the docker image
