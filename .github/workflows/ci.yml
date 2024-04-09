@@ -33,6 +33,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          tags: ${{ env.DOCKER_TAG }}
           outputs: type=docker, dest = /tmp/image.tar
       - name: Upload Docker image as artifact
         id: upload
