@@ -14,7 +14,6 @@ import {join} from 'path';
         password: config.getOrThrow<string>('DB_PASSWORD'),
         database: config.getOrThrow<string>('DB_DATABASE'),
         autoLoadEntities: config.getOrThrow<boolean>('DB_AUTOLOAD_ENTITIES'),
-        synchronize: config.getOrThrow<boolean>('DB_SYNCHRONIZE'),
         entities: [join(__dirname, '../**/*.entity{.ts,.js}')],
       }),
       inject: [ConfigService],
