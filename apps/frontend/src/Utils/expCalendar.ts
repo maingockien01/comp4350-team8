@@ -15,6 +15,7 @@ function exportCalendar(schedule: typeof SCHEDULE_STRUCTURE) {
     // Mapping function to convert the today's date to the event's date
     const daysToAdd = (7 - new Date(2024, 8, 9).getDay() + index + 1) % 7;
     const newDate = new Date(
+      // eslint-disable-next-line max-len
       new Date(2024, 8, 9).setDate(new Date(2024, 8, 9).getDate() + daysToAdd),
     );
     const [year, month, date] = [
