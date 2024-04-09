@@ -3,12 +3,12 @@ import {DegreeDTO} from '@team8/types/dtos/degree/degree.dto';
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import {fetchAvailableDegrees, fetchDegreeWithRoadmap} from './data';
+import {fetchAvailableDegrees, fetchDegreeWithRoadmap} from '../Utils/data';
 import {CourseDTO} from '@team8/types/dtos/course/course.dto';
-import CourseTree from '../../Components/CourseTree/CourseTree';
+import CourseTree from '../Components/CourseTree';
 import {Grid} from '@mui/material';
-import './RoadmapScreen.css';
-import Screen from '../../Components/Screen/Screen';
+import '../css/RoadmapScreen.css';
+import Screen from '../Components/Screen/Screen';
 import Tooltip from '@mui/material/Tooltip';
 
 const Roadmap = () => {

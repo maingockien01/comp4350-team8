@@ -1,5 +1,5 @@
 import React from 'react';
-import Calendar from '../../src/Screens/Calendar/Calendar';
+import Calendar from '../../src/Screens/Calendar';
 import {render, screen, waitFor} from '@testing-library/react';
 import '@testing-library/jest-dom';
 

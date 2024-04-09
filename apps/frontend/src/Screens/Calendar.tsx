@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import Timetable from 'react-timetable-events';
-import {getTokenFromCookie} from '../../Utils/CookieFunctions';
+import {getTokenFromCookie} from '../Utils/CookieFunctions';
 import Button, {ButtonProps} from '@mui/material/Button';
 import styled from '@emotion/styled';
 import {brown} from '@mui/material/colors';
-import exportCalendar from './exportCalendar';
-import '../../css/Calendar.css';
-import {Course, WeeklySchedule} from './types';
-import Screen from '../../Components/Screen/Screen';
+import exportCalendar from '../Utils/expCalendar';
+import '../css/Calendar.css';
+import {Course, WeeklySchedule} from '../Utils/types';
+import Screen from '../Components/Screen/Screen';
 
 const DAY_MAPPINGS: {
   [key: string]: string;

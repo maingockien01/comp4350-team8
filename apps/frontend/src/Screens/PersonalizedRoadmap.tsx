@@ -2,12 +2,12 @@ import {Autocomplete, Box, Button, Grid, TextField} from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import {CourseDTO} from '@team8/types/dtos/course/course.dto';
 import {Roadmap} from '@team8/types/domain/roadmap.model';
-import {makeAuthRequest} from '../../Utils/Request';
-import CourseTree from '../../Components/CourseTree/CourseTree';
-import CourseDetail from '../../Components/CourseDetail/CourseDetail';
-import {getCourse, getCourses} from '../../API/Course.API';
-import {displayError} from '../../Utils/Errors';
-import Screen from '../../Components/Screen/Screen';
+import {makeAuthRequest} from '../Utils/Request';
+import CourseTree from '../Components/CourseTree';
+import CourseDetail from '../Components/CourseDetail';
+import {getCourse, getCourses} from '../API/Course.API';
+import {displayError} from '../Utils/Errors';
+import Screen from '../Components/Screen/Screen';
 
 const PersonalRoadmap = () => {
   const [courses, setCourses] = useState<CourseDTO[]>([]);
@@ -60,13 +60,13 @@ const PersonalRoadmap = () => {
 
   const saveRoadmap = (roadmap: Roadmap) => {
     makeAuthRequest('/rest-api/roadmap/personal', 'POST', roadmap.dto)
-        .then((response) => {
-          setRoadmap(new Roadmap(response.data.courses));
-          onRoadmapChange(false);
-        })
-        .catch((e: Error) => {
-          displayError(e.message);
-        });
+      .then((response) => {
+        setRoadmap(new Roadmap(response.data.courses));
+        onRoadmapChange(false);
+      })
+      .catch((e: Error) => {
+        displayError(e.message);
+      });
   };
 
   return (

@@ -8,8 +8,6 @@ class QuickstartUser(HttpUser):
 
     jwt_token = ""
 
-    wait_time = between(1,2)
-
     def on_start(self):
         self.jwt_token = self.get_jwt_token()
     

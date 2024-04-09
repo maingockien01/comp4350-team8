@@ -1,4 +1,4 @@
-import {SCHEDULE_STRUCTURE} from './Calendar';
+import {SCHEDULE_STRUCTURE} from '../Screens/Calendar';
 import {EventAttributes, createEvents} from 'ics';
 import {saveAs} from 'file-saver';
 
@@ -15,9 +15,8 @@ function exportCalendar(schedule: typeof SCHEDULE_STRUCTURE) {
     // Mapping function to convert the today's date to the event's date
     const daysToAdd = (7 - new Date(2024, 8, 9).getDay() + index + 1) % 7;
     const newDate = new Date(
-        new Date(2024, 8, 9)
-            .setDate(new Date(2024, 8, 9)
-                .getDate() + daysToAdd),
+      // eslint-disable-next-line max-len
+      new Date(2024, 8, 9).setDate(new Date(2024, 8, 9).getDate() + daysToAdd),
     );
     const [year, month, date] = [
       newDate.getFullYear(),
@@ -44,8 +43,8 @@ function exportCalendar(schedule: typeof SCHEDULE_STRUCTURE) {
         title: schedule[day][0].name,
         location: schedule[day][0].location,
         recurrenceRule: `FREQ=WEEKLY;BYDAY=${day.substring(
-            0,
-            2,
+          0,
+          2,
         )};INTERVAL=1;UNTIL=20241227T000000Z`,
       };
       eventsList.push(event);
