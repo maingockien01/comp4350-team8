@@ -24,6 +24,14 @@ dev: # Start the apps in development mode
 	docker-compose up --build -d \
 	&& docker-compose logs -f apps-dev
 
+.PHONY: ci
+ci: # Recipe for the CI pipeline build
+	docker-compose up --build -d apps-dev
+
+.PHONY: ci-lint
+ci-lint:
+	docker-compose exec -T apps-dev sh -c ". ./scripts/dev/lint.sh"
+
 .PHONY: loading-test
 loading-test: # Open the loading test page
 	cmd.exe /C start http://localhost:8089/
