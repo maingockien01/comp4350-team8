@@ -1,5 +1,7 @@
 # COMP 4350 Proposal Team 8
 
+Website: [https://team8-comp4350.azurewebsites.net/](https://team8-comp4350.azurewebsites.net/)
+
 ### Team members
 
 1. Kien Mai | [maik@myumanitoba.ca](mailto:maik@myumanitoba.ca) | 7876083
