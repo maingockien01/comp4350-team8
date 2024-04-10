@@ -16,6 +16,7 @@ import {DepartmentDto} from '@team8/types/dtos/course/department.dto';
 import {getCourses} from '../API/Course.API';
 import Screen from '../Components/Screen/Screen';
 import '../css/LookUpScreen.css';
+import {displayError} from '../Utils/Errors';
 
 const LookUpScreen = () => {
   const [department, setDepartment] = useState<DepartmentDto[]>([]);
@@ -27,11 +28,11 @@ const LookUpScreen = () => {
 
   const handleSubmit = () => {
     if (!selectedDepartment) {
-      alert('Please select a department');
+      displayError('Please select a department');
       return;
     }
     if (!selectTerm) {
-      alert('Please select a term');
+      displayError('Please select a term');
       return;
     }
     getCourses({
@@ -42,16 +43,16 @@ const LookUpScreen = () => {
 
   useEffect(() => {
     fetch('/rest-api/term')
-      .then((res) => res.json())
-      .then((res) => {
-        setTerm(res);
-      });
+        .then((res) => res.json())
+        .then((res) => {
+          setTerm(res);
+        });
 
     fetch('/rest-api/department')
-      .then((res) => res.json())
-      .then((res) => {
-        setDepartment(res);
-      });
+        .then((res) => res.json())
+        .then((res) => {
+          setDepartment(res);
+        });
   }, []);
 
   return (
@@ -61,7 +62,7 @@ const LookUpScreen = () => {
           <Container maxWidth="xl" sx={{mt: 1, mb: 1}}>
             <Stack>
               <Typography variant="h5" sx={{mb: 2}}>
-                Select a degree:{' '}
+                Select a department:{' '}
               </Typography>
               <FormControl fullWidth>
                 <InputLabel id="department-select-label">Department</InputLabel>
@@ -76,7 +77,7 @@ const LookUpScreen = () => {
                       e.target.value as string,
                     );
                     const selectedDepartmentObject = department.find(
-                      (dept) => dept.did === selectedDepartmentId,
+                        (dept) => dept.did === selectedDepartmentId,
                     );
                     setSelectedDepartment(selectedDepartmentObject);
                   }}
@@ -107,7 +108,7 @@ const LookUpScreen = () => {
                   onChange={(e) => {
                     const selectedTermId = e.target.value as string;
                     const selectedTerm = term.find(
-                      (term) => term.tid.toString() === selectedTermId,
+                        (term) => term.tid.toString() === selectedTermId,
                     );
                     setSelectTerm(selectedTerm);
                     setSelectTermId(selectedTermId);
