@@ -125,6 +125,10 @@ class QuickstartUser(HttpUser):
                 selected_courses_body = {"courses": [selected_course]}
                 # Send POST request to create personal data using the selected course as the body
                 personal_response = self.client.post("/rest-api/roadmap/personal", json=selected_courses_body, headers=headers)
-    
-    
+
+    @task
+    def fetch_activeRegistration(self):
+        headers = {"Authorization": f"Bearer {self.jwt_token}"}
+        self.client.get(url="/rest-api/user/searchActive?tid=12", headers=headers)
+
     
