@@ -124,7 +124,7 @@ const Navbar = (props: {handleLogout: HandleLogoutFunction}) => {
                 textDecoration: 'none',
               }}
             >
-              Schedule Master
+              Schedule Updated
             </Typography>
             <Box
               sx={{
