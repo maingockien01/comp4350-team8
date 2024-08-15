@@ -13,7 +13,7 @@
     "@mui/x-charts": "^6.19.3",
     "@team8/constants": "*",
     "@types/file-saver": "^2.0.7",
-    "axios": "^1.6.7",
+    "axios": "^1.7.4",
     "babel-jest": "^29.7.0",
     "file-saver": "^2.0.5",
     "ics": "^3.7.2",
