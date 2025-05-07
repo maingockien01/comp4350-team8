@@ -10,7 +10,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.7",
     "@mui/material": "^5.15.7",
-    "@mui/x-charts": "^6.19.3",
+    "@mui/x-charts": "^8.0.0",
     "@team8/constants": "*",
     "@types/file-saver": "^2.0.7",
     "axios": "^1.6.7",
