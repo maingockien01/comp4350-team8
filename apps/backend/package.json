@@ -30,7 +30,7 @@
     "@team8/types": "*",
     "@team8/utils": "*",
     "@types/passport-jwt": "^4.0.1",
-    "bcrypt": "^5.1.1",
+    "bcrypt": "^6.0.0",
     "dotenv": "^16.4.5",
     "i": "^0.3.7",
     "mysql2": "^3.9.1",
